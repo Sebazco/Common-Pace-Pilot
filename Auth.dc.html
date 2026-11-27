@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sign Up and Log In</title>
+<script src="./support.js"></script>
+<style id="pilot-css">.pilot-back{position:fixed;z-index:9999;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:8px 14px;border-radius:999px;background:#111111;color:#FFFFFF;font:600 13px/1 "Hanken Grotesk",system-ui,sans-serif;text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,.18)}.pilot-back:focus-visible{outline:2px solid #3D6B52;outline-offset:3px}.pilot-back{left:max(16px,env(safe-area-inset-left,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px))}</style>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0}
+button{font-family:inherit;cursor:pointer}
+input{font-family:inherit}
+a{color:inherit;text-decoration:none}
+@media (max-width:980px){.au-brand{flex:1 1 100%!important;min-height:0!important;padding:14px 24px!important;background:#FFFFFF!important;color:#111111!important;border-bottom:1px solid rgba(17,17,17,.14)}.au-brand>svg,.au-brand .au-pitch{display:none}.au-logo rect{fill:#111111}.au-logo path{stroke:#FFFFFF}.au-form{padding:24px 24px 48px!important;align-items:flex-start!important}.au-form h1{font-size:40px!important}}
+</style>
+</helmet>
+<div style="display:flex;flex-wrap:wrap;min-height:100vh;align-content:stretch;background:#FFFFFF;color:#111111;font-family:'Hanken Grotesk',system-ui,sans-serif;font-size:17px;line-height:1.5">
+
+<!-- BRAND PANEL -->
+<div class="au-brand" style="flex:1 1 480px;min-width:0;background:#111111;color:#FFFFFF;position:relative;overflow:hidden;padding:56px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;min-height:520px">
+<svg viewBox="0 0 600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true" style="position:absolute;left:0;top:0;width:100%;height:100%">
+<g stroke="#9DB1A4" stroke-linecap="round" fill="none">
+<path d="M60 900 L260 0" stroke-width="14" stroke-opacity=".16"/>
+<path d="M140 900 L340 0" stroke-width="14" stroke-opacity=".16"/>
+<path d="M260 900 L460 0" stroke-width="14" stroke-opacity=".28"/>
+<path d="M340 900 L540 0" stroke-width="14" stroke-opacity=".28"/>
+<path d="M460 900 L660 0" stroke-width="14" stroke-opacity=".42"/>
+<path d="M540 900 L740 0" stroke-width="14" stroke-opacity=".42"/>
+</g>
+</svg>
+<a href="Main.dc.html" style="position:relative;display:flex;align-items:center;gap:12px">
+<svg class="au-logo" width="34" height="34" viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="8" fill="#FFFFFF"/><path d="M9.5 27 L17.5 9" fill="none" stroke="#111111" stroke-width="3.5" stroke-linecap="round"/><path d="M18.5 27 L26.5 9" fill="none" stroke="#111111" stroke-width="3.5" stroke-linecap="round"/></svg>
+<span style="font-weight:700;font-size:15px;letter-spacing:.14em;text-transform:uppercase">Common Pace</span>
+</a>
+<div class="au-pitch" style="position:relative">
+<h2 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(44px,5vw,76px);line-height:.98;letter-spacing:-.02em">Find the partners who run at your pace.</h2>
+<p style="margin:20px 0 0;max-width:420px;color:#C8C8C8">One account for athletes and the businesses that back them.</p>
+</div>
+</div>
+
+<!-- FORM PANEL -->
+<div class="au-form" style="flex:1 1 480px;min-width:0;display:flex;align-items:center;justify-content:center;padding:48px 24px;box-sizing:border-box">
+<div style="width:100%;max-width:420px">
+
+<!-- SIGN UP -->
+<sc-if value="{{isSignup}}" hint-placeholder-val="{{true}}">
+<div>
+<h1 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:52px;line-height:1;letter-spacing:-.01em">Create your account</h1>
+<div style="margin-top:24px;font-weight:600;font-size:15px">I'm joining as</div>
+<div role="group" aria-label="Account type" style="margin-top:10px;display:flex;flex-wrap:wrap;gap:12px">
+<sc-for list="{{roles}}" as="r" hint-placeholder-count="2">
+<button type="button" onClick="{{r.pick}}" aria-pressed="{{r.on}}" style="flex:1 1 140px;min-width:0;text-align:left;padding:14px 16px;border-radius:16px;border:1px solid #111111;background:{{r.bg}};color:{{r.fg}}">
+<div style="font-weight:700;font-size:17px">{{r.label}}</div>
+<div style="font-size:14px;color:{{r.subFg}}">{{r.sub}}</div>
+</button>
+</sc-for>
+</div>
+<div style="margin-top:22px">
+<label for="name" style="display:block;font-weight:600;font-size:15px;margin-bottom:6px">{{nameLabel}} <span style="font-weight:500;color:#6E6E6E">(required)</span></label>
+<input id="name" type="text" value="{{name}}" onChange="{{setName}}" style="width:100%;box-sizing:border-box;padding:14px 16px;font-size:17px;border:1px solid #9A9A9A;border-radius:12px;color:#111111;background:#FFFFFF">
+</div>
+<div style="margin-top:16px">
+<label for="email" style="display:block;font-weight:600;font-size:15px;margin-bottom:6px">Email</label>
+<input id="email" type="email" value="{{email}}" onChange="{{setEmail}}" placeholder="you@example.com" style="width:100%;box-sizing:border-box;padding:14px 16px;font-size:17px;border:1px solid #9A9A9A;border-radius:12px;color:#111111;background:#FFFFFF">
+</div>
+<div style="margin-top:16px">
+<label for="dob" style="display:block;font-weight:600;font-size:15px;margin-bottom:6px">{{dobLabel}} <span style="font-weight:500;color:#6E6E6E">(required)</span></label>
+<input id="dob" type="date" value="{{dob}}" onChange="{{setDob}}" style="width:100%;box-sizing:border-box;padding:14px 16px;font-size:17px;border:1px solid #9A9A9A;border-radius:12px;color:#111111;background:#FFFFFF">
+<div role="{{dobRole}}" style="margin-top:6px;font-size:14px;color:{{dobColor}}">{{dobHint}}</div>
+</div>
+<div style="margin-top:16px">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><label for="pw" style="font-weight:600;font-size:15px">Password</label><button type="button" onClick="{{toggleShow}}" aria-pressed="{{showPw}}" style="background:none;border:0;padding:8px 0 8px 12px;font-size:14px;font-weight:700;text-decoration:underline;color:#111111;min-height:44px;margin:-14px 0">{{showLabel}}</button></div>
+<input id="pw" type="{{pwType}}" value="{{pw}}" onChange="{{setPw}}" style="width:100%;box-sizing:border-box;padding:14px 16px;font-size:17px;border:1px solid #9A9A9A;border-radius:12px;color:#111111;background:#FFFFFF">
+<div style="margin-top:6px;font-size:14px;color:#6E6E6E">At least 8 characters.</div>
+</div>
+<div style="margin-top:18px;display:flex;gap:12px;align-items:flex-start">
+<input id="terms" type="checkbox" checked="{{terms}}" onChange="{{toggleTerms}}" style="width:22px;height:22px;margin:2px 0 0;flex:0 0 auto;accent-color:#111111">
+<label for="terms" style="font-size:15px;color:#3A3A3A">I agree to the <a href="Legal.dc.html#terms" target="_blank" style="font-weight:700;text-decoration:underline">Terms</a> and <a href="Legal.dc.html#privacy" target="_blank" style="font-weight:700;text-decoration:underline">Privacy Policy</a>, and I understand sponsored posts must be <a href="Legal.dc.html#disclosure" target="_blank" style="font-weight:700;text-decoration:underline">disclosed</a>.</label>
+</div>
+<div style="margin-top:12px;display:flex;gap:12px;align-items:flex-start">
+<input id="ai" type="checkbox" checked="{{ai}}" onChange="{{toggleAi}}" style="width:22px;height:22px;margin:2px 0 0;flex:0 0 auto;accent-color:#111111">
+<label for="ai" style="font-size:15px;color:#3A3A3A"><span style="font-weight:600;color:#111111">Optional:</span> let Common Pace send my profile details to an AI provider to suggest matches and draft text. Never my messages or password. I can change this in Account settings.</label>
+</div>
+<div style="margin-top:24px">
+<sc-if value="{{canCreate}}" hint-placeholder-val="{{false}}">
+<button type="button" onClick="{{create}}" style="width:100%;background:#111111;color:#FFFFFF;border:0;border-radius:999px;padding:16px;font-size:17px;font-weight:600;min-height:52px">Create account</button>
+</sc-if>
+<sc-if value="{{cannotCreate}}" hint-placeholder-val="{{true}}">
+<button type="button" disabled style="width:100%;background:#E2E2E2;color:#6E6E6E;border:0;border-radius:999px;padding:16px;font-size:17px;font-weight:600;min-height:52px;cursor:not-allowed">Create account</button>
+</sc-if>
+</div>
+<div style="margin-top:10px;font-size:14px;color:#6E6E6E;text-align:center">{{createHint}}</div>
+<div style="margin-top:20px;text-align:center;font-size:15px;color:#3A3A3A">Already have an account? <button type="button" onClick="{{goLogin}}" style="background:none;border:0;padding:10px 6px;min-height:44px;font-size:15px;font-weight:700;color:#111111;text-decoration:underline">Log in</button></div>
+</div>
+</sc-if>
+
+<!-- LOG IN -->
+<sc-if value="{{isLogin}}" hint-placeholder-val="{{false}}">
+<div>
+<h1 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:52px;line-height:1;letter-spacing:-.01em">Welcome back</h1>
+<div style="margin-top:28px">
+<label for="lemail" style="display:block;font-weight:600;font-size:15px;margin-bottom:6px">Email</label>
+<input id="lemail" type="email" value="{{email}}" onChange="{{setEmail}}" placeholder="you@example.com" style="width:100%;box-sizing:border-box;padding:14px 16px;font-size:17px;border:1px solid #9A9A9A;border-radius:12px;color:#111111;background:#FFFFFF">
+</div>
+<div style="margin-top:16px">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><label for="lpw" style="font-weight:600;font-size:15px">Password</label><button type="button" onClick="{{toggleShow}}" aria-pressed="{{showPw}}" style="background:none;border:0;padding:8px 0 8px 12px;font-size:14px;font-weight:700;text-decoration:underline;color:#111111;min-height:44px;margin:-14px 0">{{showLabel}}</button></div>
+<input id="lpw" type="{{pwType}}" value="{{pw}}" onChange="{{setPw}}" style="width:100%;box-sizing:border-box;padding:14px 16px;font-size:17px;border:1px solid #9A9A9A;border-radius:12px;color:#111111;background:#FFFFFF">
+<button type="button" onClick="{{forgot}}" style="margin-top:6px;background:none;border:0;padding:10px 0;min-height:44px;font-size:14px;font-weight:600;color:#111111;text-decoration:underline">Forgot your password?</button>
+<sc-if value="{{resetSent}}" hint-placeholder-val="{{false}}"><div role="status" style="margin-top:6px;background:#F4F4F2;border-radius:12px;padding:12px 14px;font-size:14px;color:#3A3A3A">{{resetText}}</div></sc-if>
+</div>
+<div style="margin-top:16px">
+<sc-if value="{{canLogin}}" hint-placeholder-val="{{false}}">
+<a href="{{loginHref}}" style="display:block;text-align:center;background:#111111;color:#FFFFFF;border-radius:999px;padding:16px;font-size:17px;font-weight:600">Log in</a>
+</sc-if>
+<sc-if value="{{cannotLogin}}" hint-placeholder-val="{{true}}">
+<button type="button" disabled style="width:100%;background:#E2E2E2;color:#6E6E6E;border:0;border-radius:999px;padding:16px;font-size:17px;font-weight:600;min-height:52px;cursor:not-allowed">Log in</button>
+</sc-if>
+</div>
+<div style="margin-top:10px;font-size:14px;color:#6E6E6E;text-align:center">{{loginHint}}</div>
+<div style="margin-top:20px;text-align:center;font-size:15px;color:#3A3A3A">New here? <button type="button" onClick="{{goSignup}}" style="background:none;border:0;padding:10px 6px;min-height:44px;font-size:15px;font-weight:700;color:#111111;text-decoration:underline">Create an account</button></div>
+</div>
+</sc-if>
+
+<!-- VERIFY -->
+<sc-if value="{{isVerify}}" hint-placeholder-val="{{false}}">
+<div>
+<h1 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:52px;line-height:1;letter-spacing:-.01em">Check your email</h1>
+<p style="margin:16px 0 0;color:#3A3A3A">Enter the 6-digit code we sent to {{email}}. Verifying your email is how we keep fake accounts out.</p>
+<div style="margin-top:24px">
+<label for="code" style="display:block;font-weight:600;font-size:15px;margin-bottom:6px">Verification code</label>
+<input id="code" type="text" inputmode="numeric" maxlength="6" value="{{code}}" onChange="{{setCode}}" placeholder="000000" style="width:100%;box-sizing:border-box;padding:14px 16px;font-size:26px;letter-spacing:.4em;text-align:center;border:1px solid #9A9A9A;border-radius:12px;color:#111111;background:#FFFFFF">
+</div>
+<div style="margin-top:20px">
+<sc-if value="{{canVerify}}" hint-placeholder-val="{{false}}">
+<button type="button" onClick="{{verify}}" style="width:100%;background:#111111;color:#FFFFFF;border:0;border-radius:999px;padding:16px;font-size:17px;font-weight:600;min-height:52px">Verify and continue</button>
+</sc-if>
+<sc-if value="{{cannotVerify}}" hint-placeholder-val="{{true}}">
+<button type="button" disabled style="width:100%;background:#E2E2E2;color:#6E6E6E;border:0;border-radius:999px;padding:16px;font-size:17px;font-weight:600;min-height:52px;cursor:not-allowed">Verify and continue</button>
+</sc-if>
+</div>
+<button type="button" onClick="{{goSignup}}" style="margin-top:12px;background:none;border:0;padding:10px 0;min-height:44px;font-size:15px;font-weight:600;color:#111111;text-decoration:underline">Use a different email</button>
+</div>
+</sc-if>
+
+<!-- DONE -->
+<sc-if value="{{isDone}}" hint-placeholder-val="{{false}}">
+<div>
+<div style="font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6E6E6E">Email verified</div>
+<h1 style="margin:10px 0 0;font-family:'Instrument Serif',serif;font-weight:400;font-size:60px;line-height:1;letter-spacing:-.01em">You're in.</h1>
+<sc-if value="{{isAthlete}}" hint-placeholder-val="{{true}}">
+<div>
+<p style="margin:16px 0 0;color:#3A3A3A">Next, build your profile. It takes a few minutes, and you can save your draft any time.</p>
+<a href="Profile.dc.html" style="margin-top:28px;display:block;text-align:center;background:#111111;color:#FFFFFF;border-radius:999px;padding:16px;font-size:17px;font-weight:600">Build my profile</a>
+</div>
+</sc-if>
+<sc-if value="{{isBusiness}}" hint-placeholder-val="{{false}}">
+<div>
+<p style="margin:16px 0 0;color:#3A3A3A">Business onboarding comes next: your company profile, your audience, and your first campaign. That flow is designed separately.</p>
+<a href="Find.dc.html?as=business" style="margin-top:28px;display:block;text-align:center;background:#111111;color:#FFFFFF;border-radius:999px;padding:16px;font-size:17px;font-weight:600">Meet your matches</a>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":900}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { view: 'signup', role: 'Athlete', name: '', email: '', pw: '', terms: false, code: '', showPw: false };
+try { const q = new URLSearchParams(window.location.search); if (q.get('as') === 'business') this.state.role = 'Business'; if (q.get('view') === 'login') this.state.view = 'login'; } catch (e) {}
+}
+renderVals() {
+const cpRole = (k) => { if (k === 'athlete' || k === 'business') return k; try { const q = new URLSearchParams(window.location.search).get('as'); if (q === 'business' || q === 'athlete') { try { localStorage.setItem('cpRole', q); } catch (e) {} return q; } if (localStorage.getItem('cpRole') === 'business') return 'business'; } catch (e) {} return 'athlete'; };
+const s = this.state;
+const set = (k) => (e) => this.setState({ [k]: e.target.value });
+const roles = ['Athlete', 'Business'].map((r) => {
+const on = s.role === r;
+return { label: r, sub: r === 'Athlete' ? 'Get discovered and sponsored' : 'Find and back athletes', on, bg: on ? '#111111' : '#FFFFFF', fg: on ? '#FFFFFF' : '#111111', subFg: on ? '#C8C8C8' : '#3A3A3A', pick: () => this.setState({ role: r }) };
+});
+const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.email);
+const age = (() => { if (!s.dob) return null; const b = new Date(s.dob + 'T00:00:00'), n = new Date(); let a = n.getFullYear() - b.getFullYear(); const m = n.getMonth() - b.getMonth(); if (m < 0 || (m === 0 && n.getDate() < b.getDate())) a -= 1; return a; })();
+const adult = age !== null && age >= 18;
+const canCreate = s.name.trim().length > 0 && emailOk && adult && s.pw.length >= 8 && s.terms;
+const canLogin = emailOk && s.pw.length > 0;
+const missing = [];
+if (s.name.trim().length === 0) missing.push(s.role === 'Athlete' ? 'your name' : 'your business name');
+if (!emailOk) missing.push('a valid email');
+if (age === null) missing.push('your date of birth');
+else if (!adult) missing.push('to be 18 or older');
+if (s.pw.length < 8) missing.push('a password of 8+ characters');
+if (!s.terms) missing.push('the terms box');
+const lMissing = [];
+if (!emailOk) lMissing.push('a valid email');
+if (s.pw.length === 0) lMissing.push('your password');
+const canVerify = s.code.trim().length === 6;
+return {
+isSignup: s.view === 'signup', isLogin: s.view === 'login', isVerify: s.view === 'verify', isDone: s.view === 'done',
+roles, nameLabel: s.role === 'Athlete' ? 'Full name' : 'Business name',
+name: s.name, email: s.email, pw: s.pw, code: s.code, terms: s.terms,
+setName: set('name'), setEmail: set('email'), setPw: set('pw'), setCode: set('code'),
+toggleTerms: () => this.setState({ terms: !s.terms }),
+showPw: s.showPw, pwType: s.showPw ? 'text' : 'password', showLabel: s.showPw ? 'Hide' : 'Show', toggleShow: () => this.setState({ showPw: !s.showPw }),
+createHint: canCreate ? '' : 'Still needed: ' + missing.join(', ') + '.',
+loginHref: cpRole('auto') === 'business' ? 'Find.dc.html' : 'Campaigns.dc.html',
+resetSent: !!s.reset, resetText: s.email.trim() ? 'If an account exists for ' + s.email.trim() + ', we sent a link to reset your password. It expires in 30 minutes.' : 'Enter your email above, then tap Forgot your password? again.',
+forgot: () => this.setState({ reset: true }),
+loginHint: canLogin ? '' : 'Still needed: ' + lMissing.join(' and ') + '.',
+dob: s.dob || '', setDob: (e) => this.setState({ dob: e.target.value }),
+dobLabel: s.role === 'Athlete' ? 'Date of birth' : 'Your date of birth',
+dobHint: age !== null && !adult ? 'Common Pace is for people 18 and older for now.' : (s.role === 'Athlete' ? 'You must be 18 or older. Your date of birth is never shown on your profile.' : 'You must be 18 or older to create an account for a business.'),
+dobColor: age !== null && !adult ? '#111111' : '#6E6E6E', dobRole: age !== null && !adult ? 'alert' : 'note',
+ai: !!s.ai, toggleAi: () => this.setState({ ai: !s.ai }),
+canCreate, cannotCreate: !canCreate, canLogin, cannotLogin: !canLogin, canVerify, cannotVerify: !canVerify,
+create: () => { if (canCreate) this.setState({ view: 'verify' }); },
+verify: () => { if (canVerify) this.setState({ view: 'done' }); },
+goLogin: () => this.setState({ view: 'login' }),
+goSignup: () => this.setState({ view: 'signup' }),
+isAthlete: s.role === 'Athlete', isBusiness: s.role === 'Business', _r: (s.view === 'done' ? (() => { try { localStorage.setItem('cpRole', s.role === 'Business' ? 'business' : 'athlete'); localStorage.setItem('cpAi', s.ai ? 'on' : 'off'); } catch (e) {} return ''; })() : '')
+};
+}
+}
+</script>
+<script>(function(){function ensure(){if(document.querySelector(".pilot-back")||!document.body)return;var a=document.createElement("a");a.className="pilot-back";a.href="index.html";a.innerHTML='<span aria-hidden="true">&larr;</span> Test tasks';document.body.appendChild(a);}document.addEventListener("DOMContentLoaded",ensure);setInterval(ensure,800);})();</script>
+</body>
+</html>

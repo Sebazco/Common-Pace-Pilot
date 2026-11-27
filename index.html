@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Common Pace Pilot</title>
+<meta name="description" content="Clickable Common Pace prototype with step-by-step tasks for athlete and business testers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0}
+[hidden]{display:none!important}
+/* Layout: one reading column; a bib-style header, then two numbered tracks of task cards. */
+:root{
+  --bg:#FFFFFF; --fg:#111111; --body:#3A3A3A; --muted:#6E6E6E; --line:rgba(17,17,17,.12);
+  --fog:#F4F4F2; --pine:#3D6B52; --pine-soft:#E6EEE9; --btn-fg:#FFFFFF;
+  --serif:'Instrument Serif',Georgia,'Times New Roman',serif;
+  --sans:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#141414; --fg:#F2F2F0; --body:#CFCFCB; --muted:#9A9A96; --line:rgba(255,255,255,.14);
+  --fog:#1E1E1D; --pine:#7FB096; --pine-soft:#1F2C25; --btn-fg:#111111; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141414; --fg:#F2F2F0; --body:#CFCFCB; --muted:#9A9A96; --line:rgba(255,255,255,.14);
+  --fog:#1E1E1D; --pine:#7FB096; --pine-soft:#1F2C25; --btn-fg:#111111; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font:400 17px/1.55 var(--sans)}
+a{color:inherit}
+.wrap{max-width:760px;margin:0 auto;padding-block:40px 96px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
+.bib{display:inline-flex;align-items:baseline;gap:6px;border:1.5px solid var(--fg);border-radius:10px;padding:4px 10px}
+.bib small{font-size:10px;font-weight:700;letter-spacing:.12em;color:var(--muted)}
+.bib b{font-weight:600;font-size:16px;font-variant-numeric:tabular-nums}
+h1{margin:36px 0 0;font:400 clamp(44px,8vw,68px)/.98 var(--serif);letter-spacing:-.02em;text-wrap:balance}
+.lead{margin:14px 0 0;color:var(--body);max-width:60ch}
+.facts{margin:26px 0 0;padding:18px 20px;background:var(--fog);border-radius:16px;display:grid;gap:10px}
+.facts div{display:flex;gap:10px;align-items:baseline}
+.facts .k{flex:0 0 92px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.facts .v{min-width:0;color:var(--body);font-size:15px}
+.jump{margin:28px 0 0;display:flex;gap:10px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;min-height:44px;padding:8px 18px;border:1.5px solid var(--fg);border-radius:999px;font-weight:600;font-size:15px;text-decoration:none}
+.chip.solid{background:var(--fg);color:var(--bg)}
+.track{margin-top:56px}
+.track h2{margin:0;font:400 38px/1.02 var(--serif);letter-spacing:-.01em}
+.track .sub{margin:6px 0 0;color:var(--muted);font-size:15px}
+.tasks{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:16px}
+.task{border:1px solid var(--line);border-radius:20px;padding:22px;display:grid;gap:14px}
+.task.done{border-color:var(--pine)}
+.thead{display:flex;gap:14px;align-items:baseline}
+.num{flex:0 0 auto;font-variant-numeric:tabular-nums;font-weight:600;font-size:13px;color:var(--muted);letter-spacing:.04em}
+.task h3{margin:0;font-size:20px;font-weight:700;line-height:1.25}
+.time{font-size:13px;color:var(--muted);margin-left:auto;white-space:nowrap}
+.starts{display:flex;gap:10px;flex-wrap:wrap}
+.go{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 18px;border-radius:999px;background:var(--fg);color:var(--bg);font-weight:600;font-size:15px;text-decoration:none}
+.go.alt{background:transparent;color:var(--fg);border:1.5px solid var(--fg)}
+.go:focus-visible,.chip:focus-visible,.act:focus-visible{outline:2px solid var(--pine);outline-offset:3px}
+ol.steps{margin:0;padding-left:20px;color:var(--body);display:grid;gap:4px;font-size:16px}
+.donewhen{display:flex;gap:8px;align-items:baseline;font-size:15px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--pine);flex:0 0 auto;transform:translateY(-1px)}
+.donewhen b{font-weight:600}
+.acts{display:flex;gap:8px;flex-wrap:wrap;padding-top:14px;border-top:1px solid var(--line)}
+.act{min-height:40px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--fg);font:600 14px/1 var(--sans);cursor:pointer}
+.act[aria-pressed="true"].ok{background:var(--pine);border-color:var(--pine);color:var(--btn-fg)}
+.act[aria-pressed="true"].stuck{background:var(--fg);border-color:var(--fg);color:var(--bg)}
+.act.cmt{margin-left:auto;text-decoration:underline;text-underline-offset:3px;border-color:transparent}
+.hint{font-size:13px;color:var(--muted)}
+.end{margin-top:56px;padding:24px;background:var(--fog);border-radius:20px}
+.end h2{margin:0;font:400 30px/1.05 var(--serif)}
+.end ul{margin:12px 0 0;padding-left:20px;color:var(--body);display:grid;gap:6px}
+.end .row{margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.status{font-size:14px;color:var(--muted)}
+@media (max-width:520px){.time{display:none}.act.cmt{margin-left:0}}
+@media (prefers-reduced-motion:no-preference){.task{transition:border-color .2s}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand">
+      <svg width="28" height="28" viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="8" fill="currentColor"/><path d="M9.5 27 L17.5 9" fill="none" stroke="var(--bg)" stroke-width="3.5" stroke-linecap="round"/><path d="M18.5 27 L26.5 9" fill="none" stroke="var(--bg)" stroke-width="3.5" stroke-linecap="round"/></svg>
+      Common Pace
+    </div>
+    <span class="bib"><small>PILOT</small><b>v0.9</b></span>
+  </div>
+
+  <h1>Help us test Common Pace</h1>
+  <p class="lead">Common Pace connects endurance athletes with businesses that want to sponsor them. Try it as an athlete, as a business, or both, and tell us where you got stuck.</p>
+
+  <div class="facts">
+    <div><span class="k">Time</span><span class="v">About 15 minutes for one side, 25 for both.</span></div>
+    <div><span class="k">Device</span><span class="v">On a phone, use <b>Phone app</b>. On a computer, either works.</span></div>
+    <div><span class="k">Your data</span><span class="v">This is a clickable prototype. Names and numbers are sample data. Nothing you type is saved or sent, and no email or payment is real.</span></div>
+    <div><span class="k">Getting back</span><span class="v">Every screen has a <b>Test tasks</b> button that returns here.</span></div>
+  </div>
+
+  <nav class="jump" aria-label="Choose a side">
+    <a class="chip solid" href="#athlete">Test as an athlete</a>
+    <a class="chip" href="#business">Test as a business</a>
+  </nav>
+
+  <section class="track" id="athlete" aria-labelledby="ath-h">
+    <h2 id="ath-h">As an athlete</h2>
+    <p class="sub">You put yourself out there. Businesses decide what to offer.</p>
+    <ol class="tasks" id="ath-list"></ol>
+  </section>
+
+  <section class="track" id="business" aria-labelledby="biz-h">
+    <h2 id="biz-h">As a business</h2>
+    <p class="sub">You're a local running store looking for athletes to sponsor.</p>
+    <ol class="tasks" id="biz-list"></ol>
+  </section>
+
+  <section class="end" aria-labelledby="end-h">
+    <h2 id="end-h">When you're done</h2>
+    <ul>
+      <li>Was anything confusing, or did any button not do what you expected?</li>
+      <li>As an athlete: would you put your real story on this? What would stop you?</li>
+      <li>As a business: would you make an offer through this? What would you need to see first?</li>
+    </ul>
+    <p class="hint" id="cmt-hint" style="margin:14px 0 0"></p>
+    <div class="row">
+      <button type="button" class="act" id="reset">Start over</button>
+      <span class="status" id="status" role="status"></span>
+    </div>
+  </section>
+</div>
+
+<script>
+// Feedback: paste a link to your form (Google Forms, Typeform, Tally...) between the quotes.
+// Leave it empty to hide the feedback buttons.
+const FEEDBACK_URL = '';
+
+const T = {
+  ath: [
+    { id: 'a1', title: 'Create your athlete profile', time: '6 min',
+      app: 'AppWelcome.dc.html', web: 'Main.dc.html',
+      steps: ['Tap <b>Create your athlete profile</b> and sign up with any email. Nothing is sent.',
+              'Work through the steps. On <b>Story</b>, pick what sets you apart and how you sound.',
+              'On <b>Season</b>, add a race goal and say why it matters to you.',
+              'Review and tap <b>Publish my profile</b>.'],
+      done: 'You see the <b>Published</b> screen.' },
+    { id: 'a2', title: 'Look at your Season page', time: '3 min',
+      app: 'AppSeason.dc.html?as=athlete', web: 'Season.dc.html?as=athlete',
+      steps: ['Switch between <b>Your view</b> and <b>Business view</b>.',
+              'Tap through your races and read the goal card.',
+              'Tap <b>2 businesses have reached out</b>.'],
+      done: 'You can say in a sentence what a business sees about you.' },
+    { id: 'a3', title: 'Raise your hand for a campaign', time: '2 min',
+      app: 'AppDiscover.dc.html?as=athlete', web: 'Campaigns.dc.html?as=athlete',
+      steps: ['Pick a campaign that looks right and read why it fits you.',
+              'Tap <b>I\'m interested</b>. Add a note if you want to.',
+              'Send it.'],
+      done: 'The campaign shows <b>Interested</b>.' },
+    { id: 'a4', title: 'Accept an offer and track it', time: '3 min',
+      app: 'AppMessages.dc.html?as=athlete', web: 'Messages.dc.html?as=athlete',
+      steps: ['Open the invitation from [Local running store] and tap <b>Accept</b>.',
+              'Tap <b>View in Deals</b>, then <b>See the course</b>.',
+              'Mark an aid station done.'],
+      done: 'The station shows as done on the course.' }
+  ],
+  biz: [
+    { id: 'b1', title: 'Sign up as a business', time: '2 min',
+      app: 'AppAuth.dc.html?as=business', web: 'Auth.dc.html?as=business',
+      steps: ['Create an account with any email. Nothing is sent.'],
+      done: 'You land on <b>Who are you looking for?</b>' },
+    { id: 'b2', title: 'Find an athlete', time: '4 min',
+      app: 'AppFind.dc.html?as=business', web: 'Find.dc.html?as=business',
+      steps: ['Type <b>Parent runners training for a marathon</b> and tap <b>Find</b>.',
+              'Remove one of the matching chips and see what changes.',
+              'Now try <b>honest gear reviews from parent runners</b>. No one matches everything, so you\'ll see the closest matches.',
+              'Tap <b>View season</b> on someone who interests you.'],
+      done: 'You can name the athlete you\'d sponsor and why.' },
+    { id: 'b3', title: 'Make an offer', time: '3 min',
+      app: 'AppBack.dc.html?goal=r3&as=business', web: 'Back.dc.html?goal=r3&as=business',
+      steps: ['Decide what to offer: cash, product or both.',
+              'Pick the aid stations you want to sponsor.',
+              'Turn on a finish-line bonus and choose the condition.',
+              'Agree to the terms and tap <b>Send offer</b>.'],
+      done: 'You see the offer-sent screen.' },
+    { id: 'b4', title: 'Follow the race', time: '2 min',
+      app: 'AppCourse.dc.html?as=business', web: 'Course.dc.html?as=business',
+      steps: ['Check whether the athlete is on pace and which aid stations are done.',
+              'Tap <b>Race day: load official result (sample)</b>.'],
+      done: 'The finish-line bonus shows as unlocked.' },
+    { id: 'b5', title: 'Post a campaign', time: '4 min',
+      app: 'AppCreate.dc.html?as=business', web: 'Create.dc.html?as=business',
+      steps: ['Describe what you want in your own words, or fill in the steps.',
+              'Set the budget, what athletes deliver and the deadline.',
+              'Publish it.'],
+      done: 'The campaign shows as live.' }
+  ]
+};
+
+const KEY = 'cpPilot';
+const load = () => { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { return {}; } };
+const save = (s) => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} };
+let state = load();
+
+function card(t, n) {
+  const li = document.createElement('li');
+  li.className = 'task';
+  li.id = 'task-' + t.id;
+  li.innerHTML =
+    '<div class="thead"><span class="num">' + String(n).padStart(2, '0') + '</span><h3>' + t.title + '</h3><span class="time">' + t.time + '</span></div>' +
+    '<div class="starts"><a class="go" href="' + t.app + '">Phone app</a><a class="go alt" href="' + t.web + '">Website</a></div>' +
+    '<ol class="steps">' + t.steps.map((s) => '<li>' + s + '</li>').join('') + '</ol>' +
+    '<div class="donewhen"><span class="dot" aria-hidden="true"></span><span><b>Done when:</b> ' + t.done + '</span></div>' +
+    '<div class="acts" role="group" aria-label="How did task ' + n + ' go?">' +
+      '<button type="button" class="act ok" data-v="ok">It worked</button>' +
+      '<button type="button" class="act stuck" data-v="stuck">I got stuck</button>' +
+      (FEEDBACK_URL ? '<a class="act cmt" href="' + FEEDBACK_URL + '" target="_blank" rel="noopener">Send feedback</a>' : '') +
+    '</div>';
+  li.querySelectorAll('.act[data-v]').forEach((b) => b.addEventListener('click', () => {
+    state[t.id] = state[t.id] === b.dataset.v ? undefined : b.dataset.v;
+    save(state); paint();
+    if (state[t.id] === 'stuck' && FEEDBACK_URL) { try { window.open(FEEDBACK_URL, '_blank', 'noopener'); } catch (e) {} }
+  }));
+  return li;
+}
+
+
+function paint() {
+  let done = 0, total = 0;
+  for (const t of [...T.ath, ...T.biz]) {
+    total++;
+    const li = document.getElementById('task-' + t.id);
+    const v = state[t.id];
+    if (v === 'ok') done++;
+    li.classList.toggle('done', v === 'ok');
+    li.querySelectorAll('.act[data-v]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === v)));
+  }
+  document.getElementById('status').textContent = done ? done + ' of ' + total + ' tasks worked for you.' : '';
+}
+
+T.ath.forEach((t, i) => document.getElementById('ath-list').appendChild(card(t, i + 1)));
+T.biz.forEach((t, i) => document.getElementById('biz-list').appendChild(card(t, i + 1)));
+paint();
+
+document.getElementById('reset').addEventListener('click', () => {
+  state = {}; save(state);
+  try { ['cpRole', 'cpAi'].forEach((k) => localStorage.removeItem(k)); } catch (e) {}
+  paint();
+  document.getElementById('status').textContent = 'Cleared. You can start again from the top.';
+});
+
+if (FEEDBACK_URL) {
+  const h = document.getElementById('cmt-hint');
+  h.innerHTML = 'Use <b>Send feedback</b> on any task, or the button below.';
+  const a = document.createElement('a'); a.className = 'go'; a.href = FEEDBACK_URL; a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'Send feedback';
+  document.querySelector('.end .row').prepend(a);
+} else {
+  document.getElementById('cmt-hint').textContent = 'Tell the person who invited you what worked and where you got stuck.';
+}
+</script>
+
+</body>
+</html>

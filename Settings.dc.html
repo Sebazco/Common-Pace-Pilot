@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Account settings</title>
+<script src="./support.js"></script>
+<style id="pilot-css">.pilot-back{position:fixed;z-index:9999;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:8px 14px;border-radius:999px;background:#111111;color:#FFFFFF;font:600 13px/1 "Hanken Grotesk",system-ui,sans-serif;text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,.18)}.pilot-back:focus-visible{outline:2px solid #3D6B52;outline-offset:3px}.pilot-back{left:max(16px,env(safe-area-inset-left,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px))}</style>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+input{font-family:inherit}
+</style>
+</helmet>
+<div style="background:#FFFFFF;color:#111111;font-family:'Hanken Grotesk',system-ui,sans-serif;font-size:17px;line-height:1.5;min-height:100vh">
+<dc-import name="TopNav" kind="auto" active="" hint-size="100%,74px"></dc-import>
+<div style="max-width:760px;margin:0 auto;padding:40px 24px 96px;box-sizing:border-box">
+<h1 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(40px,6vw,64px);line-height:1;letter-spacing:-.02em">Account settings.</h1>
+<p style="margin:10px 0 0;color:#3A3A3A">Manage AI suggestions, connected accounts and your data.</p>
+
+<section style="margin-top:24px;border:1px solid rgba(17,17,17,.18);border-radius:24px;padding:28px;box-sizing:border-box">
+<h2 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:34px;line-height:1.05">Account</h2>
+<div style="margin-top:12px">
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 16px;padding:14px 0;border-top:1px solid rgba(17,17,17,.12)"><span><span style="display:block;font-size:14px;color:#6E6E6E">Signed in as</span><span style="font-weight:600">{{who}}</span></span><span style="font-size:14px;color:#6E6E6E">{{roleText}}</span></div>
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 16px;padding:14px 0;border-top:1px solid rgba(17,17,17,.12)"><span><span style="display:block;font-size:14px;color:#6E6E6E">Email</span><span style="font-weight:600">[you@example.com]</span></span></div>
+</div>
+</section>
+
+<section style="margin-top:24px;border:1px solid rgba(17,17,17,.18);border-radius:24px;padding:28px;box-sizing:border-box">
+<h2 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:34px;line-height:1.05">AI suggestions</h2>
+<div style="margin-top:12px;display:flex;gap:16px;align-items:flex-start;justify-content:space-between">
+<div style="flex:1 1 auto;min-width:0">
+<div style="font-weight:600">Use AI for matches and drafts</div>
+<div style="margin-top:4px;font-size:15px;color:#3A3A3A">{{aiText}}</div>
+</div>
+<button type="button" role="switch" aria-checked="{{aiOn}}" aria-label="Use AI for matches and drafts" onClick="{{toggleAi}}" style="flex:0 0 auto;width:60px;height:36px;border-radius:999px;border:1.5px solid #111111;background:{{aiTrack}};position:relative;padding:0">
+<span style="position:absolute;top:3px;left:{{aiKnob}}px;width:27px;height:27px;border-radius:50%;background:{{aiKnobBg}}"></span>
+</button>
+</div>
+<div role="status" style="margin-top:10px;font-size:14px;font-weight:600">{{aiState}}</div>
+</section>
+
+<sc-if value="{{notBiz}}" hint-placeholder-val="{{true}}">
+<section style="margin-top:24px;border:1px solid rgba(17,17,17,.18);border-radius:24px;padding:28px;box-sizing:border-box">
+<h2 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:34px;line-height:1.05">Connected accounts</h2>
+<div style="margin-top:12px">
+<sc-for list="{{conns}}" as="c" hint-placeholder-count="2">
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 16px;padding:14px 0;border-top:1px solid rgba(17,17,17,.12)"><span><span style="font-weight:600">{{c.name}}</span><span style="display:block;font-size:14px;color:#6E6E6E">{{c.status}}</span></span>
+<button type="button" onClick="{{c.toggle}}" style="background:#FFFFFF;color:#111111;border:1.5px solid #111111;border-radius:999px;padding:10px 20px;font-size:15px;font-weight:600;min-height:44px">{{c.action}}</button></div>
+</sc-for>
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 16px;padding:14px 0;border-top:1px solid rgba(17,17,17,.12)"><span><span style="font-weight:600">Race results</span><span style="display:block;font-size:14px;color:#6E6E6E">Add or remove results in your profile</span></span><a href="Profile.dc.html" style="font-weight:600;text-decoration:underline;min-height:44px;display:inline-flex;align-items:center">Manage</a></div>
+</div>
+</section>
+</sc-if>
+
+<section style="margin-top:24px;border:1px solid rgba(17,17,17,.18);border-radius:24px;padding:28px;box-sizing:border-box">
+<h2 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:34px;line-height:1.05">Help and safety</h2>
+<div style="margin-top:12px">
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 16px;padding:14px 0;border-top:1px solid rgba(17,17,17,.12)"><span><span style="font-weight:600">Contact support</span><span style="display:block;font-size:14px;color:#6E6E6E">[support email] &middot; we reply within [1 business day]</span></span></div>
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 16px;padding:14px 0;border-top:1px solid rgba(17,17,17,.12)"><span><span style="font-weight:600">Blocked accounts</span><span style="display:block;font-size:14px;color:#6E6E6E">You haven't blocked anyone.</span></span></div>
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 16px;padding:14px 0;border-top:1px solid rgba(17,17,17,.12)"><span><span style="font-weight:600">Your reports</span><span style="display:block;font-size:14px;color:#6E6E6E">Reports are reviewed within [24 hours]. You'll get a message with the outcome.</span></span></div>
+<div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 16px;padding:14px 0;border-top:1px solid rgba(17,17,17,.12)"><a href="Legal.dc.html#terms" style="font-weight:600;text-decoration:underline;min-height:44px;display:inline-flex;align-items:center">Terms</a><a href="Legal.dc.html#privacy" style="font-weight:600;text-decoration:underline;min-height:44px;display:inline-flex;align-items:center">Privacy</a><a href="Legal.dc.html#copyright" style="font-weight:600;text-decoration:underline;min-height:44px;display:inline-flex;align-items:center">Copyright</a><a href="Legal.dc.html#contact" style="font-weight:600;text-decoration:underline;min-height:44px;display:inline-flex;align-items:center">Contact</a></div>
+</div>
+</section>
+
+<section style="margin-top:24px;border:1px solid rgba(17,17,17,.18);border-radius:24px;padding:28px;box-sizing:border-box;border-color:#111111">
+<h2 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:34px;line-height:1.05">Delete account</h2>
+<sc-if value="{{delIdle}}" hint-placeholder-val="{{true}}">
+<p style="margin:10px 0 0;font-size:15px;color:#3A3A3A">Permanently delete your account and the data tied to it.</p>
+<button type="button" onClick="{{startDelete}}" style="margin-top:14px;background:#FFFFFF;color:#111111;border:1.5px solid #111111;border-radius:999px;padding:12px 22px;font-size:15px;font-weight:700;min-height:46px">Delete my account</button>
+</sc-if>
+<sc-if value="{{delConfirm}}" hint-placeholder-val="{{false}}">
+<div style="margin-top:12px;font-weight:700">What gets deleted</div>
+<ul style="margin:6px 0 0;padding-left:20px;font-size:15px;color:#3A3A3A">
+<sc-for list="{{delList}}" as="d" hint-placeholder-count="4"><li>{{d}}</li></sc-for>
+</ul>
+<div style="margin-top:12px;font-weight:700">What we keep, and why</div>
+<p style="margin:6px 0 0;font-size:15px;color:#3A3A3A">Records of completed deals and safety reports, for [retention period], because the law or fraud prevention requires it. Messages you sent stay visible to the other person, shown as from a deleted account.</p>
+<label for="delword" style="display:block;margin-top:14px;font-weight:600;font-size:15px">Type DELETE to confirm</label>
+<input id="delword" type="text" value="{{delWord}}" onChange="{{setDelWord}}" autocomplete="off" style="margin-top:6px;width:100%;max-width:280px;box-sizing:border-box;padding:12px 14px;font-size:16px;border:1px solid #9A9A9A;border-radius:10px">
+<div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px">
+<button type="button" onClick="{{confirmDelete}}" disabled="{{delBlocked}}" style="background:{{delBg}};color:#FFFFFF;border:0;border-radius:999px;padding:12px 22px;font-size:15px;font-weight:700;min-height:46px">Delete permanently</button>
+<button type="button" onClick="{{cancelDelete}}" style="background:#FFFFFF;color:#111111;border:1.5px solid #111111;border-radius:999px;padding:10px 20px;font-size:15px;font-weight:600;min-height:44px">Cancel</button>
+</div>
+</sc-if>
+<sc-if value="{{delDone}}" hint-placeholder-val="{{false}}">
+<div role="status" style="margin-top:12px;background:#F4F4F2;border-radius:14px;padding:14px 16px">
+<div style="font-weight:700">Your account is scheduled for deletion.</div>
+<div style="margin-top:4px;font-size:15px;color:#3A3A3A">Your profile is hidden now. Everything listed above is deleted after [grace period]. Log in before then to cancel. We sent a confirmation to your email.</div>
+</div>
+<a href="Main.dc.html" style="margin-top:12px;font-weight:600;text-decoration:underline;min-height:44px;display:inline-flex;align-items:center">Back to the start</a>
+</sc-if>
+<p style="margin:14px 0 0;font-size:14px;color:#6E6E6E">You can also <a href="Legal.dc.html#delete" style="font-weight:700;text-decoration:underline">request deletion by email</a>.</p>
+</section>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1700}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+let ai = false;
+try { ai = localStorage.getItem('cpAi') === 'on'; } catch (e) {}
+this.state = { ai, del: 'idle', delWord: '', ig: true, tt: true };
+}
+renderVals() {
+const s = this.state;
+const cpRole = (k) => { if (k === 'athlete' || k === 'business') return k; try { const q = new URLSearchParams(window.location.search).get('as'); if (q === 'business' || q === 'athlete') { try { localStorage.setItem('cpRole', q); } catch (e) {} return q; } if (localStorage.getItem('cpRole') === 'business') return 'business'; } catch (e) {} return 'athlete'; };
+const isBiz = cpRole('auto') === 'business';
+const conn = (name, key) => ({ name, status: s[key] ? 'Connected. Follower counts show as Verified.' : 'Not connected', action: s[key] ? 'Disconnect' : 'Connect', toggle: () => this.setState({ [key]: !s[key] }) });
+return {
+isBiz, notBiz: !isBiz,
+who: isBiz ? '[Your business]' : '[Your name]', roleText: isBiz ? 'Business account' : 'Athlete account',
+aiOn: s.ai ? 'true' : 'false', aiTrack: s.ai ? '#111111' : '#FFFFFF', aiKnob: s.ai ? 27 : 3, aiKnobBg: s.ai ? '#FFFFFF' : '#111111',
+aiState: s.ai ? 'On' : 'Off',
+aiText: isBiz ? 'We send your campaign details to an AI provider to rank athletes and draft campaigns. Never your messages or payment details. When off, matches use filters only.' : 'We send your profile details to an AI provider to suggest matches and draft text. Never your messages or password. When off, matches use filters only.',
+toggleAi: () => { const v = !s.ai; try { localStorage.setItem('cpAi', v ? 'on' : 'off'); } catch (e) {} this.setState({ ai: v }); },
+conns: [conn('Instagram', 'ig'), conn('TikTok', 'tt')],
+delIdle: s.del === 'idle', delConfirm: s.del === 'confirm', delDone: s.del === 'done',
+delList: isBiz ? ['Your business profile and campaigns', 'Saved athletes and invitations', 'Your account details and sign-in'] : ['Your profile, story and photos', 'Your videos and race results', 'Connected account links', 'Your account details and sign-in'],
+delWord: s.delWord, setDelWord: (e) => this.setState({ delWord: e.target.value }),
+delBlocked: s.delWord.trim() !== 'DELETE', delBg: s.delWord.trim() === 'DELETE' ? '#3D6B52' : '#E2E2E2',
+startDelete: () => this.setState({ del: 'confirm' }), cancelDelete: () => this.setState({ del: 'idle', delWord: '' }),
+confirmDelete: () => { if (s.delWord.trim() === 'DELETE') this.setState({ del: 'done' }); }
+};
+}
+}
+</script>
+<script>(function(){function ensure(){if(document.querySelector(".pilot-back")||!document.body)return;var a=document.createElement("a");a.className="pilot-back";a.href="index.html";a.innerHTML='<span aria-hidden="true">&larr;</span> Test tasks';document.body.appendChild(a);}document.addEventListener("DOMContentLoaded",ensure);setInterval(ensure,800);})();</script>
+</body>
+</html>

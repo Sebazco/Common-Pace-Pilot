@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Athlete Profile</title>
+<script src="./support.js"></script>
+<style id="pilot-css">.pilot-back{position:fixed;z-index:9999;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:8px 14px;border-radius:999px;background:#111111;color:#FFFFFF;font:600 13px/1 "Hanken Grotesk",system-ui,sans-serif;text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,.18)}.pilot-back:focus-visible{outline:2px solid #3D6B52;outline-offset:3px}.pilot-back{left:max(16px,env(safe-area-inset-left,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px))}</style>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0}
+button{font-family:inherit;cursor:pointer}
+a{color:inherit;text-decoration:none}
+@media (max-width:760px){.at-photo{min-height:300px!important;flex-basis:100%!important}.at-vids{flex-wrap:nowrap!important;overflow-x:auto;scroll-snap-type:x mandatory;margin-left:-24px!important;margin-right:-24px!important;padding:0 24px;scroll-padding-left:24px;gap:14px!important;scrollbar-width:none}.at-vids::-webkit-scrollbar{display:none}.at-vids>*{flex:0 0 160px!important;scroll-snap-align:start}}
+</style>
+</helmet>
+<div style="background:#FFFFFF;color:#111111;font-family:'Hanken Grotesk',system-ui,sans-serif;font-size:17px;line-height:1.5">
+
+<!-- NAV -->
+<dc-import name="TopNav" kind="athlete" active="Profile" hint-size="100%,74px"></dc-import>
+
+<!-- SAMPLE BANNER -->
+<div style="background:#F4F4F2">
+<div style="max-width:1280px;margin:0 auto;padding:12px 24px;box-sizing:border-box;display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;justify-content:space-between;font-size:15px">
+<div role="group" aria-label="Preview as" style="display:flex;gap:4px;background:#FFFFFF;border-radius:999px;padding:4px">
+<sc-for list="{{views}}" as="v" hint-placeholder-count="2">
+<button type="button" onClick="{{v.pick}}" aria-pressed="{{v.on}}" style="border:0;border-radius:999px;padding:8px 18px;font-size:14px;font-weight:600;min-height:44px;background:{{v.bg}};color:{{v.fg}}">{{v.label}}</button>
+</sc-for>
+</div>
+<span style="color:#3A3A3A;flex:1 1 280px">{{viewNote}}</span>
+<a href="Profile.dc.html" style="font-weight:700;text-decoration:underline">Edit profile</a>
+</div>
+</div>
+
+<div style="max-width:1280px;margin:0 auto;padding:48px 24px 96px;box-sizing:border-box">
+
+<!-- HERO -->
+<div style="display:flex;flex-wrap:wrap;gap:48px;align-items:stretch">
+<div class="at-photo" style="flex:0 1 340px;min-width:260px;min-height:440px;border-radius:28px;background:#EDEEEC;position:relative;display:flex;align-items:flex-end;padding:20px;box-sizing:border-box">
+<svg viewBox="0 0 340 440" preserveAspectRatio="xMidYMid slice" aria-hidden="true" style="position:absolute;left:0;top:0;width:100%;height:100%;border-radius:28px">
+<g stroke="#111111" stroke-linecap="round" fill="none" stroke-opacity=".10"><path d="M30 440 L200 0" stroke-width="16"/><path d="M110 440 L280 0" stroke-width="16"/><path d="M190 440 L360 0" stroke-width="16"/></g>
+</svg>
+<span style="position:relative;font-weight:600;font-size:14px;letter-spacing:.12em;text-transform:uppercase">Athlete photo</span>
+</div>
+
+<div style="flex:1 1 480px;min-width:0;display:flex;flex-direction:column;justify-content:space-between;gap:28px">
+<div>
+<div style="display:flex;flex-wrap:wrap;gap:8px">
+<span style="display:inline-flex;align-items:center;gap:6px;background:#111111;color:#FFFFFF;border-radius:999px;padding:4px 12px;font-size:13px;font-weight:600"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 6.5 L5 9 L10 3" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Email verified</span>
+<span style="display:inline-flex;align-items:center;gap:6px;background:#111111;color:#FFFFFF;border-radius:999px;padding:4px 12px;font-size:13px;font-weight:600"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 6.5 L5 9 L10 3" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Race results verified</span>
+<span style="border:1px solid #111111;border-radius:999px;padding:3px 12px;font-size:13px;font-weight:600">Open to partnerships</span>
+</div>
+<h1 style="margin:18px 0 0;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(52px,7vw,92px);line-height:.95;letter-spacing:-.025em">[Athlete name]</h1>
+<div style="margin-top:12px;font-size:19px;color:#3A3A3A">Road running &middot; [City, State] &middot; Training for [race]</div>
+<p style="margin:18px 0 0;max-width:560px;font-family:'Instrument Serif',serif;font-size:30px;line-height:1.15;color:#111111">Back-of-the-pack marathoner, front-of-the-pack optimist.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:18px">
+<sc-if value="{{isBusinessView}}" hint-placeholder-val="{{false}}">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:14px 18px;background:#F4F4F2;border-radius:20px;padding:14px 20px;box-sizing:border-box">
+<div style="position:relative;width:76px;height:76px;flex:0 0 auto">
+<svg viewBox="0 0 100 100" width="76" height="76" role="img" aria-label="Compatibility score 94 percent" style="position:absolute;left:0;top:0">
+<circle cx="50" cy="50" r="44" fill="none" stroke="#FFFFFF" stroke-width="8"/>
+<circle cx="50" cy="50" r="44" fill="none" stroke="#111111" stroke-width="8" stroke-linecap="round" stroke-dasharray="259.9 276.5" transform="rotate(-90 50 50)"/>
+</svg>
+<div style="position:absolute;left:0;top:0;width:76px;height:76px;display:flex;align-items:center;justify-content:center;font-family:'Instrument Serif',serif;font-size:28px">94<span style="font-size:14px">%</span></div>
+</div>
+<div style="flex:1 1 220px;min-width:0">
+<div style="font-weight:700">Match with Fall long-run series</div>
+<div style="font-size:14px;color:#3A3A3A">Sample score from content, audience, location and race timing. <a href="Dashboard.dc.html" style="font-weight:700;text-decoration:underline">See the reasons</a></div>
+</div>
+</div>
+</sc-if>
+<div style="display:flex;flex-wrap:wrap;gap:12px">
+<sc-if value="{{isBusinessView}}" hint-placeholder-val="{{false}}">
+<a href="Messages.dc.html" style="background:#111111;color:#FFFFFF;padding:15px 30px;border-radius:999px;font-weight:600;font-size:17px">Invite to campaign</a>
+</sc-if>
+<sc-if value="{{isBusinessView}}" hint-placeholder-val="{{false}}">
+<a href="Messages.dc.html" style="border:1.5px solid #111111;padding:13.5px 28px;border-radius:999px;font-weight:600;font-size:17px">Message</a>
+</sc-if>
+<sc-if value="{{isBusinessView}}" hint-placeholder-val="{{false}}">
+<button type="button" onClick="{{reportProfile}}" style="background:none;border:0;padding:8px 4px;font-size:14px;font-weight:600;text-decoration:underline;color:#6E6E6E;min-height:44px">Report profile</button>
+</sc-if>
+<sc-if value="{{isMeView}}" hint-placeholder-val="{{true}}">
+<a href="Profile.dc.html" style="background:#111111;color:#FFFFFF;padding:15px 30px;border-radius:999px;font-weight:600;font-size:17px">Edit profile</a>
+</sc-if>
+<sc-if value="{{isMeView}}" hint-placeholder-val="{{true}}">
+<button type="button" onClick="{{switchToBusiness}}" style="background:#FFFFFF;color:#111111;border:1.5px solid #111111;padding:13.5px 28px;border-radius:999px;font-weight:600;font-size:17px;min-height:52px">Preview as a business</button>
+</sc-if>
+</div>
+</div>
+</div>
+</div>
+
+<!-- COMPANY SEARCH (athlete's own view only) -->
+<sc-if value="{{isMeView}}" hint-placeholder-val="{{true}}">
+<div style="margin-top:72px;background:#F4F4F2;color:#111111;border-radius:32px;padding:40px;box-sizing:border-box">
+<div style="font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6E6E6E">Find companies</div>
+<h2 style="margin:8px 0 0;font-family:'Instrument Serif',serif;font-weight:400;font-size:52px;line-height:1;letter-spacing:-.02em">Know who you want to work with?</h2>
+<p style="margin:12px 0 0;max-width:560px;color:#6E6E6E">Search by company name. Introduce yourself, or see what campaigns they have open.</p>
+<div style="margin-top:24px">
+<label for="cq" style="display:block;font-size:14px;font-weight:600;margin-bottom:8px;color:#6E6E6E">Company name</label>
+<input id="cq" type="text" value="{{q}}" onChange="{{setQ}}" placeholder="Start typing a company name" style="width:100%;max-width:560px;box-sizing:border-box;padding:15px 22px;font-size:18px;border:0;border-radius:999px;background:#111111;color:#FFFFFF">
+</div>
+<div style="margin-top:22px;font-size:14px;color:#6E6E6E">{{listLabel}}</div>
+<div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:16px">
+<sc-for list="{{companies}}" as="c" hint-placeholder-count="3">
+<div style="flex:1 1 280px;min-width:0;max-width:420px;background:#111111;color:#FFFFFF;border-radius:24px;padding:22px;box-sizing:border-box">
+<div style="display:flex;gap:14px;align-items:center">
+<span aria-hidden="true" style="flex:0 0 auto;width:52px;height:52px;border-radius:50%;background:#F4F4F2;display:flex;align-items:center;justify-content:center;font-family:'Instrument Serif',serif;font-size:26px">{{c.initial}}</span>
+<div style="min-width:0"><div style="font-weight:700">{{c.name}}</div><div style="font-size:14px;color:#3A3A3A">{{c.cat}} &middot; {{c.loc}}</div></div>
+</div>
+<div style="margin-top:14px;font-size:14px;font-weight:600;color:#6E6E6E">{{c.openText}}</div>
+<div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+<sc-if value="{{c.unsent}}" hint-placeholder-val="{{true}}">
+<button type="button" onClick="{{c.send}}" style="background:#111111;color:#111111;border:0;border-radius:999px;padding:10px 20px;font-size:14px;font-weight:600;min-height:44px">Introduce myself</button>
+</sc-if>
+<sc-if value="{{c.sent}}" hint-placeholder-val="{{false}}">
+<span style="display:inline-flex;align-items:center;gap:6px;background:#F4F4F2;border-radius:999px;padding:10px 18px;font-size:14px;font-weight:700"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 6.5 L5 9 L10 3" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Intro sent</span>
+</sc-if>
+<a href="Campaigns.dc.html" style="font-size:14px;font-weight:700;text-decoration:underline;padding:10px 4px">View campaigns</a>
+</div>
+</div>
+</sc-for>
+</div>
+<sc-if value="{{noCompanies}}" hint-placeholder-val="{{false}}">
+<div style="margin-top:8px;font-size:16px;color:#6E6E6E">No company found with that name. Try part of the name, or check the spelling.</div>
+</sc-if>
+<div style="margin-top:20px;font-size:13px;color:#6E6E6E">Sample companies. An introduction shares your public profile. The company decides whether to reply.</div>
+</div>
+</sc-if>
+
+<!-- BEST RACE TIMES -->
+<div style="margin-top:96px">
+<div style="display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between">
+<div>
+<div style="font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6E6E6E">Race results</div>
+<h2 style="margin:8px 0 0;font-family:'Instrument Serif',serif;font-weight:400;font-size:56px;line-height:1;letter-spacing:-.02em">Best times</h2>
+</div>
+<span style="display:inline-flex;align-items:center;gap:6px;background:#111111;color:#FFFFFF;border-radius:999px;padding:4px 14px;font-size:13px;font-weight:600"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 6.5 L5 9 L10 3" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Verified from race results</span>
+</div>
+<div style="margin-top:28px;border:1px solid rgba(17,17,17,.2);border-radius:20px;padding:20px;box-sizing:border-box;max-width:420px">
+<div style="font-size:14px;color:#6E6E6E">{{race.dist}} &middot; {{race.date}}</div><div style="margin-top:4px;font-family:'Instrument Serif',serif;font-size:44px;line-height:1">{{race.time}}</div><div style="margin-top:6px;font-weight:700">{{race.name}}</div><div style="margin-top:6px;font-size:13px;font-weight:600;color:#6E6E6E">Chip time, matched to official results &middot; Sample data</div>
+</div>
+<div style="margin-top:12px;display:flex;align-items:center;gap:12px">
+<button type="button" aria-label="Previous race" onClick="{{prevRace}}" disabled="{{prevRaceOff}}" style="width:44px;height:44px;border-radius:50%;border:1px solid #111111;background:#FFFFFF;display:flex;align-items:center;justify-content:center;flex:0 0 auto;opacity:{{prevRaceOp}}"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 L5 8 L10 13" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+<span aria-live="polite" style="font-size:14px;font-weight:600;color:#3A3A3A;min-width:64px;text-align:center">{{raceCount}}</span>
+<button type="button" aria-label="Next race" onClick="{{nextRace}}" disabled="{{nextRaceOff}}" style="width:44px;height:44px;border-radius:50%;border:1px solid #111111;background:#FFFFFF;display:flex;align-items:center;justify-content:center;flex:0 0 auto;opacity:{{nextRaceOp}}"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3 L11 8 L6 13" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+</div>
+<div style="margin-top:14px;font-size:14px;color:#6E6E6E">Each time is checked against the race's official results. The athlete chooses which results to show.</div>
+</div>
+
+<!-- VIDEOS -->
+<div style="margin-top:96px">
+<div style="font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6E6E6E">Best work</div>
+<h2 style="margin:8px 0 0;font-family:'Instrument Serif',serif;font-weight:400;font-size:56px;line-height:1;letter-spacing:-.02em">Three videos that sound like me.</h2>
+<div class="at-vids" data-scroll-x="1" style="margin-top:32px;display:flex;flex-wrap:wrap;gap:24px">
+<sc-for list="{{videos}}" as="v" hint-placeholder-count="3">
+<div style="flex:0 1 190px;width:100%;max-width:190px;min-width:0">
+<div style="position:relative;aspect-ratio:9/16;border-radius:24px;background:#EDEEEC;overflow:hidden;display:flex;align-items:center;justify-content:center">
+<svg viewBox="0 0 300 380" preserveAspectRatio="xMidYMid slice" aria-hidden="true" style="position:absolute;left:0;top:0;width:100%;height:100%"><g stroke="#111111" stroke-linecap="round" stroke-opacity=".10"><path d="M20 380 L170 0" stroke-width="14"/><path d="M90 380 L240 0" stroke-width="14"/><path d="M160 380 L310 0" stroke-width="14"/></g></svg>
+<span style="position:absolute;top:14px;left:14px;background:#FFFFFF;border-radius:999px;padding:3px 12px;font-size:13px;font-weight:600">{{v.platform}}</span>
+<span style="position:relative;width:68px;height:68px;border-radius:50%;background:#111111;display:flex;align-items:center;justify-content:center"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><path d="M9 5 L21 13 L9 21 Z" fill="#FFFFFF"/></svg></span>
+<span style="position:absolute;bottom:14px;left:14px;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase">{{v.origin}}</span>
+</div>
+<div style="margin-top:12px;font-weight:700;font-size:16px">{{v.title}}</div>
+<sc-if value="{{isBusinessView}}" hint-placeholder-val="{{false}}"><button type="button" onClick="{{v.report}}" style="background:none;border:0;padding:8px 4px;font-size:14px;font-weight:600;text-decoration:underline;color:#6E6E6E;min-height:44px;padding:4px 0">Report video</button></sc-if>
+<div style="font-size:15px;color:#3A3A3A">{{v.note}}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<!-- METRICS -->
+<div style="margin-top:96px">
+<div style="font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6E6E6E">Audience</div>
+<h2 style="margin:8px 0 0;font-family:'Instrument Serif',serif;font-weight:400;font-size:56px;line-height:1;letter-spacing:-.02em">Numbers with their sources.</h2>
+<div style="margin-top:20px;display:flex;flex-wrap:wrap;gap:10px 20px;font-size:14px;color:#3A3A3A">
+<span><strong>Verified</strong>: confirmed through an account connection or official race results</span>
+<span><strong>Athlete-reported</strong>: entered by the athlete</span>
+<span><strong>AI estimate</strong>: inferred from linked posts</span>
+</div>
+<div style="margin-top:24px;border-top:1px solid rgba(17,17,17,.14)">
+<sc-for list="{{metrics}}" as="m" hint-placeholder-count="4">
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 24px;padding:22px 0;border-bottom:1px solid rgba(17,17,17,.14)">
+<div style="flex:1 1 140px;font-weight:700;font-size:19px">{{m.platform}}</div>
+<div style="flex:1 1 160px"><div style="font-family:'Instrument Serif',serif;font-size:34px;line-height:1.05">{{m.value}}</div><div style="font-size:14px;color:#6E6E6E">{{m.valueLabel}}</div></div>
+<div style="flex:1 1 200px;font-size:16px">{{m.extra}}</div>
+<div style="flex:1 1 200px;font-size:14px;color:#3A3A3A">Source: {{m.source}}</div>
+<span style="flex:0 0 auto;border-radius:999px;padding:4px 14px;font-size:13px;font-weight:600;background:{{m.bg}};color:{{m.fg}};border:1px {{m.borderStyle}} #111111">{{m.status}}</span>
+</div>
+</sc-for>
+</div>
+</div>
+
+<!-- SEASON + STORY -->
+<div style="margin-top:96px;display:flex;flex-wrap:wrap;gap:56px">
+<div style="flex:1 1 440px;min-width:0">
+<div style="font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6E6E6E">Season</div>
+<h2 style="margin:8px 0 0;font-family:'Instrument Serif',serif;font-weight:400;font-size:48px;line-height:1;letter-spacing:-.02em">Race schedule</h2>
+<div style="margin-top:24px;border-top:1px solid rgba(17,17,17,.14)">
+<sc-for list="{{races}}" as="r" hint-placeholder-count="3">
+<div style="display:flex;flex-wrap:wrap;gap:6px 20px;padding:18px 0;border-bottom:1px solid rgba(17,17,17,.14)">
+<div style="flex:0 0 90px;font-family:'Instrument Serif',serif;font-size:28px;line-height:1.1">{{r.date}}</div>
+<div style="flex:1 1 200px"><div style="font-weight:700">{{r.name}}</div><div style="font-size:15px;color:#3A3A3A">{{r.goal}}</div></div>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="flex:1 1 440px;min-width:0">
+<div style="font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6E6E6E">Story</div>
+<h2 style="margin:8px 0 0;font-family:'Instrument Serif',serif;font-weight:400;font-size:48px;line-height:1;letter-spacing:-.02em">Why I run</h2>
+<p style="margin:24px 0 0;color:#3A3A3A">I document the unglamorous middle of training: the early alarms, the bad runs, the small wins. I'm looking for partners who value honest storytelling over polish and who want to reach people just getting started.</p>
+<div style="margin-top:22px;font-weight:700;font-size:15px">Goals</div>
+<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:8px">
+<span style="border:1px solid #111111;border-radius:999px;padding:4px 14px;font-size:14px;font-weight:500">Finish a first marathon</span>
+<span style="border:1px solid #111111;border-radius:999px;padding:4px 14px;font-size:14px;font-weight:500">Build a run club</span>
+</div>
+<div style="margin-top:18px;font-weight:700;font-size:15px">Interests</div>
+<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:8px">
+<span style="background:#F4F4F2;border-radius:999px;padding:4px 14px;font-size:14px;font-weight:500">Gear reviews</span>
+<span style="background:#F4F4F2;border-radius:999px;padding:4px 14px;font-size:14px;font-weight:500">Nutrition</span>
+<span style="background:#F4F4F2;border-radius:999px;padding:4px 14px;font-size:14px;font-weight:500">Beginner coaching</span>
+</div>
+<div style="margin-top:28px;font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6E6E6E">In my own words</div>
+<div style="margin-top:10px;background:#F4F4F2;border-radius:20px;padding:18px 22px"><div style="font-size:14px;font-weight:600;color:#6E6E6E">The best part of a long run is...</div><div style="margin-top:4px;font-family:'Instrument Serif',serif;font-size:26px;line-height:1.15">[Sample answer from the athlete]</div></div>
+<div style="margin-top:10px;background:#F4F4F2;border-radius:20px;padding:18px 22px"><div style="font-size:14px;font-weight:600;color:#6E6E6E">My best advice for beginners...</div><div style="margin-top:4px;font-family:'Instrument Serif',serif;font-size:26px;line-height:1.15">[Sample answer from the athlete]</div></div>
+</div>
+</div>
+
+<!-- PARTNER PREFERENCES -->
+<div style="margin-top:96px;background:#F4F4F2;color:#111111;border-radius:28px;padding:48px;box-sizing:border-box;display:flex;flex-wrap:wrap;gap:40px;align-items:center;justify-content:space-between">
+<div style="flex:1 1 420px;min-width:0">
+<div style="font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6E6E6E">Work with me</div>
+<h2 style="margin:10px 0 0;font-family:'Instrument Serif',serif;font-weight:400;font-size:48px;line-height:1;letter-spacing:-.02em">Open to sponsors this season.</h2>
+<div style="margin-top:20px;display:flex;flex-wrap:wrap;gap:8px">
+<span style="border:1px solid #6E6E6E;border-radius:999px;padding:4px 14px;font-size:14px">Footwear</span>
+<span style="border:1px solid #6E6E6E;border-radius:999px;padding:4px 14px;font-size:14px">Nutrition</span>
+<span style="border:1px solid #6E6E6E;border-radius:999px;padding:4px 14px;font-size:14px">Local business</span>
+</div>
+<div style="margin-top:14px;font-size:14px;color:#6E6E6E">Businesses make the offer: cash, product or both.</div>
+</div>
+<div style="flex:0 0 auto;display:flex;flex-wrap:wrap;gap:12px">
+
+<a href="Portfolio.dc.html" style="border:1.5px solid #FFFFFF;padding:13.5px 28px;border-radius:999px;font-weight:600;font-size:17px">View portfolio</a>
+</div>
+</div>
+
+</div>
+<sc-if value="{{rpOpen}}" hint-placeholder-val="{{false}}">
+<div style="position:fixed;inset:0;z-index:80;background:rgba(17,17,17,.45);display:flex;align-items:center;justify-content:center;padding:24px;box-sizing:border-box">
+<div role="dialog" aria-modal="true" aria-labelledby="rp-title" style="width:min(520px,100%);max-height:90%;overflow-y:auto;background:#FFFFFF;border-radius:24px;padding:24px 20px;box-sizing:border-box;color:#111111">
+<sc-if value="{{rpNotSent}}" hint-placeholder-val="{{true}}">
+<h2 id="rp-title" style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:30px;line-height:1.05">Report {{rpTarget}}</h2>
+<p style="margin:8px 0 0;font-size:15px;color:#3A3A3A">Reports are private. The account is not told who reported it.</p>
+<div style="margin-top:14px;font-weight:600;font-size:15px">What's wrong?</div>
+<div role="radiogroup" aria-label="Reason" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:8px">
+<sc-for list="{{rpReasons}}" as="x" hint-placeholder-count="6">
+<button type="button" role="radio" aria-checked="{{x.on}}" onClick="{{x.pick}}" style="padding:10px 16px;border-radius:999px;font-size:15px;font-weight:600;min-height:44px;border:1px solid #111111;background:{{x.bg}};color:{{x.fg}}">{{x.label}}</button>
+</sc-for>
+</div>
+<div style="margin-top:8px;font-size:14px;color:#6E6E6E">{{rpHelp}}</div>
+<label for="rp-note" style="display:block;margin-top:14px;font-weight:600;font-size:15px">Details <span style="font-weight:400;color:#6E6E6E">(optional)</span></label>
+<textarea id="rp-note" rows="3" value="{{rpNote}}" onChange="{{setRpNote}}" style="margin-top:6px;width:100%;box-sizing:border-box;padding:12px 14px;font-size:16px;font-family:inherit;border:1px solid #9A9A9A;border-radius:12px;resize:vertical"></textarea>
+<div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:10px">
+<button type="button" onClick="{{sendReport}}" disabled="{{rpBlocked}}" style="background:{{rpBg}};color:#FFFFFF;border:0;border-radius:999px;padding:12px 24px;font-size:16px;font-weight:600;min-height:48px">Send report</button>
+<button type="button" onClick="{{closeReport}}" style="background:#FFFFFF;color:#111111;border:1.5px solid #111111;border-radius:999px;padding:12px 24px;font-size:16px;font-weight:600;min-height:48px">Cancel</button>
+</div>
+</sc-if>
+<sc-if value="{{rpSent}}" hint-placeholder-val="{{false}}">
+<h2 role="status" style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:30px;line-height:1.05">Thanks. We'll look into it.</h2>
+<p style="margin:8px 0 0;font-size:15px;color:#3A3A3A">Our team reviews reports within [24 hours] and messages you with the outcome. Copyright reports follow our takedown process.</p>
+<button type="button" onClick="{{closeReport}}" style="margin-top:16px;background:#111111;color:#FFFFFF;border:0;border-radius:999px;padding:12px 24px;font-size:16px;font-weight:600;min-height:48px">Done</button>
+</sc-if>
+</div>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":3300}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { mode: 'recent', pick: 1, view: 'me', q: '', intro: [], race: 0 };
+}
+renderVals() {
+const races = [{ dist: '13.1 mi', date: 'Oct 4', time: '1:52:10', name: 'City Half Marathon' }, { dist: '6.2 mi', date: 'Sep 14', time: '51:42', name: 'Fall 10K' }, { dist: '26.2 mi', date: 'Apr 20', time: '4:03:55', name: 'Spring Marathon' }];
+const ri = Math.min(this.state.race, races.length - 1);
+const s = this.state;
+const rpReasonDefs = [['Spam or scam', 'Fake offers, requests for money or personal details.'], ['Harassment or hate', 'Abuse, threats or hateful content.'], ['Copyright', 'Uses video, music or images the account does not own.'], ['Misleading or fake', 'False stats, race times or identity.'], ['Under 18', 'The person appears to be younger than 18.'], ['Something else', 'Tell us more in the details.']];
+const rpPick = rpReasonDefs.find((d) => d[0] === s.rpReason);
+const rpVals = { rpOpen: !!s.rp, rpTarget: s.rp || '', rpSent: !!s.rpSent, rpNotSent: !s.rpSent,
+rpReasons: rpReasonDefs.map((d) => { const on = s.rpReason === d[0]; return { label: d[0], on: on ? 'true' : 'false', bg: on ? '#111111' : '#FFFFFF', fg: on ? '#FFFFFF' : '#111111', pick: () => this.setState({ rpReason: d[0] }) }; }),
+rpHelp: rpPick ? rpPick[1] : 'Pick one reason.', rpNote: s.rpNote || '', setRpNote: (e) => this.setState({ rpNote: e.target.value }),
+rpBlocked: !s.rpReason, rpBg: s.rpReason ? '#111111' : '#E2E2E2',
+sendReport: () => { if (s.rpReason) this.setState({ rpSent: true }); },
+closeReport: () => this.setState({ rp: '', rpReason: '', rpNote: '', rpSent: false }) };
+const openReport = (t) => () => this.setState({ rp: t, rpReason: '', rpNote: '', rpSent: false });
+const acts = [
+{ title: 'Sunday long run', type: 'Run', date: 'Oct 25', dist: '14.2 mi', paceLabel: 'Pace', pace: '8:30 /mi', time: '2:00:42', elev: '612 ft', path: 'M40 200 C70 120 110 150 150 100 S230 50 270 110 S340 170 360 70' },
+{ title: 'Tempo intervals', type: 'Run', date: 'Oct 22', dist: '6.0 mi', paceLabel: 'Pace', pace: '7:48 /mi', time: '46:48', elev: '180 ft', path: 'M50 80 C100 40 140 120 190 90 S270 40 300 120 S340 200 370 160' },
+{ title: 'Easy shakeout', type: 'Run', date: 'Oct 20', dist: '5.0 mi', paceLabel: 'Pace', pace: '9:10 /mi', time: '45:50', elev: '95 ft', path: 'M60 190 C90 150 130 210 170 170 S240 120 280 160 S330 210 360 180' },
+{ title: 'Rolling hills ride', type: 'Ride', date: 'Oct 18', dist: '32.4 mi', paceLabel: 'Speed', pace: '17.3 mph', time: '1:52:20', elev: '2,140 ft', path: 'M40 150 C80 60 140 60 180 130 S260 220 300 140 S350 60 370 110' }
+];
+const shown = s.mode === 'recent' ? acts[0] : acts[s.pick];
+const mk = (label, key) => { const on = s.mode === key; return { label, on, bg: on ? '#111111' : 'transparent', fg: on ? '#FFFFFF' : '#111111', pick: () => this.setState({ mode: key }) }; };
+const activities = acts.map((a, i) => { const on = s.pick === i; return { ...a, on, bg: on ? '#111111' : '#FFFFFF', fg: on ? '#FFFFFF' : '#111111', subFg: on ? '#C8C8C8' : '#3A3A3A', pick: () => this.setState({ pick: i }) }; });
+const st = (status) => {
+if (status === 'Verified') return { bg: '#111111', fg: '#FFFFFF', borderStyle: 'solid' };
+if (status === 'Athlete-reported') return { bg: 'transparent', fg: '#111111', borderStyle: 'solid' };
+return { bg: '#F4F4F2', fg: '#111111', borderStyle: 'dashed' };
+};
+const rawMetrics = [
+{ platform: 'YouTube', value: '1,150', valueLabel: 'Subscribers', extra: 'Average views per video: 640', source: 'YouTube connection', status: 'Verified' },
+{ platform: 'Instagram', value: '2,480', valueLabel: 'Followers', extra: 'Engagement rate: not provided', source: 'Entered by athlete', status: 'Athlete-reported' },
+{ platform: 'TikTok', value: '3,900', valueLabel: 'Followers', extra: 'Estimated engagement: 4% to 6%', source: 'Estimated from linked posts', status: 'AI estimate' }
+];
+const metrics = rawMetrics.map((m) => ({ ...m, ...st(m.status) }));
+const compAll = [
+{ name: 'Sample Running Store', cat: 'Retail', loc: '[City]', open: 1 },
+{ name: 'Sample Recovery Studio', cat: 'Wellness', loc: '[City]', open: 1 },
+{ name: 'Sample Nutrition Co.', cat: 'Nutrition', loc: 'Online', open: 1 },
+{ name: 'Sample Cycling Apparel', cat: 'Apparel', loc: 'Online', open: 1 },
+{ name: 'Sample Swim Gear', cat: 'Gear', loc: 'Online', open: 1 },
+{ name: 'Sample Trail Races', cat: 'Events', loc: '[State]', open: 1 },
+{ name: 'Sample Outdoor Outfitters', cat: 'Retail', loc: '[City]', open: 0 },
+{ name: 'Sample Sports Physio', cat: 'Wellness', loc: '[City]', open: 0 }
+];
+const qq = s.q.trim().toLowerCase();
+const matched = qq ? compAll.filter((c) => c.name.toLowerCase().includes(qq)) : compAll.slice(0, 3);
+const companies = matched.map((c) => ({
+...c,
+openText: c.open > 0 ? c.open + (c.open === 1 ? ' open campaign' : ' open campaigns') : 'No open campaigns right now',
+sent: s.intro.includes(c.name), unsent: !s.intro.includes(c.name),
+initial: c.name.replace('Sample ', '').charAt(0),
+send: () => this.setState({ intro: [...s.intro, c.name] })
+}));
+const vmk = (label, key) => { const on = s.view === key; return { label, on, bg: on ? '#111111' : 'transparent', fg: on ? '#FFFFFF' : '#111111', pick: () => this.setState({ view: key }) }; };
+return {
+...rpVals,
+race: races[ri], raceCount: (ri + 1) + ' of ' + races.length,
+prevRace: () => this.setState({ race: Math.max(ri - 1, 0) }), prevRaceOff: ri === 0, prevRaceOp: ri === 0 ? .35 : 1,
+nextRace: () => this.setState({ race: Math.min(ri + 1, races.length - 1) }), nextRaceOff: ri === races.length - 1, nextRaceOp: ri === races.length - 1 ? .35 : 1,
+modes: [mk('Most recent', 'recent'), mk('Let me choose', 'chosen')],
+views: [vmk('Your view', 'me'), vmk('Business view', 'business')],
+viewNote: s.view === 'me' ? 'Sample data. You are viewing your own profile. Switch to Business view to see what a brand sees.' : 'Sample data. This is how a business sees your profile, including how well it fits their campaign.',
+isMeView: s.view === 'me', isBusinessView: s.view === 'business', reportProfile: openReport('this profile'),
+switchToBusiness: () => this.setState({ view: 'business' }),
+q: s.q, setQ: (e) => this.setState({ q: e.target.value }),
+companies, noCompanies: companies.length === 0,
+listLabel: qq ? companies.length + (companies.length === 1 ? ' company found' : ' companies found') : 'Suggested for you',
+isChosen: s.mode === 'chosen',
+shown, activities, metrics,
+videos: [
+{ platform: 'Instagram', origin: 'Uploaded', title: 'Trail shoe first impressions', note: 'Honest gear review after 40 miles.' },
+{ platform: 'YouTube', origin: 'Linked', title: 'Race recap: [race name]', note: 'Mile-by-mile story of the day.' },
+{ platform: 'TikTok', origin: 'Uploaded', title: 'Beginner tempo tips', note: 'Short teaching clip for new runners.' }
+].map((v) => ({ ...v, report: openReport('this video') })),
+races: [
+{ date: 'Nov 15', name: '[Race name]', goal: 'Goal: finish strong and enjoy it' },
+{ date: 'Mar 7', name: '[Race name]', goal: 'Goal: new half marathon PR' },
+{ date: 'May 2', name: '[Race name]', goal: 'Goal: first full marathon' }
+]
+};
+}
+}
+</script>
+<script>(function(){function ensure(){if(document.querySelector(".pilot-back")||!document.body)return;var a=document.createElement("a");a.className="pilot-back";a.href="index.html";a.innerHTML='<span aria-hidden="true">&larr;</span> Test tasks';document.body.appendChild(a);}document.addEventListener("DOMContentLoaded",ensure);setInterval(ensure,800);})();</script>
+</body>
+</html>

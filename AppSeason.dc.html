@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>App: Season profile</title>
+<script src="./support.js"></script>
+<style id="pilot-css">.pilot-back{position:fixed;z-index:9999;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:8px 14px;border-radius:999px;background:#111111;color:#FFFFFF;font:600 13px/1 "Hanken Grotesk",system-ui,sans-serif;text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,.18)}.pilot-back:focus-visible{outline:2px solid #3D6B52;outline-offset:3px}.pilot-back{right:max(12px,env(safe-area-inset-right,0px));bottom:calc(86px + env(safe-area-inset-bottom,0px))}@media (min-width:520px){html,body{background:#E7E7E4}body{padding:28px 0}#dc-root{width:390px;margin:0 auto;box-shadow:0 10px 40px rgba(0,0,0,.14);border-radius:28px;overflow:hidden;background:#FFFFFF}.pilot-back{left:24px;right:auto;top:24px;bottom:auto}}</style>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+input,textarea{font-family:inherit}
+.cp{color:#111111;font-family:'Hanken Grotesk',system-ui,sans-serif;font-size:17px;line-height:1.5;background:#FFFFFF}
+.app.cp{font-size:16px;line-height:1.45}
+.eb{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#6E6E6E}
+.dark .eb{color:#A3A3A3}
+.h1{margin:6px 0 0;font-family:'Instrument Serif',serif;font-weight:400;font-size:64px;line-height:.98;letter-spacing:-.02em}
+.app .h1{font-size:38px;line-height:1}
+.h2{margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:36px;line-height:1.02;letter-spacing:-.01em}
+.app .h2{font-size:28px}
+.lead{margin:8px 0 0;color:#3A3A3A}
+.dark .lead{color:#C8C8C8}
+.muted{color:#6E6E6E;font-size:14px}
+.clock{font-variant-numeric:tabular-nums;font-feature-settings:'tnum' 1;font-weight:800;letter-spacing:-.03em}
+.dark{background:#111111;color:#FFFFFF}
+.bib{position:relative;background:#FFFFFF;color:#111111;border:2px solid #111111;border-radius:14px;padding:16px 20px 14px;box-sizing:border-box}
+.pin{position:absolute;width:9px;height:9px;border-radius:50%;border:2px solid #111111;background:#FFFFFF;box-sizing:border-box}
+.p1{top:7px;left:7px}.p2{top:7px;right:7px}.p3{bottom:7px;left:7px}.p4{bottom:7px;right:7px}
+.bibno{font-size:54px;font-weight:800;line-height:.95;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.app .bibno{font-size:44px}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid #111111;border-radius:999px;padding:8px 14px;font-size:14px;font-weight:600;min-height:40px;background:#FFFFFF;color:#111111;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#111111;color:#FFFFFF;border:0;border-radius:999px;padding:14px 24px;font-size:16px;font-weight:600;min-height:48px;box-sizing:border-box;text-align:center}
+.btn2{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#FFFFFF;color:#111111;border:1.5px solid #111111;border-radius:999px;padding:12px 22px;font-size:16px;font-weight:600;min-height:48px;box-sizing:border-box;text-align:center}
+.btnw{display:inline-flex;align-items:center;justify-content:center;background:#FFFFFF;color:#111111;border:0;border-radius:999px;padding:14px 24px;font-size:16px;font-weight:700;min-height:48px;box-sizing:border-box}
+.link{font-weight:700;text-decoration:underline;min-height:44px;display:inline-flex;align-items:center}
+.card{border:1px solid rgba(17,17,17,.18);border-radius:22px;padding:20px;box-sizing:border-box;background:#FFFFFF}
+.mist{background:#F4F4F2;border-radius:22px;padding:20px;box-sizing:border-box}
+.tag{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:700;white-space:nowrap}
+.tag.v{background:#111111;color:#FFFFFF}
+.tag.a{border:1px dashed #6E6E6E;color:#3A3A3A}
+.tag.ai{border:1px solid #111111;color:#111111}
+.tag.open{background:#3D6B52;color:#FFFFFF}
+.tag.s{background:#F4F4F2;color:#111111}
+.x{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;gap:12px;scroll-padding-left:16px}
+.x::-webkit-scrollbar{display:none}
+.x>*{scroll-snap-align:start;flex:0 0 auto}
+.input{width:100%;box-sizing:border-box;padding:13px 16px;font-size:16px;border:1px solid #9A9A9A;border-radius:12px;color:#111111;background:#FFFFFF}
+.label{display:block;font-weight:600;font-size:15px;margin-bottom:6px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.grid2{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:900px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.app .grid2{display:block}
+.app .grid2>*+*{margin-top:16px}
+.wrap{max-width:1160px;margin:0 auto;padding:32px 24px 96px;box-sizing:border-box}
+.sec{margin-top:36px}
+.app .sec{margin-top:28px}
+@media (max-width:640px){.web .h1{font-size:44px}.web .lbl-done{display:none}.web .wrap{padding-left:16px;padding-right:16px}}
+
+/* calm theme */
+.flat .card{border:0;border-top:1px solid rgba(17,17,17,.1);border-radius:0;padding:26px 0 6px;background:transparent}
+.flat .grid2>div>.card:first-child{border-top:0;padding-top:0}
+.flat .mist{border-radius:18px}
+.rows li.card{border:0;border-bottom:1px solid rgba(17,17,17,.1);border-radius:0;padding:14px 0;background:transparent!important}
+.app .lbl-done{display:none}
+.clock{font-weight:600;letter-spacing:-.02em}
+.h1{font-size:56px}
+.hair{border-top:1px solid rgba(17,17,17,.1)}
+.seg{display:inline-flex;background:#F4F4F2;border-radius:999px;padding:3px}
+.seg button{border:0;border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600;min-height:36px;background:transparent;color:#6E6E6E}
+.seg button[aria-pressed="true"]{background:#FFFFFF;color:#111111;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.tabs{display:flex;gap:22px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid rgba(17,17,17,.1)}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:0 0 auto;border:0;background:none;padding:10px 0 12px;font-size:14px;font-weight:600;color:#8A8A8A;border-bottom:2px solid transparent;margin-bottom:-1px;min-height:44px;white-space:nowrap}
+.tabs button[aria-pressed="true"]{color:#111111;border-bottom-color:#111111}
+.stat .k{font-size:12px;font-weight:600;color:#8A8A8A;letter-spacing:.04em}
+.stat .v{font-size:22px;margin-top:2px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#3D6B52;flex:0 0 auto}
+.gtext{color:#3D6B52}
+.bibmini{display:inline-flex;align-items:baseline;gap:6px;border:1.5px solid #111111;border-radius:10px;padding:4px 10px}
+.bibmini span:first-child{font-size:10px;font-weight:700;letter-spacing:.12em;color:#6E6E6E}
+.bibmini span:last-child{font-weight:600;font-size:18px;font-variant-numeric:tabular-nums}
+.lnk{background:none;border:0;padding:0;font-size:15px;font-weight:600;color:#111111;text-decoration:underline;text-underline-offset:3px;min-height:44px;display:inline-flex;align-items:center}
+.btns{padding:10px 18px;font-size:15px;min-height:44px}
+.check{width:22px;height:22px;margin:2px 0 0;flex:0 0 auto;accent-color:#111111}
+</style>
+</helmet>
+<div class="cp app" style="position:relative;width:390px;height:844px;overflow:hidden">
+<div id="scroll" style="position:absolute;left:0;right:0;top:0;bottom:72px;overflow-y:auto">
+<div style="padding:20px 16px 0">
+<div class="row" style="justify-content:space-between">
+<span class="bibmini"><span>NO.</span><span>0147</span></span>
+<div class="seg" role="group" aria-label="View as"><sc-for list="{{views}}" as="v" hint-placeholder-count="2"><button type="button" aria-pressed="{{v.on}}" onClick="{{v.pick}}">{{v.label}}</button></sc-for></div>
+</div>
+<h1 class="h1" style="margin-top:22px">[Athlete name]</h1>
+<p class="lead" style="margin-top:6px">Marathoner in [City]. Season 2026&ndash;27.</p>
+<div style="margin-top:28px">
+<div class="stat"><div class="k">WHAT SETS ME APART</div></div>
+<div style="margin-top:10px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px 32px">
+<sc-for list="{{apart}}" as="a" hint-placeholder-count="3"><div style="border-top:1px solid #111111;padding-top:12px"><div style="font-family:'Instrument Serif',serif;font-size:26px;line-height:1.1">{{a.t}}</div><div style="margin-top:6px;color:#3A3A3A;font-size:15px">{{a.d}}</div></div></sc-for>
+</div>
+<div class="muted" style="margin-top:14px">Sounds {{toneText}}</div>
+</div>
+<div style="position:relative;margin-top:40px">
+<svg viewBox="0 0 358 150" role="img" aria-label="Season line: two races done, two goals ahead" style="width:100%;height:auto;display:block;overflow:visible">
+<path d="{{pastArea}}" fill="#F4F4F2"/>
+<path d="{{pastPath}}" fill="none" stroke="#111111" stroke-width="2" stroke-linejoin="round"/>
+<path d="{{futurePath}}" fill="none" stroke="#B5B5B5" stroke-width="1.5" stroke-dasharray="4 5"/>
+<line x1="{{todayX}}" x2="{{todayX}}" y1="10" y2="140" stroke="#C8C8C8" stroke-width="1"/>
+<sc-for list="{{marks}}" as="m" hint-placeholder-count="4"><circle cx="{{m.x}}" cy="{{m.y}}" r="{{m.r}}" fill="{{m.fill}}" stroke="#FFFFFF" stroke-width="2"/></sc-for>
+</svg>
+<span aria-hidden="true" style="position:absolute;left:{{todayLx}};top:0;transform:translate(-50%,-100%);font-size:11px;font-weight:600;color:#8A8A8A;letter-spacing:.06em">TODAY</span>
+<sc-for list="{{marks}}" as="m" hint-placeholder-count="4"><div aria-hidden="true" class="lbl-{{m.kind}}" style="position:absolute;left:{{m.lx}};top:{{m.lt}};transform:translate({{m.tx}},-100%);text-align:{{m.anchor}};pointer-events:none;white-space:nowrap;padding-bottom:10px;text-shadow:0 0 3px #FFFFFF,0 0 3px #FFFFFF,0 0 6px #FFFFFF"><div style="font-size:12px;font-weight:600;color:#6E6E6E;line-height:1.1">{{m.short}}</div><div class="clock" style="font-size:13px;line-height:1.15;color:{{m.subFg}}">{{m.sub}}</div></div></sc-for>
+<div aria-hidden="true" style="position:relative;height:16px;margin-top:4px"><sc-for list="{{monthRow}}" as="mo" hint-placeholder-count="9"><span style="position:absolute;left:{{mo.l}};transform:translateX(-50%);font-size:11px;color:#A3A3A3;letter-spacing:.04em">{{mo.m}}</span></sc-for></div>
+</div>
+<div class="tabs" role="group" aria-label="Races this season" style="margin-top:18px">
+<sc-for list="{{marks}}" as="m" hint-placeholder-count="4"><button type="button" aria-pressed="{{m.on}}" onClick="{{m.pick}}">{{m.btnText}}</button></sc-for>
+</div>
+</div>
+<div style="padding:24px 16px 40px">
+<div class="grid2" style="gap:56px">
+<div>
+<sc-if value="{{selGoal}}" hint-placeholder-val="{{true}}">
+<div class="row" style="gap:8px"><span class="dot"></span><span class="gtext" style="font-size:13px;font-weight:600">Open to sponsors &middot; {{sel.weeks}}</span></div>
+<h2 class="h2" style="margin-top:8px">{{sel.title}}</h2>
+<div class="muted" style="margin-top:4px">{{sel.block}}</div>
+<blockquote style="margin:18px 0 0;padding:0 0 0 14px;border-left:2px solid #3D6B52;font-family:'Instrument Serif',serif;font-size:22px;line-height:1.25;color:#111111">&ldquo;{{sel.why}}&rdquo;<span style="display:block;margin-top:6px;font-family:'Hanken Grotesk',system-ui,sans-serif;font-size:12px;font-weight:600;letter-spacing:.04em;color:#8A8A8A">WHY THIS RACE</span></blockquote>
+<div style="margin-top:22px;display:flex;flex-wrap:wrap;gap:20px 36px">
+<div class="stat"><div class="k">GOAL</div><div class="v clock">{{sel.goal}}</div></div>
+<div class="stat"><div class="k">RACE DAY</div><div class="v clock">{{sel.dateText}}</div></div>
+<div class="stat"><div class="k">SHARING</div><div class="v" style="font-size:17px;font-weight:600;margin-top:6px">{{sel.share}}</div></div>
+</div>
+<p class="muted" style="margin:18px 0 0">AI estimate: {{sel.evidence}}</p>
+<div class="hair" style="margin-top:24px;padding-top:18px">
+<div class="stat"><div class="k">WHAT I'M SHARING THIS BLOCK</div></div>
+<ol style="margin:10px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:6px;color:#3A3A3A">
+<sc-for list="{{sel.stations}}" as="st" hint-placeholder-count="4"><li>{{st}}</li></sc-for>
+</ol>
+</div>
+<div class="row" style="margin-top:26px;gap:14px">
+<sc-if value="{{isBiz}}" hint-placeholder-val="{{false}}"><a class="btn" href="{{backHref}}">Make an offer</a><a class="lnk" href="{{msgHref}}">Message</a></sc-if>
+<sc-if value="{{isMe}}" hint-placeholder-val="{{true}}"><a class="btn" href="{{editHref}}">Edit goal</a><a class="lnk" href="{{editHref}}">Add a goal</a></sc-if>
+</div>
+<div class="muted" style="margin-top:12px"><sc-if value="{{isMe}}" hint-placeholder-val="{{true}}"><a href="AppMessages.dc.html?as=athlete" style="text-decoration:underline;text-underline-offset:3px;color:#111111;font-weight:600">{{sel.backers}}</a> See their offers.</sc-if><sc-if value="{{isBiz}}" hint-placeholder-val="{{false}}">{{sel.backers}}</sc-if></div>
+</sc-if>
+<sc-if value="{{selDone}}" hint-placeholder-val="{{false}}">
+<div class="row" style="gap:8px"><span class="dot"></span><span class="gtext" style="font-size:13px;font-weight:600">Verified from race results</span></div>
+<h2 class="h2" style="margin-top:8px">{{sel.name}}</h2>
+<div class="clock" style="font-size:64px;line-height:1;margin-top:14px">{{sel.result}}</div>
+<div class="muted" style="margin-top:8px">Chip time, {{sel.dateText}} &middot; Sample data</div>
+</sc-if>
+</div>
+<div>
+<div class="stat"><div class="k">MY STORY SO FAR</div></div>
+<ol style="margin:12px 0 28px;padding:0;list-style:none;position:relative">
+<sc-for list="{{moments}}" as="m" hint-placeholder-count="3"><li style="display:grid;grid-template-columns:56px 1fr;gap:12px;padding:8px 0;align-items:baseline"><span class="clock" style="font-size:15px;color:{{m.c}}">{{m.y}}</span><span style="color:#3A3A3A">{{m.l}}</span></li></sc-for>
+</ol>
+<div class="stat"><div class="k">VERIFIED RESULTS</div></div>
+<sc-for list="{{doneRows}}" as="d" hint-placeholder-count="2">
+<button type="button" onClick="{{d.pick}}" style="width:100%;display:flex;justify-content:space-between;align-items:baseline;gap:12px;background:none;border:0;border-bottom:1px solid rgba(17,17,17,.1);padding:14px 0;text-align:left;color:#111111;min-height:52px">
+<span><span style="font-weight:600;display:block">{{d.name}}</span><span class="muted">{{d.dateText}}</span></span>
+<span class="clock" style="font-size:22px">{{d.result}}</span>
+</button>
+</sc-for>
+<div class="row" style="margin-top:14px;gap:6px 22px"><a class="lnk" href="{{aboutHref}}">Story, videos and audience</a><a class="lnk" href="{{portHref}}">Past partnerships</a><sc-if value="{{isMe}}" hint-placeholder-val="{{true}}"><a class="lnk" href="{{editHref}}">Edit profile</a></sc-if></div>
+</div>
+</div></div></div>
+<dc-import name="AppTabs" kind="auto" active="Profile" hint-size="390px,72px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { sel: '', view: '' };
+}
+renderVals() {
+const s = this.state;
+const cpRole = (k) => { if (k === 'athlete' || k === 'business') return k; try { const q = new URLSearchParams(window.location.search).get('as'); if (q === 'business' || q === 'athlete') { try { localStorage.setItem('cpRole', q); } catch (e) {} return q; } if (localStorage.getItem('cpRole') === 'business') return 'business'; } catch (e) {} return 'athlete'; };
+const qp = (k) => { try { return new URLSearchParams(window.location.search).get(k) || ''; } catch (e) { return ''; } };
+const TODAY = '2026-11-09';
+const SEASON0 = '2026-08-01', SEASON1 = '2027-04-30';
+const races = [
+{ id: 'r1', name: 'Fall 10K', short: '10K', date: '2026-09-14', dateText: 'Sep 14', dist: 6.2, status: 'done', result: '51:42' },
+{ id: 'r2', name: 'City Half Marathon', short: 'Half', date: '2026-10-04', dateText: 'Oct 4', dist: 13.1, status: 'done', result: '1:52:10' },
+{ id: 'r3', name: 'City Marathon', short: 'Marathon', date: '2026-11-23', dateText: 'Nov 23', dist: 26.2, status: 'goal', goal: 'Sub-4:00', title: 'Sub-4:00 at City Marathon', block: 'Week 14 of a 16-week build', why: 'My dad ran City Marathon in 1994 in 4:02. I want to beat his time.', evidence: 'A verified 1:52:10 half suggests about 3:55 to 4:05.', share: 'Weekly training videos', backers: '2 businesses have reached out.', stations: ['Weekly training check-in videos', 'Honest gear notes from long runs', 'Race-week story', 'Race-day post with my official result'] },
+{ id: 'r4', name: 'Spring Trail 50K', short: '50K', date: '2027-04-10', dateText: 'Apr 10', dist: 31, status: 'goal', goal: 'First ultra', title: 'First ultra at Spring Trail 50K', block: 'Base building starts Dec 1', why: 'I want to find out what is past 26.2.', evidence: 'Longest run so far is 20 miles (athlete-reported).', share: 'Monthly long-run films', backers: 'No offers yet.', stations: ['Monthly long-run films', 'Trail gear notes', 'Race-day story', 'Finish-line post with my official result'] }
+];
+const APP = true, W = 358, H = 150, PAD = 10;
+const t = (d) => Date.parse(d + 'T00:00:00Z') / 864e5;
+const t0 = t(SEASON0), t1 = t(SEASON1);
+const X = (d) => PAD + (t(d) - t0) / (t1 - t0) * (W - 2 * PAD);
+const base = H - 8, y0 = 30;
+const peakH = (dist) => (dist / 31) * (base - y0 - 10);
+const bw = APP ? 16 : 38;
+const Y = (x) => { let y = base - 4 - 2.5 * Math.sin(x / 19) - 2 * Math.sin(x / 7); races.forEach((r) => { const dx = (x - X(r.date)) / bw; y -= peakH(r.dist) * Math.exp(-dx * dx); }); return y; };
+const tx = X(TODAY);
+const pts = (a, b) => { const out = []; for (let x = a; x <= b; x += 3) out.push([x, Y(x)]); out.push([b, Y(b)]); return out; };
+const toPath = (p) => 'M' + p.map((q) => q[0].toFixed(1) + ' ' + q[1].toFixed(1)).join(' L');
+const past = pts(PAD, tx), fut = pts(tx, W - PAD);
+const role = cpRole('auto');
+const view = s.view || (qp('view') === 'business' || role === 'business' ? 'business' : 'me');
+const selId = s.sel || qp('goal') || 'r3';
+const sel = races.find((r) => r.id === selId) || races[2];
+const months = ['Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr'];
+const mdates = ['2026-08-01', '2026-09-01', '2026-10-01', '2026-11-01', '2026-12-01', '2027-01-01', '2027-02-01', '2027-03-01', '2027-04-01'];
+const weeksOut = (d) => { const w = Math.round((t(d) - t(TODAY)) / 7); return w <= 0 ? 'race week' : w === 1 ? '1 week out' : w + ' weeks out'; };
+const pc = (v, m) => (v / m * 100).toFixed(2) + '%';
+return {
+apart: [{ t: 'Comeback from injury', d: 'Broke my foot in 2024. Racing again by spring 2025.' }, { t: 'Parent runner', d: 'Two kids, 5 a.m. long runs, stroller miles on Sundays.' }, { t: 'Races in a cape', d: "My dad's old superhero cape. He got me into running." }],
+toneText: 'funny and honest',
+moments: [['2019', "Couldn't run a mile"], ['2024', 'Broke my foot three weeks before my first marathon'], ['2026', 'Chasing sub-4 at the race my dad ran']].map((m, i, a) => ({ y: m[0], l: m[1], c: i === a.length - 1 ? '#3D6B52' : '#111111' })),
+views: [['me', 'Your view'], ['business', 'Business view']].map((v) => ({ label: v[1], on: view === v[0] ? 'true' : 'false', pick: () => this.setState({ view: v[0] }) })),
+isBiz: view === 'business', isMe: view !== 'business',
+monthRow: months.map((m, i) => ({ m, l: pc(X(mdates[i]), W) })),
+pastPath: toPath(past), futurePath: toPath(fut),
+pastArea: toPath(past) + ' L' + tx.toFixed(1) + ' ' + base + ' L' + PAD + ' ' + base + ' Z',
+todayX: tx.toFixed(1), todayLx: pc(tx, W),
+marks: races.map((r) => { const x = X(r.date), y = Y(x), on = r.id === sel.id, goal = r.status === 'goal'; const anchor = x < 50 ? 'left' : x > W - 50 ? 'right' : 'center'; return { kind: goal ? 'goal' : 'done', lx: pc(x, W), lt: pc(y, H), tx: anchor === 'left' ? '-6px' : anchor === 'right' ? 'calc(-100% + 6px)' : '-50%', anchor, subFg: goal ? '#3D6B52' : '#111111', x: x.toFixed(1), y: y.toFixed(1), short: r.short, sub: goal ? r.goal : r.result, r: on ? 7 : 5, fill: goal ? '#3D6B52' : '#111111', on: on ? 'true' : 'false', btnText: r.short + ' \u00b7 ' + r.dateText, pick: () => this.setState({ sel: r.id }) }; }),
+selGoal: sel.status === 'goal', selDone: sel.status === 'done',
+sel: Object.assign({}, sel, { weeks: weeksOut(sel.date) }),
+doneRows: races.filter((r) => r.status === 'done').map((r) => ({ name: r.name, dateText: r.dateText, result: r.result, pick: () => this.setState({ sel: r.id }) })),
+backHref: 'AppBack.dc.html?goal=' + sel.id + '&as=business',
+msgHref: 'AppMessages.dc.html?as=business',
+editHref: 'AppBuild.dc.html',
+aboutHref: 'AppProfile.dc.html',
+portHref: 'AppPortfolio.dc.html'
+};
+}
+}
+</script>
+<script>(function(){function ensure(){if(document.querySelector(".pilot-back")||!document.body)return;var a=document.createElement("a");a.className="pilot-back";a.href="index.html";a.innerHTML='<span aria-hidden="true">&larr;</span> Test tasks';document.body.appendChild(a);}document.addEventListener("DOMContentLoaded",ensure);setInterval(ensure,800);})();</script>
+</body>
+</html>

@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>App New campaign</title>
+<script src="./support.js"></script>
+<style id="pilot-css">.pilot-back{position:fixed;z-index:9999;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:8px 14px;border-radius:999px;background:#111111;color:#FFFFFF;font:600 13px/1 "Hanken Grotesk",system-ui,sans-serif;text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,.18)}.pilot-back:focus-visible{outline:2px solid #3D6B52;outline-offset:3px}.pilot-back{right:max(12px,env(safe-area-inset-right,0px));bottom:calc(86px + env(safe-area-inset-bottom,0px))}@media (min-width:520px){html,body{background:#E7E7E4}body{padding:28px 0}#dc-root{width:390px;margin:0 auto;box-shadow:0 10px 40px rgba(0,0,0,.14);border-radius:28px;overflow:hidden;background:#FFFFFF}.pilot-back{left:24px;right:auto;top:24px;bottom:auto}}</style>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0}
+button{font-family:inherit;cursor:pointer}
+input,textarea{font-family:inherit}
+a{color:inherit;text-decoration:none}
+</style>
+</helmet>
+<div style="position:relative;width:390px;height:844px;overflow:hidden;background:#FFFFFF;color:#111111;font-family:'Hanken Grotesk',system-ui,sans-serif;font-size:16px;line-height:1.45">
+<div id="cscroll" style="position:absolute;left:0;right:0;top:0;bottom:72px;overflow-y:auto">
+
+<sc-if value="{{notDone}}" hint-placeholder-val="{{true}}">
+<div style="position:sticky;top:0;z-index:5;background:#FFFFFF;padding:14px 16px 10px;border-bottom:1px solid rgba(17,17,17,.12)">
+<div style="display:flex;gap:6px">
+<sc-for list="{{steps}}" as="st" hint-placeholder-count="4">
+<button type="button" aria-label="Go to step {{st.n}}: {{st.label}}" onClick="{{st.go}}" style="flex:1 1 0;min-width:0;border:0;background:none;padding:10px 0;min-height:44px;display:flex;flex-direction:column;justify-content:flex-start;align-items:stretch"><div style="height:6px;border-radius:999px;background:{{st.bar}}"></div><div style="margin-top:4px;font-size:11px;font-weight:{{st.weight}};color:#111111">{{st.label}}</div></button>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<div style="padding:18px 16px 110px">
+
+<sc-if value="{{isStep1}}" hint-placeholder-val="{{true}}">
+<div>
+<div style="font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6E6E6E">Step 1 of 4</div><h1 style="margin:6px 0 0;font-family:'Instrument Serif',serif;font-weight:400;font-size:36px;line-height:1.04;letter-spacing:-.01em">Describe the athlete you want.</h1>
+<p style="margin:10px 0 0;color:#3A3A3A;font-size:15px">Write it the way you'd tell a friend. We'll turn it into a draft campaign you can edit. You can also skip ahead and fill it in yourself.</p>
+<div style="margin-top:20px"><label for="desc" style="display:block;font-size:15px;font-weight:600;margin-bottom:6px">Your goal</label>
+<textarea id="desc" rows="6" value="{{desc}}" onChange="{{setDesc}}" placeholder="Example: I want three local runners to make honest videos about our new running socks." style="width:100%;box-sizing:border-box;padding:13px 14px;font-size:16px;line-height:1.5;border:1px solid #9A9A9A;border-radius:12px;background:#FFFFFF;color:#111111;resize:none"></textarea></div>
+<sc-if value="{{canDraft}}" hint-placeholder-val="{{false}}"><button type="button" onClick="{{draft}}" style="margin-top:14px;width:100%;background:#111111;color:#FFFFFF;border:0;border-radius:999px;padding:14px 28px;font-size:16px;font-weight:600;min-height:52px">Draft for me</button></sc-if>
+<sc-if value="{{cannotDraft}}" hint-placeholder-val="{{true}}"><button type="button" disabled style="margin-top:14px;width:100%;background:#E2E2E2;color:#6E6E6E;border:0;border-radius:999px;padding:14px 28px;font-size:16px;font-weight:600;min-height:52px;cursor:not-allowed">Draft for me</button></sc-if>
+<div style="margin-top:8px;font-size:13px;color:#6E6E6E">The draft is a starting point. Nothing is published until you approve it. Drafting uses an AI provider, and only this description is sent. You can turn AI off in Account settings.</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isStep2}}" hint-placeholder-val="{{false}}">
+<div>
+<div style="font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6E6E6E">Step 2 of 4</div><h1 style="margin:6px 0 0;font-family:'Instrument Serif',serif;font-weight:400;font-size:36px;line-height:1.04;letter-spacing:-.01em">Campaign basics.</h1>
+<sc-if value="{{drafted}}" hint-placeholder-val="{{false}}"><div style="margin-top:14px;background:#F4F4F2;border:1px dashed #111111;border-radius:18px;padding:16px"><div style="font-weight:700">AI draft to review.</div><div style="margin-top:4px;font-size:14px;color:#3A3A3A">We filled in the next steps from your description. Check every field before you publish. Budget is never guessed.</div></div></sc-if>
+<div style="margin-top:20px"><label for="title" style="display:block;font-size:15px;font-weight:600;margin-bottom:6px">Campaign title <span style="font-weight:500;color:#6E6E6E">(required)</span></label>
+<input id="title" type="text"  value="{{title}}" onChange="{{setTitle}}" placeholder="Example: Honest sock reviews from local runners" style="width:100%;box-sizing:border-box;padding:13px 14px;font-size:16px;border:1px solid #9A9A9A;border-radius:12px;background:#FFFFFF;color:#111111"></div><div style="margin-top:22px;font-weight:600;margin-bottom:8px">What's the main goal?</div><div role="group" aria-label="Goal" style="display:flex;flex-wrap:wrap;gap:8px">
+<sc-for list="{{objChips}}" as="c" hint-placeholder-count="5">
+<button type="button" onClick="{{c.pick}}" aria-pressed="{{c.on}}" style="padding:9px 16px;border-radius:999px;font-size:15px;font-weight:600;min-height:44px;border:1px solid #111111;background:{{c.bg}};color:{{c.fg}}">{{c.label}}</button>
+</sc-for>
+</div><div style="margin-top:22px;font-weight:600;margin-bottom:8px">Sports <span style="font-weight:400;color:#6E6E6E">(pick any)</span></div><div role="group" aria-label="Sports" style="display:flex;flex-wrap:wrap;gap:8px">
+<sc-for list="{{sportChips}}" as="c" hint-placeholder-count="6">
+<button type="button" onClick="{{c.pick}}" aria-pressed="{{c.on}}" style="padding:9px 16px;border-radius:999px;font-size:15px;font-weight:600;min-height:44px;border:1px solid #111111;background:{{c.bg}};color:{{c.fg}}">{{c.label}}</button>
+</sc-for>
+</div><div style="margin-top:22px;font-weight:600;margin-bottom:8px">Where should athletes be?</div><div role="group" aria-label="Location type" style="display:flex;flex-wrap:wrap;gap:8px">
+<sc-for list="{{locChips}}" as="c" hint-placeholder-count="2">
+<button type="button" onClick="{{c.pick}}" aria-pressed="{{c.on}}" style="padding:9px 16px;border-radius:999px;font-size:15px;font-weight:600;min-height:44px;border:1px solid #111111;background:{{c.bg}};color:{{c.fg}}">{{c.label}}</button>
+</sc-for>
+</div>
+<sc-if value="{{isLocal}}" hint-placeholder-val="{{false}}"><div style="margin-top:20px"><label for="city" style="display:block;font-size:15px;font-weight:600;margin-bottom:6px">City or area</label>
+<input id="city" type="text"  value="{{city}}" onChange="{{setCity}}" placeholder="City, State" style="width:100%;box-sizing:border-box;padding:13px 14px;font-size:16px;border:1px solid #9A9A9A;border-radius:12px;background:#FFFFFF;color:#111111"></div></sc-if>
+<div style="margin-top:22px;font-weight:600;margin-bottom:8px">Content style you want <span style="font-weight:400;color:#6E6E6E">(pick any)</span></div><div role="group" aria-label="Content style" style="display:flex;flex-wrap:wrap;gap:8px">
+<sc-for list="{{styleChips}}" as="c" hint-placeholder-count="7">
+<button type="button" onClick="{{c.pick}}" aria-pressed="{{c.on}}" style="padding:9px 16px;border-radius:999px;font-size:15px;font-weight:600;min-height:44px;border:1px solid #111111;background:{{c.bg}};color:{{c.fg}}">{{c.label}}</button>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isStep3}}" hint-placeholder-val="{{false}}">
+<div>
+<div style="font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6E6E6E">Step 3 of 4</div><h1 style="margin:6px 0 0;font-family:'Instrument Serif',serif;font-weight:400;font-size:36px;line-height:1.04;letter-spacing:-.01em">Deliverables and pay.</h1>
+<p style="margin:10px 0 0;color:#3A3A3A;font-size:15px">Be specific. Athletes respond faster when they know exactly what's expected.</p>
+<div style="margin-top:22px;font-weight:600;margin-bottom:8px">Deliverables per athlete</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<sc-for list="{{delivRows}}" as="d" hint-placeholder-count="4">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid rgba(17,17,17,.2);border-radius:16px;padding:8px 14px">
+<span style="font-weight:600">{{d.label}}</span>
+<div style="display:flex;align-items:center;gap:10px">
+<button type="button" aria-label="{{d.decLabel}}" onClick="{{d.dec}}" style="width:44px;height:44px;border-radius:50%;border:1px solid #111111;background:#FFFFFF;color:#111111;font-size:22px;line-height:1">&minus;</button>
+<span style="min-width:22px;text-align:center;font-family:'Instrument Serif',serif;font-size:28px">{{d.n}}</span>
+<button type="button" aria-label="{{d.incLabel}}" onClick="{{d.inc}}" style="width:44px;height:44px;border-radius:50%;border:0;background:#111111;color:#FFFFFF;font-size:22px;line-height:1">+</button>
+</div>
+</div>
+</sc-for>
+</div>
+<div style="margin-top:22px;font-weight:600;margin-bottom:8px">Compensation</div><div role="group" aria-label="Compensation" style="display:flex;flex-wrap:wrap;gap:8px">
+<sc-for list="{{compChips}}" as="c" hint-placeholder-count="4">
+<button type="button" onClick="{{c.pick}}" aria-pressed="{{c.on}}" style="padding:9px 16px;border-radius:999px;font-size:15px;font-weight:600;min-height:44px;border:1px solid #111111;background:{{c.bg}};color:{{c.fg}}">{{c.label}}</button>
+</sc-for>
+</div><div style="margin-top:20px"><label for="budget" style="display:block;font-size:15px;font-weight:600;margin-bottom:6px">Budget per athlete</label>
+<input id="budget" type="text"  value="{{budget}}" onChange="{{setBudget}}" placeholder="Example: $200 plus product" style="width:100%;box-sizing:border-box;padding:13px 14px;font-size:16px;border:1px solid #9A9A9A;border-radius:12px;background:#FFFFFF;color:#111111"></div><div style="margin-top:20px"><label for="count" style="display:block;font-size:15px;font-weight:600;margin-bottom:6px">Athletes needed</label>
+<input id="count" type="text" inputmode="numeric"  value="{{count}}" onChange="{{setCount}}" placeholder="3" style="width:100%;box-sizing:border-box;padding:13px 14px;font-size:16px;border:1px solid #9A9A9A;border-radius:12px;background:#FFFFFF;color:#111111"></div>
+<div style="margin-top:8px;font-size:13px;color:#6E6E6E">Payment happens between you and the athlete for now. Common Pace tracks the agreed terms.</div>
+<div style="margin-top:20px"><label for="start" style="display:block;font-size:15px;font-weight:600;margin-bottom:6px">Start date</label><input id="start" type="date" value="{{start}}" onChange="{{setStart}}" style="width:100%;box-sizing:border-box;padding:13px 14px;font-size:16px;border:1px solid #9A9A9A;border-radius:12px;background:#FFFFFF;color:#111111"></div>
+<div style="margin-top:20px"><label for="deadline" style="display:block;font-size:15px;font-weight:600;margin-bottom:6px">Final deadline <span style="font-weight:500;color:#6E6E6E">(required)</span></label><input id="deadline" type="date" value="{{deadline}}" onChange="{{setDeadline}}" style="width:100%;box-sizing:border-box;padding:13px 14px;font-size:16px;border:1px solid #9A9A9A;border-radius:12px;background:#FFFFFF;color:#111111"></div>
+<div style="margin-top:22px;font-weight:600;margin-bottom:8px">Usage rights</div><div role="group" aria-label="Usage rights" style="display:flex;flex-wrap:wrap;gap:8px">
+<sc-for list="{{rightsChips}}" as="c" hint-placeholder-count="4">
+<button type="button" onClick="{{c.pick}}" aria-pressed="{{c.on}}" style="padding:9px 16px;border-radius:999px;font-size:15px;font-weight:600;min-height:44px;border:1px solid #111111;background:{{c.bg}};color:{{c.fg}}">{{c.label}}</button>
+</sc-for>
+</div>
+<div style="margin-top:20px;background:#F4F4F2;border-radius:16px;padding:14px 16px;font-size:14px;color:#3A3A3A"><strong>Disclosure is required.</strong> Every sponsored post must be clearly labeled as a paid partnership. This is on for all campaigns.</div>
+<div style="margin-top:20px"><label for="notes" style="display:block;font-size:15px;font-weight:600;margin-bottom:6px">Notes <span style="font-weight:400;color:#6E6E6E">(optional)</span></label>
+<textarea id="notes" rows="3" value="{{notes}}" onChange="{{setNotes}}" placeholder="" style="width:100%;box-sizing:border-box;padding:13px 14px;font-size:16px;line-height:1.5;border:1px solid #9A9A9A;border-radius:12px;background:#FFFFFF;color:#111111;resize:none"></textarea></div>
+</div>
+</sc-if>
+
+<sc-if value="{{isStep4}}" hint-placeholder-val="{{false}}">
+<div>
+<div style="font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6E6E6E">Step 4 of 4</div><h1 style="margin:6px 0 0;font-family:'Instrument Serif',serif;font-weight:400;font-size:36px;line-height:1.04;letter-spacing:-.01em">Review and publish.</h1>
+<p style="margin:10px 0 0;color:#3A3A3A;font-size:15px">Once published, matched athletes can see this campaign and say they're interested.</p>
+<div style="margin-top:16px;background:#F4F4F2;color:#111111;border-radius:24px;padding:18px;box-sizing:border-box">
+<div style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#6E6E6E">How athletes will see it</div>
+<div style="margin-top:6px;display:flex;justify-content:space-between;gap:8px;font-size:13px;color:#6E6E6E"><span>[Your business]</span><span>Due {{previewDue}}</span></div>
+<div style="margin-top:6px;font-family:'Instrument Serif',serif;font-size:26px;line-height:1.05;overflow-wrap:anywhere">{{previewTitle}}</div>
+<div style="margin-top:6px;font-size:14px;color:#6E6E6E">{{previewLine}}</div>
+<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{previewTags}}" as="t" hint-placeholder-count="3"><span style="border:1px solid #6E6E6E;border-radius:999px;padding:1px 10px;font-size:12px;font-weight:600">{{t.label}}</span></sc-for></div>
+<div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(17,17,17,.12);font-size:14px;color:#6E6E6E">Deliverables: {{previewDeliv}}</div>
+<div style="margin-top:4px;font-size:14px;color:#6E6E6E">Budget: {{previewBudget}}</div>
+</div>
+<div style="margin-top:16px;display:flex;justify-content:space-between;font-size:14px;font-weight:600"><span>Campaign completeness</span><span>{{pctText}}</span></div>
+<div style="margin-top:6px;height:8px;border-radius:999px;background:#E2E2E2;overflow:hidden"><div style="height:8px;background:#111111;width:{{pctText}}"></div></div>
+<div style="margin-top:14px;border-top:1px solid rgba(17,17,17,.14)">
+<sc-for list="{{reviewRows}}" as="r" hint-placeholder-count="8">
+<div style="display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid rgba(17,17,17,.14)">
+<div style="flex:1 1 auto;min-width:0"><div style="font-weight:600">{{r.label}}</div><div style="font-size:14px;color:#3A3A3A;overflow-wrap:anywhere">{{r.value}}</div></div>
+<span style="flex:0 0 auto;font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:{{r.badgeBg}};color:{{r.badgeFg}}">{{r.status}}</span>
+<button type="button" onClick="{{r.edit}}" style="flex:0 0 auto;background:none;border:0;padding:8px;min-height:44px;font-size:14px;font-weight:600;text-decoration:underline;color:#111111">Edit</button>
+</div>
+</sc-for>
+</div>
+<div style="margin-top:18px;background:#F4F4F2;border-radius:16px;padding:16px;display:flex;gap:12px;align-items:flex-start">
+<input id="confirm" type="checkbox" checked="{{confirm}}" onChange="{{toggleConfirm}}" style="width:24px;height:24px;margin:2px 0 0;flex:0 0 auto;accent-color:#111111">
+<label for="confirm" style="font-size:14px">I confirm these details are accurate. I'll require athletes to disclose paid partnerships, and I won't ask anyone to pay or be paid outside agreed terms.</label>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isDone}}" hint-placeholder-val="{{false}}">
+<div>
+<div style="font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6E6E6E">Published</div>
+<h1 style="margin:6px 0 0;font-family:'Instrument Serif',serif;font-weight:400;font-size:52px;line-height:1;letter-spacing:-.02em">Campaign live.</h1>
+<p style="margin:12px 0 0;color:#3A3A3A;font-size:15px">&ldquo;{{previewTitle}}&rdquo; is live. Here's what happens next.</p>
+<div style="margin-top:20px;border-top:1px solid rgba(17,17,17,.14)">
+<div style="padding:14px 0;border-bottom:1px solid rgba(17,17,17,.14)"><div style="font-weight:700">Athletes see it in Discover</div><div style="font-size:14px;color:#3A3A3A">Matched athletes get it recommended, with the reasons.</div></div>
+<div style="padding:14px 0;border-bottom:1px solid rgba(17,17,17,.14)"><div style="font-weight:700">See who's interested</div><div style="font-size:14px;color:#3A3A3A">Each interested athlete's card includes their profile, videos and verified activity.</div></div>
+<a href="AppMatches.dc.html" style="display:block;padding:14px 0;border-bottom:1px solid rgba(17,17,17,.14)"><div style="font-weight:700;text-decoration:underline">Meet your matches</div><div style="font-size:14px;color:#3A3A3A">See athletes ranked by compatibility, with the reasons.</div></a>
+<a href="AppMessages.dc.html" style="display:block;padding:14px 0;border-bottom:1px solid rgba(17,17,17,.14)"><div style="font-weight:700;text-decoration:underline">Open messages</div><div style="font-size:14px;color:#3A3A3A">Make offers to athletes who are interested.</div></a>
+</div>
+<button type="button" onClick="{{newOne}}" style="margin-top:20px;width:100%;background:#111111;color:#FFFFFF;border:0;border-radius:999px;padding:14px;font-size:16px;font-weight:600;min-height:52px">Create another campaign</button>
+<button type="button" onClick="{{editAgain}}" style="margin-top:10px;width:100%;background:#FFFFFF;color:#111111;border:1px solid #111111;border-radius:999px;padding:13px;font-size:16px;font-weight:600;min-height:52px">Edit this campaign</button>
+</div>
+</sc-if>
+
+</div>
+</div>
+
+<sc-if value="{{notDone}}" hint-placeholder-val="{{true}}">
+<div style="position:absolute;left:0;right:0;bottom:72px;z-index:50;background:#FFFFFF;border-top:1px solid rgba(17,17,17,.18);padding:10px 16px;display:flex;align-items:center;gap:10px">
+<sc-if value="{{showBack}}" hint-placeholder-val="{{false}}"><button type="button" onClick="{{goBack}}" style="flex:0 0 auto;background:#FFFFFF;color:#111111;border:1px solid #111111;border-radius:999px;padding:0 22px;font-size:16px;font-weight:600;min-height:50px">Back</button></sc-if>
+<div style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:2px">
+<sc-if value="{{showMissing}}" hint-placeholder-val="{{false}}"><span style="font-size:12px;color:#6E6E6E;text-align:center">{{missingText}}</span></sc-if>
+<sc-if value="{{showContinue}}" hint-placeholder-val="{{true}}"><button type="button" onClick="{{goNext}}" style="width:100%;background:{{contBg}};color:{{contFg}};border:1.5px solid #111111;border-radius:999px;font-size:16px;font-weight:600;min-height:50px">{{continueLabel}}</button></sc-if>
+<sc-if value="{{showPublishOn}}" hint-placeholder-val="{{false}}"><button type="button" onClick="{{publish}}" style="width:100%;background:#111111;color:#FFFFFF;border:0;border-radius:999px;font-size:16px;font-weight:600;min-height:50px">Publish campaign</button></sc-if>
+<sc-if value="{{showPublishOff}}" hint-placeholder-val="{{false}}"><button type="button" disabled style="width:100%;background:#E2E2E2;color:#6E6E6E;border:0;border-radius:999px;font-size:16px;font-weight:600;min-height:50px;cursor:not-allowed">Publish campaign</button></sc-if>
+</div>
+</div>
+</sc-if>
+
+<dc-import name="AppTabs" kind="business" active="New campaign" hint-size="390px,72px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = {
+step: 1, desc: '', drafted: false,
+title: '', objective: '', sports: [], loc: 'Local', city: '', styles: [],
+deliv: { Video: 0, Post: 0, Story: 0, 'Event appearance': 0 },
+comps: [], budget: '', count: '', start: '', deadline: '', rights: '', notes: '',
+confirm: false, done: false
+};
+}
+goStep(o) { this.setState(o); setTimeout(() => { const e = document.getElementById('cscroll'); if (e) e.scrollTop = 0; }, 0); }
+renderVals() {
+const fmtDate = (v) => { const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v || ''); if (!m) return ''; return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m[2] - 1] + ' ' + (+m[3]); };
+const s = this.state;
+const set = (k) => (e) => this.setState({ [k]: e.target.value });
+const chip = (on) => ({ bg: on ? '#111111' : '#FFFFFF', fg: on ? '#FFFFFF' : '#111111' });
+const single = (key, labels) => labels.map((l) => { const on = s[key] === l; return { label: l, on, bg: chip(on).bg, fg: chip(on).fg, pick: () => this.setState({ [key]: l }) }; });
+const multi = (key, labels) => labels.map((l) => { const on = s[key].includes(l); return { label: l, on, bg: chip(on).bg, fg: chip(on).fg, pick: () => this.setState({ [key]: on ? s[key].filter((x) => x !== l) : [...s[key], l] }) }; });
+
+const names = ['Goal', 'Basics', 'Deliverables and pay', 'Review'];
+const steps = names.map((label, i) => {
+const n = i + 1;
+const active = s.step === n;
+const past = s.step > n;
+return { n, label, bar: (active || past) ? '#111111' : '#E2E2E2', weight: active ? 700 : 500, dotBg: active ? '#111111' : (past ? '#9DB1A4' : '#FFFFFF'), dotFg: active ? '#FFFFFF' : (past ? '#111111' : '#6E6E6E'), dotBorder: active ? '#111111' : '#9DB1A4', go: () => this.goStep({ step: n }) };
+});
+
+const delivKeys = Object.keys(s.deliv);
+const delivRows = delivKeys.map((k) => ({
+label: k, n: s.deliv[k],
+incLabel: 'Add one ' + k.toLowerCase(), decLabel: 'Remove one ' + k.toLowerCase(),
+inc: () => this.setState({ deliv: { ...s.deliv, [k]: Math.min(9, s.deliv[k] + 1) } }),
+dec: () => this.setState({ deliv: { ...s.deliv, [k]: Math.max(0, s.deliv[k] - 1) } })
+}));
+const plural = (k, n) => { const w = k.toLowerCase(); return n > 1 ? (w === 'story' ? 'stories' : w + 's') : w; };
+const delivParts = delivKeys.filter((k) => s.deliv[k] > 0).map((k) => s.deliv[k] + ' ' + plural(k, s.deliv[k]));
+const delivText = delivParts.length > 0 ? delivParts.join(', ') : 'Not set';
+
+const locText = s.loc === 'Remote' ? 'Remote, any location' : (s.city.trim() || 'Local, area not set');
+const items = [
+{ label: 'Title', ok: !!s.title.trim(), value: s.title.trim() || 'Not added', step: 2 },
+{ label: 'Goal', ok: !!s.objective, value: s.objective || 'Not set', step: 2 },
+{ label: 'Sports', ok: s.sports.length > 0, value: s.sports.join(', ') || 'Not set', step: 2 },
+{ label: 'Location', ok: s.loc === 'Remote' || !!s.city.trim(), value: locText, step: 2 },
+{ label: 'Deliverables', ok: delivParts.length > 0, value: delivText, step: 3 },
+{ label: 'Compensation', ok: s.comps.length > 0, value: s.comps.join(', ') || 'Not set', step: 3 },
+{ label: 'Budget', ok: !!s.budget.trim(), value: s.budget.trim() || 'Not added', step: 3 },
+{ label: 'Deadline', ok: !!s.deadline.trim(), value: fmtDate(s.deadline) || 'Not added', step: 3 }
+];
+const reviewRows = items.map((it) => ({ label: it.label, value: it.value, status: it.ok ? 'Complete' : 'Missing', badgeBg: it.ok ? '#111111' : '#F4F4F2', badgeFg: it.ok ? '#FFFFFF' : '#6E6E6E', edit: () => this.goStep({ step: it.step }) }));
+const pctText = Math.round((items.filter((it) => it.ok).length / items.length) * 100) + '%';
+
+const hasReq = !!s.title.trim() && s.sports.length > 0 && s.comps.length > 0 && delivParts.length > 0 && !!s.deadline.trim();
+const canPublish = hasReq && s.confirm;
+const canDraft = s.desc.trim().length > 10;
+
+const previewTags = [...s.sports, ...s.comps].slice(0, 6).map((l) => ({ label: l }));
+const previewLine = [s.objective, s.loc === 'Remote' ? 'Remote' : (s.city.trim() || 'Local')].filter((x) => x).join(' · ') || 'Goal and location';
+
+return {
+steps, reviewRows, pctText, delivRows,
+notDone: !s.done, isDone: s.done,
+isStep1: !s.done && s.step === 1, isStep2: !s.done && s.step === 2, isStep3: !s.done && s.step === 3, isStep4: !s.done && s.step === 4,
+desc: s.desc, setDesc: set('desc'),
+title: s.title, setTitle: set('title'), city: s.city, setCity: set('city'),
+budget: s.budget, setBudget: set('budget'), count: s.count, setCount: set('count'),
+start: s.start, setStart: set('start'), deadline: s.deadline, setDeadline: set('deadline'),
+notes: s.notes, setNotes: set('notes'),
+confirm: s.confirm, toggleConfirm: () => this.setState({ confirm: !s.confirm }),
+objChips: single('objective', ['Reviews', 'Awareness', 'Event turnout', 'Sales or sign-ups', 'Community']),
+sportChips: multi('sports', ['Running', 'Triathlon', 'Cycling', 'Swimming', 'Trail', 'Ultra']),
+locChips: single('loc', ['Local', 'Remote']),
+isLocal: s.loc === 'Local',
+styleChips: multi('styles', ['Gear reviews', 'Education', 'Storytelling', 'Race recaps', 'Humor', 'Community', 'Beginner-focused']),
+compChips: multi('comps', ['Cash', 'Product', 'Event support', 'Affiliate']),
+rightsChips: single('rights', ['None', '30 days', '90 days', '1 year']),
+canDraft, cannotDraft: !canDraft, drafted: s.drafted,
+draft: () => {
+const d = s.desc.trim().toLowerCase();
+const sports = [];
+if (/run|marathon|5k|10k/.test(d)) sports.push('Running');
+if (/tri/.test(d)) sports.push('Triathlon');
+if (/cycl|bike|ride/.test(d)) sports.push('Cycling');
+if (/swim/.test(d)) sports.push('Swimming');
+if (/trail/.test(d)) sports.push('Trail');
+const review = /review|honest/.test(d);
+const words = s.desc.trim().split(/\s+/).slice(0, 7).join(' ');
+this.setState({
+drafted: true,
+title: s.title || (words.charAt(0).toUpperCase() + words.slice(1)),
+objective: review ? 'Reviews' : 'Awareness',
+sports: sports.length ? sports : s.sports,
+styles: review ? ['Gear reviews'] : s.styles,
+deliv: { ...s.deliv, Video: Math.max(1, s.deliv.Video), Story: Math.max(2, s.deliv.Story) },
+step: 2
+});
+},
+showBack: s.step > 1, showContinue: s.step < 4,
+contBg: (s.step === 1 && !s.drafted) ? '#FFFFFF' : '#111111', contFg: (s.step === 1 && !s.drafted) ? '#111111' : '#FFFFFF',
+continueLabel: s.step === 1 ? (s.drafted ? 'Continue' : 'Skip and fill in myself') : 'Continue',
+showPublishOn: s.step === 4 && canPublish, showPublishOff: s.step === 4 && !canPublish,
+showMissing: s.step === 4 && !canPublish,
+missingText: hasReq ? 'Tick the confirmation to publish.' : 'Add a title, sport, compensation, deliverable and deadline.',
+goBack: () => this.goStep({ step: Math.max(1, s.step - 1) }),
+goNext: () => this.goStep({ step: Math.min(4, s.step + 1) }),
+publish: () => { if (canPublish) this.setState({ done: true }); },
+editAgain: () => this.setState({ done: false, step: 2, confirm: false }),
+newOne: () => this.goStep({ step: 1, desc: '', drafted: false, title: '', objective: '', sports: [], loc: 'Local', city: '', styles: [], deliv: { Video: 0, Post: 0, Story: 0, 'Event appearance': 0 }, comps: [], budget: '', count: '', start: '', deadline: '', rights: '', notes: '', confirm: false, done: false }),
+previewTitle: s.title.trim() || 'Your campaign title',
+previewDue: fmtDate(s.deadline) || 'not set',
+previewLine, previewTags,
+previewDeliv: delivText,
+previewBudget: s.budget.trim() ? s.budget.trim() + (s.count.trim() ? ' for ' + s.count.trim() + (s.count.trim() === '1' ? ' athlete' : ' athletes') : '') : 'Not set'
+};
+}
+}
+</script>
+<script>(function(){function ensure(){if(document.querySelector(".pilot-back")||!document.body)return;var a=document.createElement("a");a.className="pilot-back";a.href="index.html";a.innerHTML='<span aria-hidden="true">&larr;</span> Test tasks';document.body.appendChild(a);}document.addEventListener("DOMContentLoaded",ensure);setInterval(ensure,800);})();</script>
+</body>
+</html>

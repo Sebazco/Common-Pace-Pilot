@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Top bar</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+.tn-bar{max-width:1280px;margin:0 auto;padding:14px 24px;box-sizing:border-box;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 14px}
+.tn-nav{display:flex;flex-wrap:wrap;gap:4px;background:#F4F4F2;border-radius:999px;padding:4px}
+.tn-tabs{display:none}
+@media (max-width:760px){
+.tn-nav{display:none}
+body{padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+.tn-bar{padding:10px 16px}
+.tn-tabs{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:60;background:#FFFFFF;border-top:1px solid rgba(17,17,17,.18);padding:6px 6px calc(6px + env(safe-area-inset-bottom));box-sizing:border-box}
+.tn-tabs a{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 0;font-size:11px;font-weight:600;min-height:56px;justify-content:center}
+}
+</style>
+</helmet>
+<div style="position:relative;z-index:50;background:#FFFFFF;border-bottom:1px solid rgba(17,17,17,.14);color:#111111;font-family:'Hanken Grotesk',system-ui,sans-serif;font-size:17px;line-height:1.5">
+<div class="tn-bar">
+
+<a href="{{home}}" style="display:flex;align-items:center;gap:10px">
+<svg width="30" height="30" viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="8" fill="#111111"/><path d="M9.5 27 L17.5 9" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round"/><path d="M18.5 27 L26.5 9" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round"/></svg>
+<span style="font-weight:700;font-size:14px;letter-spacing:.14em;text-transform:uppercase">Common Pace</span>
+<sc-if value="{{isBusiness}}" hint-placeholder-val="{{false}}">
+<span style="margin-left:6px;border:1px solid #111111;border-radius:999px;padding:1px 10px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase">Business</span>
+</sc-if>
+</a>
+
+<nav class="tn-tabs" aria-label="Primary tabs">
+<sc-for list="{{items}}" as="n" hint-placeholder-count="5">
+<a href="{{n.href}}" aria-current="{{n.current}}" style="color:{{n.lc}}">
+<span style="display:flex;align-items:center;justify-content:center;width:52px;height:30px;border-radius:999px;background:{{n.tabBg}}"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="{{n.icon}}" fill="none" stroke="{{n.tabFg}}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+<span>{{n.label}}</span>
+</a>
+</sc-for>
+</nav>
+
+<nav class="tn-nav" aria-label="Primary">
+<sc-for list="{{items}}" as="n" hint-placeholder-count="5">
+<a href="{{n.href}}" aria-current="{{n.current}}" style="padding:10px 18px;border-radius:999px;font-size:15px;font-weight:600;background:{{n.bg}};color:{{n.fg}}">{{n.label}}</a>
+</sc-for>
+</nav>
+
+<div style="position:relative">
+<button type="button" onClick="{{toggle}}" aria-label="Account menu" aria-expanded="{{open}}" style="width:44px;height:44px;border-radius:50%;border:0;background:#EDEEEC;color:#111111;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center">{{initials}}</button>
+<sc-if value="{{open}}" hint-placeholder-val="{{false}}">
+<div style="position:absolute;right:0;top:52px;width:260px;background:#FFFFFF;border:1px solid rgba(17,17,17,.22);border-radius:20px;box-shadow:0 16px 36px rgba(17,17,17,.16);padding:8px;box-sizing:border-box">
+<div style="padding:10px 14px 8px;font-size:13px;color:#6E6E6E">Signed in as {{who}}</div>
+<sc-for list="{{menu}}" as="m" hint-placeholder-count="3">
+<div>
+<sc-if value="{{m.isLink}}" hint-placeholder-val="{{true}}">
+<a href="{{m.href}}" style="display:block;padding:12px 14px;border-radius:12px;font-size:15px;font-weight:600">{{m.label}}</a>
+</sc-if>
+<sc-if value="{{m.isSoon}}" hint-placeholder-val="{{false}}">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 14px;font-size:15px;font-weight:600;color:#6E6E6E"><span>{{m.label}}</span><span style="font-size:12px;border:1px dashed #6E6E6E;border-radius:999px;padding:0 10px">Coming soon</span></div>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</sc-if>
+</div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"kind":{"editor":null,"default":"athlete"},"active":{"editor":null,"default":""},"$preview":{"width":1280,"height":74}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { open: false };
+}
+renderVals() {
+const cpRole = (k) => { if (k === 'athlete' || k === 'business') return k; try { const q = new URLSearchParams(window.location.search).get('as'); if (q === 'business' || q === 'athlete') { try { localStorage.setItem('cpRole', q); } catch (e) {} return q; } if (localStorage.getItem('cpRole') === 'business') return 'business'; } catch (e) {} return 'athlete'; };
+const kind = cpRole(this.props.kind);
+const active = this.props.active || '';
+const defs = kind === 'business'
+? [['Matches', 'Find.dc.html?as=business'], ['New campaign', 'Create.dc.html'], ['Messages', 'Messages.dc.html?as=business'], ['Deals', 'Deals.dc.html?as=business']]
+: [['Discover', 'Campaigns.dc.html'], ['Messages', 'Messages.dc.html?as=athlete'], ['Deals', 'Deals.dc.html?as=athlete'], ['Profile', 'Season.dc.html?as=athlete']];
+const icons = { 'Discover': 'M11 4a7 7 0 1 0 0 14a7 7 0 0 0 0-14zM21 21l-5-5', 'Messages': 'M4 5h16v11H9l-5 4z', 'Deals': 'M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h5', 'Portfolio': 'M4 8h16v11H4zM9 8V5h6v3', 'Profile': 'M12 4a4 4 0 1 0 0 8a4 4 0 0 0 0-8zM5 21c0-4 3-6 7-6s7 2 7 6', 'Matches': 'M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.500-7 10-7 10z', 'New campaign': 'M12 5v14M5 12h14' };
+const items = defs.map((d) => { const on = d[0] === active; return { label: d[0], href: d[1], icon: icons[d[0]], tabBg: on ? '#111111' : 'transparent', tabFg: on ? '#FFFFFF' : '#6E6E6E', current: on ? 'page' : 'false', lc: on ? '#111111' : '#6E6E6E', bg: on ? '#111111' : 'transparent', fg: on ? '#FFFFFF' : '#111111' }; });
+const menuDefs = kind === 'business'
+? [{ label: 'Account settings', href: 'Settings.dc.html?as=business' }, { label: 'Sign out', href: 'Auth.dc.html' }]
+: [{ label: 'Edit profile', href: 'Profile.dc.html' }, { label: 'Account settings', href: 'Settings.dc.html?as=athlete' }, { label: 'Sign out', href: 'Auth.dc.html' }];
+const menu = menuDefs.map((m) => ({ label: m.label, href: m.href || '', isLink: !m.soon, isSoon: !!m.soon }));
+return {
+items, menu,
+home: kind === 'business' ? 'Find.dc.html' : 'Campaigns.dc.html',
+isBusiness: kind === 'business',
+initials: kind === 'business' ? 'Biz' : 'You',
+who: kind === 'business' ? '[Your business]' : '[Your name]',
+open: this.state.open,
+toggle: () => this.setState({ open: !this.state.open })
+};
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sponsorship Deals</title>
+<script src="./support.js"></script>
+<style id="pilot-css">.pilot-back{position:fixed;z-index:9999;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:8px 14px;border-radius:999px;background:#111111;color:#FFFFFF;font:600 13px/1 "Hanken Grotesk",system-ui,sans-serif;text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,.18)}.pilot-back:focus-visible{outline:2px solid #3D6B52;outline-offset:3px}.pilot-back{left:max(16px,env(safe-area-inset-left,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px))}</style>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0}
+button{font-family:inherit;cursor:pointer}
+a{color:inherit;text-decoration:none}
+</style>
+</helmet>
+<div style="background:#FFFFFF;color:#111111;font-family:'Hanken Grotesk',system-ui,sans-serif;font-size:17px;line-height:1.5">
+
+<!-- NAV -->
+<dc-import name="TopNav" kind="auto" active="Deals" hint-size="100%,74px"></dc-import>
+
+<div style="max-width:1280px;margin:0 auto;padding:48px 24px 80px;box-sizing:border-box">
+<h1 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(48px,6vw,80px);line-height:.96;letter-spacing:-.025em">Deals</h1>
+<p style="margin:12px 0 0;color:#3A3A3A;max-width:560px">Sample deals. Track terms and deliverables from the first handshake to the final post.</p>
+
+<a href="Course.dc.html" style="margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;background:#111111;color:#FFFFFF;border-radius:22px;padding:18px 20px;text-decoration:none">
+<span style="min-width:0"><span style="display:block;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#A3A3A3">Goal deal &middot; On pace</span><span style="display:block;margin-top:4px;font-family:'Instrument Serif',serif;font-size:32px;line-height:1.05">Sub-4:00 at City Marathon</span><span style="display:block;margin-top:2px;font-size:14px;color:#C8C8C8">Bib 0147 &middot; 1 of 5 aid stations done &middot; finish Nov 23</span></span>
+<span style="flex:0 0 auto;background:#FFFFFF;color:#111111;border-radius:999px;padding:12px 20px;font-weight:700;font-size:15px">See the course</span>
+</a>
+<div role="group" aria-label="Choose a deal" style="margin-top:32px;display:flex;flex-wrap:wrap;gap:10px">
+<sc-for list="{{deals}}" as="d" hint-placeholder-count="2">
+<button type="button" onClick="{{d.pick}}" aria-pressed="{{d.on}}" style="text-align:left;border:1px solid #111111;border-radius:18px;padding:14px 20px;background:{{d.bg}};color:{{d.fg}};flex:1 1 260px;max-width:380px">
+<div style="font-weight:700">{{d.biz}}</div>
+<div style="font-size:14px;color:{{d.subFg}}">{{d.title}} &middot; {{d.stage}}</div>
+</button>
+</sc-for>
+</div>
+
+<!-- STATUS TRACK -->
+<div style="margin-top:40px;background:#F4F4F2;color:#111111;border-radius:28px;padding:32px;box-sizing:border-box">
+<div style="font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6E6E6E">Status</div>
+<div style="margin-top:6px;font-family:'Instrument Serif',serif;font-size:44px;line-height:1.02;letter-spacing:-.01em">{{cur.title}}</div>
+<div style="margin-top:28px;display:flex;flex-wrap:wrap;gap:12px 0">
+<sc-for list="{{track}}" as="t" hint-placeholder-count="5">
+<div style="flex:1 1 140px;min-width:0">
+<div style="height:6px;border-radius:999px;background:{{t.bar}}"></div>
+<div style="margin-top:8px;font-size:14px;font-weight:{{t.weight}};color:{{t.fg}}">{{t.label}}</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="margin-top:32px;display:flex;flex-wrap:wrap;gap:32px;align-items:flex-start">
+
+<!-- AGREEMENT -->
+<div style="flex:1 1 420px;min-width:0">
+<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between">
+<h2 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:40px;line-height:1;letter-spacing:-.02em">Agreement summary</h2>
+<span style="border:1px {{termsBorder}} #111111;border-radius:999px;padding:3px 14px;font-size:13px;font-weight:600;background:{{termsBg}};color:{{termsFg}}">{{termsStatus}}</span>
+</div>
+<div style="margin-top:20px;border-top:1px solid rgba(17,17,17,.14)">
+<sc-for list="{{terms}}" as="r" hint-placeholder-count="6">
+<div style="display:flex;flex-wrap:wrap;gap:4px 20px;padding:14px 0;border-bottom:1px solid rgba(17,17,17,.14)">
+<div style="flex:0 0 150px;font-weight:600">{{r.k}}</div>
+<div style="flex:1 1 200px;color:#3A3A3A">{{r.v}}</div>
+</div>
+</sc-for>
+</div>
+<sc-if value="{{needsConfirm}}" hint-placeholder-val="{{false}}">
+<div style="margin-top:20px;background:#F4F4F2;border-radius:18px;padding:20px">
+<div style="font-weight:700">Review before you agree</div>
+<div style="margin-top:4px;font-size:15px;color:#3A3A3A">This summary was drafted automatically from your conversation. Check every line. Terms only become confirmed when you and {{otherParty}} both approve them.</div>
+<button type="button" onClick="{{confirmTerms}}" style="margin-top:14px;background:#111111;color:#FFFFFF;border:0;border-radius:999px;padding:12px 26px;font-size:15px;font-weight:600;min-height:46px">I agree to these terms</button>
+</div>
+</sc-if>
+<sc-if value="{{confirmedNote}}" hint-placeholder-val="{{false}}">
+<div style="margin-top:16px;font-size:14px;color:#6E6E6E">Both sides approved these terms. Changes need approval from both.</div>
+</sc-if>
+</div>
+
+<!-- DELIVERABLES -->
+<div style="flex:1 1 420px;min-width:0">
+<div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between">
+<h2 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:40px;line-height:1;letter-spacing:-.02em">Deliverables</h2>
+<span style="font-size:15px;font-weight:600">{{doneText}}</span>
+</div>
+<div style="margin-top:14px;height:8px;border-radius:999px;background:#E2E2E2;overflow:hidden"><div style="height:8px;background:#111111;width:{{pct}}"></div></div>
+<div style="margin-top:20px;display:flex;flex-direction:column;gap:12px">
+<sc-for list="{{items}}" as="i" hint-placeholder-count="4">
+<div style="display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;border:1px solid rgba(17,17,17,.2);border-radius:18px;padding:16px 18px;background:{{i.bg}}">
+<div style="flex:1 1 200px;min-width:0">
+<div style="font-weight:700">{{i.name}}</div>
+<div style="font-size:14px;color:#3A3A3A">Due {{i.due}}</div>
+</div>
+<sc-if value="{{i.done}}" hint-placeholder-val="{{false}}">
+<span style="display:inline-flex;align-items:center;gap:6px;background:#111111;color:#FFFFFF;border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 6.5 L5 9 L10 3" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Delivered</span>
+</sc-if>
+<sc-if value="{{i.canMark}}" hint-placeholder-val="{{false}}">
+<button type="button" onClick="{{i.mark}}" style="background:#FFFFFF;color:#111111;border:1px solid #111111;border-radius:999px;padding:8px 18px;font-size:14px;font-weight:600;min-height:44px">{{markLabel}}</button>
+</sc-if>
+<sc-if value="{{i.confirming}}" hint-placeholder-val="{{false}}">
+<div style="flex:1 1 100%;margin-top:6px;background:#F4F4F2;border-radius:14px;padding:14px">
+<div style="display:flex;gap:10px;align-items:flex-start"><input id="disc-{{i.name}}" type="checkbox" checked="{{i.discOk}}" onChange="{{i.toggleDisc}}" style="width:22px;height:22px;margin:2px 0 0;flex:0 0 auto;accent-color:#111111"><label for="disc-{{i.name}}" style="font-size:15px">{{discLabel}}</label></div>
+<div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px"><button type="button" onClick="{{i.confirmMark}}" disabled="{{i.confirmBlocked}}" style="background:{{i.confirmBg}};color:#FFFFFF;border:0;border-radius:999px;padding:10px 20px;font-size:15px;font-weight:600;min-height:44px">{{confirmLabel}}</button><button type="button" onClick="{{i.cancelMark}}" style="background:#FFFFFF;color:#111111;border:1px solid #111111;border-radius:999px;padding:10px 20px;font-size:15px;font-weight:600;min-height:44px">Cancel</button></div>
+</div>
+</sc-if>
+<sc-if value="{{i.locked}}" hint-placeholder-val="{{false}}">
+<span style="font-size:13px;color:#6E6E6E">Opens after terms are agreed</span>
+</sc-if>
+</div>
+</sc-for>
+</div>
+<sc-if value="{{allDone}}" hint-placeholder-val="{{false}}">
+<div style="margin-top:20px;background:#F4F4F2;border-radius:18px;padding:20px">
+<div style="font-weight:700">All deliverables delivered</div>
+<div style="margin-top:4px;font-size:15px;color:#3A3A3A">{{doneNote}}</div>
+<sc-if value="{{notBiz}}" hint-placeholder-val="{{true}}"><a href="Portfolio.dc.html" style="display:inline-block;margin-top:12px;font-size:15px;font-weight:700;text-decoration:underline">View portfolio</a></sc-if>
+</div>
+</sc-if>
+<div style="margin-top:16px;font-size:13px;color:#6E6E6E">Remember to label sponsored posts clearly, for example with #ad or a paid partnership tag. <a href="Legal.dc.html#disclosure" style="font-weight:700;text-decoration:underline">How to disclose</a></div>
+<button type="button" onClick="{{reportDeal}}" style="margin-top:6px;background:none;border:0;padding:8px 0;font-size:15px;font-weight:700;text-decoration:underline;color:#111111;min-height:44px">Report a problem with this deal</button>
+</div>
+
+</div>
+</div>
+<sc-if value="{{rpOpen}}" hint-placeholder-val="{{false}}">
+<div style="position:fixed;inset:0;z-index:80;background:rgba(17,17,17,.45);display:flex;align-items:center;justify-content:center;padding:24px;box-sizing:border-box">
+<div role="dialog" aria-modal="true" aria-labelledby="rp-title" style="width:min(520px,100%);max-height:90%;overflow-y:auto;background:#FFFFFF;border-radius:24px;padding:24px 20px;box-sizing:border-box;color:#111111">
+<sc-if value="{{rpNotSent}}" hint-placeholder-val="{{true}}">
+<h2 id="rp-title" style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:30px;line-height:1.05">Report {{rpTarget}}</h2>
+<p style="margin:8px 0 0;font-size:15px;color:#3A3A3A">Reports are private. The account is not told who reported it.</p>
+<div style="margin-top:14px;font-weight:600;font-size:15px">What's wrong?</div>
+<div role="radiogroup" aria-label="Reason" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:8px">
+<sc-for list="{{rpReasons}}" as="x" hint-placeholder-count="6">
+<button type="button" role="radio" aria-checked="{{x.on}}" onClick="{{x.pick}}" style="padding:10px 16px;border-radius:999px;font-size:15px;font-weight:600;min-height:44px;border:1px solid #111111;background:{{x.bg}};color:{{x.fg}}">{{x.label}}</button>
+</sc-for>
+</div>
+<div style="margin-top:8px;font-size:14px;color:#6E6E6E">{{rpHelp}}</div>
+<label for="rp-note" style="display:block;margin-top:14px;font-weight:600;font-size:15px">Details <span style="font-weight:400;color:#6E6E6E">(optional)</span></label>
+<textarea id="rp-note" rows="3" value="{{rpNote}}" onChange="{{setRpNote}}" style="margin-top:6px;width:100%;box-sizing:border-box;padding:12px 14px;font-size:16px;font-family:inherit;border:1px solid #9A9A9A;border-radius:12px;resize:vertical"></textarea>
+<div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:10px">
+<button type="button" onClick="{{sendReport}}" disabled="{{rpBlocked}}" style="background:{{rpBg}};color:#FFFFFF;border:0;border-radius:999px;padding:12px 24px;font-size:16px;font-weight:600;min-height:48px">Send report</button>
+<button type="button" onClick="{{closeReport}}" style="background:#FFFFFF;color:#111111;border:1.5px solid #111111;border-radius:999px;padding:12px 24px;font-size:16px;font-weight:600;min-height:48px">Cancel</button>
+</div>
+</sc-if>
+<sc-if value="{{rpSent}}" hint-placeholder-val="{{false}}">
+<h2 role="status" style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:30px;line-height:1.05">Thanks. We'll look into it.</h2>
+<p style="margin:8px 0 0;font-size:15px;color:#3A3A3A">Our team reviews reports within [24 hours] and messages you with the outcome. Copyright reports follow our takedown process.</p>
+<button type="button" onClick="{{closeReport}}" style="margin-top:16px;background:#111111;color:#FFFFFF;border:0;border-radius:999px;padding:12px 24px;font-size:16px;font-weight:600;min-height:48px">Done</button>
+</sc-if>
+</div>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1400}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { active: 0, agreed: [false, true], delivered: [[], [0]], markOpen: -1, discOk: false };
+}
+renderVals() {
+const s = this.state;
+const rpReasonDefs = [['Payment not received', 'The agreed payment or product has not arrived.'], ['Deliverable not done', 'A post was missed, late or not as agreed.'], ['Post not disclosed', 'A sponsored post has no Ad or paid partnership label.'], ['Terms changed', 'One side changed terms without agreement.'], ['Harassment or scam', 'Abuse, threats or a request for money or details.'], ['Something else', 'Tell us more in the details.']];
+const rpPick = rpReasonDefs.find((d) => d[0] === s.rpReason);
+const rpVals = { rpOpen: !!s.rp, rpTarget: s.rp || '', rpSent: !!s.rpSent, rpNotSent: !s.rpSent,
+rpReasons: rpReasonDefs.map((d) => { const on = s.rpReason === d[0]; return { label: d[0], on: on ? 'true' : 'false', bg: on ? '#111111' : '#FFFFFF', fg: on ? '#FFFFFF' : '#111111', pick: () => this.setState({ rpReason: d[0] }) }; }),
+rpHelp: rpPick ? rpPick[1] : 'Pick one reason.', rpNote: s.rpNote || '', setRpNote: (e) => this.setState({ rpNote: e.target.value }),
+rpBlocked: !s.rpReason, rpBg: s.rpReason ? '#111111' : '#E2E2E2',
+sendReport: () => { if (s.rpReason) this.setState({ rpSent: true }); },
+closeReport: () => this.setState({ rp: '', rpReason: '', rpNote: '', rpSent: false }) };
+const openReport = (t) => () => this.setState({ rp: t, rpReason: '', rpNote: '', rpSent: false });
+const cpRole = (k) => { if (k === 'athlete' || k === 'business') return k; try { const q = new URLSearchParams(window.location.search).get('as'); if (q === 'business' || q === 'athlete') { try { localStorage.setItem('cpRole', q); } catch (e) {} return q; } if (localStorage.getItem('cpRole') === 'business') return 'business'; } catch (e) {} return 'athlete'; };
+const isBiz = cpRole('auto') === 'business';
+const deals = [
+{ biz: isBiz ? '[Athlete name] \u00b7 No. 07' : '[Local running store]', title: 'Fall long-run series', terms: [
+{ k: 'Compensation', v: '$300 plus product (one pair of shoes)' },
+{ k: 'Deliverables', v: '2 videos and 3 stories' },
+{ k: 'Deadline', v: 'Nov 20' },
+{ k: 'Usage rights', v: 'Business may repost for 90 days' },
+{ k: 'Disclosure', v: 'Label each post as a paid partnership' },
+{ k: 'Payment', v: 'Handled outside Common Pace for now' },
+{ k: 'Cancellation', v: 'Either side can cancel before work starts. After that, both agree in writing on what is owed.' },
+{ k: 'If something goes wrong', v: 'Use Report a problem. Common Pace is not a party to the deal, but reviews every report.' }
+], items: [{ name: 'Video 1: first impressions', due: 'Nov 8' }, { name: 'Video 2: 40-mile review', due: 'Nov 20' }, { name: 'Story set 1', due: 'Nov 10' }, { name: 'Story set 2', due: 'Nov 17' }] },
+{ biz: isBiz ? '[Athlete name] \u00b7 No. 12' : '[Recovery studio]', title: 'Marathon recovery series', terms: [
+{ k: 'Compensation', v: '$250' },
+{ k: 'Deliverables', v: '1 video and 2 posts' },
+{ k: 'Deadline', v: 'Nov 30' },
+{ k: 'Usage rights', v: 'Studio may repost for 60 days' },
+{ k: 'Disclosure', v: 'Label each post as a paid partnership' },
+{ k: 'Payment', v: 'Handled outside Common Pace for now' },
+{ k: 'Cancellation', v: 'Either side can cancel before work starts. After that, both agree in writing on what is owed.' },
+{ k: 'If something goes wrong', v: 'Use Report a problem. Common Pace is not a party to the deal, but reviews every report.' }
+], items: [{ name: 'Recovery video', due: 'Nov 20' }, { name: 'Post 1: session recap', due: 'Nov 24' }, { name: 'Post 2: results', due: 'Nov 30' }] }
+];
+const d = deals[s.active];
+const agreed = s.agreed[s.active];
+const done = s.delivered[s.active];
+const allDone = agreed && done.length === d.items.length;
+const stageOf = (i) => {
+const dn = s.delivered[i].length, tot = deals[i].items.length;
+if (!s.agreed[i]) return 'Negotiating';
+if (dn === tot) return 'Delivered';
+return 'In progress';
+};
+const stages = ['Invited', 'Negotiating', 'Agreed', 'In progress', 'Delivered'];
+const curStage = stageOf(s.active);
+const curIdx = curStage === 'Negotiating' ? 1 : (curStage === 'In progress' ? 3 : 4);
+const track = stages.map((label, i) => ({ label, bar: i <= curIdx ? '#111111' : '#DDDDDD', fg: i <= curIdx ? '#111111' : '#8A8A8A', weight: i === curIdx ? 700 : 500 }));
+const items = d.items.map((it, i) => {
+const isDone = done.includes(i);
+return { ...it, done: isDone, canMark: agreed && !isDone && s.markOpen !== i, locked: !agreed && !isDone, bg: isDone ? '#F4F4F2' : '#FFFFFF', confirming: s.markOpen === i && agreed && !isDone, notConfirming: s.markOpen !== i, mark: () => this.setState({ markOpen: i, discOk: false }), discOk: !!s.discOk, toggleDisc: () => this.setState({ discOk: !s.discOk }), cancelMark: () => this.setState({ markOpen: -1, discOk: false }), confirmMark: () => { if (s.discOk) this.setState({ delivered: s.delivered.map((arr, j) => (j === s.active ? [...arr, i] : arr)), markOpen: -1, discOk: false }); }, confirmBg: s.discOk ? '#111111' : '#E2E2E2', confirmBlocked: !s.discOk };
+});
+const doneCount = done.length;
+return {
+...rpVals,
+deals: deals.map((x, i) => { const on = s.active === i; return { biz: x.biz, title: x.title, stage: stageOf(i), on, bg: on ? '#111111' : '#FFFFFF', fg: on ? '#FFFFFF' : '#111111', subFg: on ? '#C8C8C8' : '#3A3A3A', pick: () => this.setState({ active: i }) }; }),
+cur: d, track, terms: d.terms, items, allDone,
+discLabel: isBiz ? 'I checked the post. It is clearly labeled as an ad or paid partnership.' : 'This post is clearly labeled as an ad or paid partnership (for example, the platform\'s paid partnership label or #ad at the start).', confirmLabel: isBiz ? 'Confirm received' : 'Confirm delivered', reportDeal: openReport('a problem with this deal'),
+isBiz, notBiz: !isBiz, markLabel: isBiz ? 'Confirm received' : 'Mark delivered', otherParty: isBiz ? 'the athlete' : 'the business',
+doneNote: isBiz ? 'Confirm completion with the athlete to close this deal. Results then appear in their portfolio.' : 'The business now confirms completion. Then this deal moves into your portfolio.',
+termsStatus: agreed ? 'Confirmed terms' : 'Draft summary',
+termsBg: agreed ? '#111111' : '#F4F4F2', termsFg: agreed ? '#FFFFFF' : '#111111', termsBorder: agreed ? 'solid' : 'dashed',
+needsConfirm: !agreed, confirmedNote: agreed,
+confirmTerms: () => this.setState({ agreed: s.agreed.map((v, j) => (j === s.active ? true : v)) }),
+doneText: doneCount + ' of ' + d.items.length + ' delivered',
+pct: Math.round((doneCount / d.items.length) * 100) + '%'
+};
+}
+}
+</script>
+<script>(function(){function ensure(){if(document.querySelector(".pilot-back")||!document.body)return;var a=document.createElement("a");a.className="pilot-back";a.href="index.html";a.innerHTML='<span aria-hidden="true">&larr;</span> Test tasks';document.body.appendChild(a);}document.addEventListener("DOMContentLoaded",ensure);setInterval(ensure,800);})();</script>
+</body>
+</html>

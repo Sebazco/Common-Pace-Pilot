@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>App Matches</title>
+<script src="./support.js"></script>
+<style id="pilot-css">.pilot-back{position:fixed;z-index:9999;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:8px 14px;border-radius:999px;background:#111111;color:#FFFFFF;font:600 13px/1 "Hanken Grotesk",system-ui,sans-serif;text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,.18)}.pilot-back:focus-visible{outline:2px solid #3D6B52;outline-offset:3px}.pilot-back{right:max(12px,env(safe-area-inset-right,0px));bottom:calc(86px + env(safe-area-inset-bottom,0px))}@media (min-width:520px){html,body{background:#E7E7E4}body{padding:28px 0}#dc-root{width:390px;margin:0 auto;box-shadow:0 10px 40px rgba(0,0,0,.14);border-radius:28px;overflow:hidden;background:#FFFFFF}.pilot-back{left:24px;right:auto;top:24px;bottom:auto}}</style>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0}
+button{font-family:inherit;cursor:pointer}
+a{color:inherit;text-decoration:none}
+</style>
+</helmet>
+<div style="position:relative;width:390px;height:844px;overflow:hidden;background:#FFFFFF;color:#111111;font-family:'Hanken Grotesk',system-ui,sans-serif;font-size:16px;line-height:1.45">
+<div style="position:absolute;left:0;right:0;top:0;bottom:72px;overflow-y:auto">
+<div style="padding:24px 16px 32px">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><div style="font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6E6E6E">Matches for your campaign &middot; Business</div><a href="AppSettings.dc.html?as=business" aria-label="Account settings" style="flex:0 0 44px;width:44px;height:44px;border-radius:50%;background:#EDEEEC;color:#111111;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center">Biz</a></div>
+<h1 style="margin:6px 0 0;font-family:'Instrument Serif',serif;font-weight:400;font-size:44px;line-height:1;letter-spacing:-.02em">Meet your match.</h1>
+<div style="margin-top:14px;background:#F4F4F2;border-radius:18px;padding:12px 16px">
+<div style="font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#6E6E6E">Campaign</div>
+<div style="font-family:'Instrument Serif',serif;font-size:24px;line-height:1.1">Fall long-run series</div>
+<div style="font-size:13px;color:#3A3A3A">3 athletes needed &middot; $300 plus product &middot; Due Nov 20</div>
+</div>
+
+<div style="margin-top:12px;display:flex;gap:6px">
+<div style="flex:1 1 0;min-width:0;border:1px solid rgba(17,17,17,.2);border-radius:16px;padding:10px 2px;text-align:center"><div style="font-size:10px;font-weight:600;letter-spacing:0;text-transform:uppercase;color:#6E6E6E">Reviewed</div><div style="font-family:'Instrument Serif',serif;font-size:26px;line-height:1.1">{{reviewed}}<span style="font-size:13px;color:#6E6E6E">/{{total}}</span></div></div>
+<div style="flex:1 1 0;min-width:0;border:1px solid rgba(17,17,17,.2);border-radius:16px;padding:10px 2px;text-align:center"><div style="font-size:10px;font-weight:600;letter-spacing:0;text-transform:uppercase;color:#6E6E6E">Shortlisted</div><div style="font-family:'Instrument Serif',serif;font-size:26px;line-height:1.1">{{savedCount}}</div></div>
+<div style="flex:1 1 0;min-width:0;border:1px solid rgba(17,17,17,.2);border-radius:16px;padding:10px 2px;text-align:center"><div style="font-size:10px;font-weight:600;letter-spacing:0;text-transform:uppercase;color:#6E6E6E">Invited</div><div style="font-family:'Instrument Serif',serif;font-size:26px;line-height:1.1">{{invitedCount}}</div></div>
+<div style="flex:1.25 1 0;min-width:0;background:#111111;color:#FFFFFF;border-radius:16px;padding:10px 2px;text-align:center"><div style="font-size:10px;font-weight:600;letter-spacing:0;text-transform:uppercase;color:#A3A3A3">Interested</div><div style="font-family:'Instrument Serif',serif;font-size:26px;line-height:1.1">{{appCount}}</div></div>
+</div>
+
+<sc-if value="{{showMutual}}" hint-placeholder-val="{{false}}">
+<div style="margin-top:14px;background:#3D6B52;color:#FFFFFF;border-radius:20px;padding:16px;box-sizing:border-box">
+<div style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase">Mutual interest</div>
+<div style="margin-top:2px;font-family:'Instrument Serif',serif;font-size:24px;line-height:1.1">Athlete No. {{mutualNo}} is already interested in your campaign.</div>
+<div style="margin-top:12px;display:flex;gap:8px"><a href="AppMessages.dc.html" style="background:#FFFFFF;color:#111111;padding:12px 20px;border-radius:999px;font-size:15px;font-weight:600">Start a conversation</a><button type="button" onClick="{{dismissMutual}}" style="background:none;border:1.5px solid #FFFFFF;color:#FFFFFF;border-radius:999px;padding:10px 18px;font-size:15px;font-weight:600;min-height:44px">Later</button></div>
+</div>
+</sc-if>
+
+<div role="group" aria-label="Show athletes" style="margin-top:16px;display:flex;gap:8px">
+<sc-for list="{{filters}}" as="f" hint-placeholder-count="2">
+<button type="button" onClick="{{f.pick}}" aria-pressed="{{f.on}}" style="padding:8px 16px;border-radius:999px;font-size:15px;font-weight:600;min-height:44px;border:1px solid #111111;background:{{f.bg}};color:{{f.fg}}">{{f.label}}</button>
+</sc-for>
+</div>
+
+<sc-if value="{{hasCur}}" hint-placeholder-val="{{true}}">
+<div style="margin-top:14px">
+<div style="position:relative;padding-bottom:16px">
+<sc-if value="{{hasNext}}" hint-placeholder-val="{{true}}">
+<div aria-hidden="true" style="position:absolute;left:22px;right:22px;bottom:0;top:24px;background:#E2E2E2;border-radius:28px"></div>
+<div aria-hidden="true" style="position:absolute;left:11px;right:11px;bottom:8px;top:12px;background:#F4F4F2;border-radius:28px;border:1px solid rgba(17,17,17,.12)"></div>
+</sc-if>
+<div style="position:relative;background:#FFFFFF;border:1px solid rgba(17,17,17,.22);border-radius:28px;overflow:hidden;box-shadow:0 14px 32px rgba(17,17,17,.12)">
+<div style="position:relative;height:200px;background-color:{{cur.tone}};">
+<span style="position:absolute;top:14px;left:14px;background:#FFFFFF;border-radius:999px;padding:2px 12px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase">No. {{cur.no}}</span>
+<sc-if value="{{cur.hasStatus}}" hint-placeholder-val="{{false}}"><span style="position:absolute;top:14px;right:14px;background:#111111;color:#FFFFFF;border-radius:999px;padding:2px 12px;font-size:12px;font-weight:600">{{cur.statusText}}</span></sc-if>
+<span style="position:absolute;left:14px;bottom:12px;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase">Athlete photo</span>
+<div style="position:absolute;right:16px;bottom:-36px;width:100px;height:100px;border-radius:50%;background:#FFFFFF;box-shadow:0 8px 24px rgba(17,17,17,.18);display:flex;align-items:center;justify-content:center">
+<svg viewBox="0 0 100 100" width="100" height="100" role="img" aria-label="Compatibility: {{cur.fit}} fit" style="position:absolute;left:0;top:0">
+<circle cx="50" cy="50" r="44" fill="none" stroke="#F4F4F2" stroke-width="7"/>
+<circle cx="50" cy="50" r="44" fill="none" stroke="#111111" stroke-width="7" stroke-linecap="round" stroke-dasharray="{{cur.dash}}" transform="rotate(-90 50 50)"/>
+</svg>
+<div style="position:relative;text-align:center;line-height:1"><div style="font-family:'Instrument Serif',serif;font-size:24px;line-height:1">{{cur.fit}}</div><div style="margin-top:2px;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#6E6E6E">Fit</div></div>
+</div>
+</div>
+<div style="padding:20px 18px 20px;box-sizing:border-box">
+<div style="padding-top:8px;padding-right:110px;min-height:56px">
+<div style="font-family:'Instrument Serif',serif;font-size:32px;line-height:1;letter-spacing:-.02em">[Athlete name]</div>
+<div style="margin-top:4px;font-size:15px;color:#3A3A3A">{{cur.sport}} &middot; {{cur.city}}</div>
+</div>
+<div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:6px">
+<sc-for list="{{cur.tags}}" as="t" hint-placeholder-count="3"><span style="border:1px solid #111111;border-radius:999px;padding:2px 12px;font-size:13px;font-weight:500">{{t.label}}</span></sc-for>
+<sc-if value="{{cur.raceVerified}}" hint-placeholder-val="{{true}}"><span style="background:#111111;color:#FFFFFF;border-radius:999px;padding:2px 12px;font-size:13px;font-weight:600">Race-verified results</span></sc-if>
+<sc-if value="{{cur.applied}}" hint-placeholder-val="{{false}}"><span style="background:#3D6B52;color:#FFFFFF;border-radius:999px;padding:2px 12px;font-size:13px;font-weight:600">Interested in you</span></sc-if>
+</div>
+<div style="margin-top:18px;display:flex;justify-content:space-between;align-items:baseline"><div style="font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#6E6E6E">Why you match</div><div style="font-size:12px;color:#6E6E6E">AI estimate · sample</div></div>
+<div style="margin-top:10px;display:flex;flex-direction:column;gap:12px">
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="4">
+<div>
+<div style="font-size:14px;font-weight:700">{{r.k}} <span style="font-weight:600;color:#6E6E6E">&middot; {{r.level}}</span></div>
+<div style="font-size:13px;color:#3A3A3A">{{r.why}}</div>
+<div style="margin-top:4px;height:6px;border-radius:999px;background:#F4F4F2;overflow:hidden"><div style="height:6px;border-radius:999px;background:#111111;width:{{r.pct}}"></div></div>
+</div>
+</sc-for>
+</div>
+<div style="margin-top:16px;padding-top:12px;border-top:1px solid rgba(17,17,17,.14);font-size:13px;color:#3A3A3A"><div><strong style="color:#111111">Audience:</strong> {{cur.audience}}</div><div style="margin-top:2px"><strong style="color:#111111">Next race:</strong> {{cur.nextRace}}</div><div style="margin-top:2px;color:#6E6E6E">Evidence: {{cur.evidence}}</div></div>
+<a href="AppProfile.dc.html" style="display:inline-block;margin-top:12px;font-weight:700;font-size:15px;text-decoration:underline;min-height:44px;line-height:44px">View full profile</a>
+</div>
+</div>
+</div>
+<div style="margin-top:14px;display:flex;align-items:center;justify-content:center;gap:10px">
+<button type="button" aria-label="Previous athlete" onClick="{{prev}}" style="flex:0 0 44px;width:44px;height:48px;border-radius:50%;border:0;background:#F4F4F2;display:flex;align-items:center;justify-content:center"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M11 3 L5 9 L11 15" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+<button type="button" aria-label="Pass on this athlete" onClick="{{pass}}" style="min-height:48px;padding:0 18px;gap:8px;border-radius:999px;font-size:15px;font-weight:600;color:#111111;border:1.5px solid #111111;background:#FFFFFF;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6 L18 18 M18 6 L6 18" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round"/></svg>Pass</button>
+<button type="button" aria-label="Save to shortlist" onClick="{{save}}" style="min-height:48px;padding:0 18px;gap:8px;border-radius:999px;font-size:15px;font-weight:600;color:#111111;border:1.5px solid #111111;background:#F4F4F2;display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4 H17 V21 L12 17 L7 21 Z" fill="none" stroke="#111111" stroke-width="2.2" stroke-linejoin="round"/></svg>Save</button>
+<button type="button" onClick="{{invite}}" style="height:56px;border-radius:999px;border:0;background:#111111;color:#FFFFFF;padding:0 18px;font-size:15px;font-weight:600">Invite to campaign</button>
+</div>
+<div style="margin-top:10px;text-align:center;font-size:12px;color:#6E6E6E">Pass, save or invite. Nothing is sent until you invite.</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isEnd}}" hint-placeholder-val="{{false}}">
+<div style="margin-top:14px;background:#F4F4F2;border-radius:28px;padding:36px 24px;box-sizing:border-box;text-align:center">
+<div style="font-family:'Instrument Serif',serif;font-size:36px;line-height:1">That's everyone for now.</div>
+<p style="margin:10px 0 0;color:#3A3A3A;font-size:15px">New athletes join every week. Check your shortlist, or start the deck again.</p>
+<button type="button" onClick="{{restart}}" style="margin-top:16px;background:#111111;color:#FFFFFF;border:0;border-radius:999px;padding:12px 28px;font-size:16px;font-weight:600;min-height:48px">Start over</button>
+</div>
+</sc-if>
+
+<div style="margin-top:20px;font-size:12px;color:#6E6E6E">Fit is an AI estimate built from profile content, audience, location and race timing. Every fit shows its reasons, and you decide who to invite. Fit is not a measure of an athlete's worth.</div>
+
+<div role="group" aria-label="Lists" style="margin-top:24px;display:flex;gap:4px;background:#F4F4F2;border-radius:999px;padding:4px">
+<sc-for list="{{listTabs}}" as="t" hint-placeholder-count="3">
+<button type="button" onClick="{{t.pick}}" aria-pressed="{{t.on}}" style="flex:1 1 0;border:0;border-radius:999px;padding:8px 4px;font-size:14px;font-weight:600;min-height:44px;background:{{t.bg}};color:{{t.fg}}">{{t.label}}</button>
+</sc-for>
+</div>
+<div style="margin-top:6px;border-top:1px solid rgba(17,17,17,.14)">
+<sc-for list="{{listRows}}" as="p" hint-placeholder-count="2">
+<div style="display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid rgba(17,17,17,.14)">
+<span style="flex:0 0 auto;font-size:12px;font-weight:600;color:{{p.fitColor}}">{{p.fit}} fit</span>
+<div style="flex:1 1 auto;min-width:0"><div style="font-weight:700">No. {{p.no}}</div><div style="font-size:13px;color:#3A3A3A">{{p.sport}} &middot; {{p.city}}</div></div>
+<sc-if value="{{showSavedActions}}" hint-placeholder-val="{{true}}"><div style="display:flex;align-items:center"><button type="button" onClick="{{p.invite}}" style="background:#111111;color:#FFFFFF;border:0;border-radius:999px;padding:8px 14px;font-size:14px;font-weight:600;min-height:44px">Invite</button><button type="button" onClick="{{p.remove}}" style="background:none;border:0;padding:8px;font-size:13px;font-weight:600;text-decoration:underline;color:#111111;min-height:44px">Remove</button></div></sc-if>
+<sc-if value="{{showInvitedNote}}" hint-placeholder-val="{{false}}"><span style="border:1px dashed #111111;border-radius:999px;padding:3px 12px;font-size:12px;font-weight:600">Waiting for reply</span></sc-if>
+<sc-if value="{{showAppActions}}" hint-placeholder-val="{{false}}"><a href="AppMessages.dc.html" style="background:#111111;color:#FFFFFF;border-radius:999px;padding:10px 18px;font-size:14px;font-weight:600">Review</a></sc-if>
+</div>
+</sc-for>
+</div>
+<sc-if value="{{listEmpty}}" hint-placeholder-val="{{false}}"><div style="padding:16px 0;font-size:15px;color:#6E6E6E">{{emptyText}}</div></sc-if>
+</div>
+</div>
+<dc-import name="AppTabs" kind="business" active="Matches" hint-size="390px,72px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { filter: 'All athletes', idx: 0, status: {}, mutual: '', ltab: 'Shortlisted' };
+}
+renderVals() {
+const s = this.state;
+const level = (n) => (n >= 85 ? 'Strong' : (n >= 70 ? 'Good' : (n >= 50 ? 'Fair' : 'Limited')));
+const raw = [
+{ no: '07', sport: 'Road running', city: '[City]', tone: '#9DB1A4', applied: true, raceVerified: true, c: 95, a: 90, l: 100, b: 90, tags: ['Gear reviews', 'Beginner-friendly', 'Run club'], audience: 'Recreational runners, about 2,500 followers (athlete-reported)', nextRace: 'City Marathon, Nov 23', evidence: '3 linked posts and 1 race-verified result', why: ['Gear reviews and beginner training videos', 'Recreational runners, from linked posts', 'Same city as your campaign', 'Races Nov 23, inside your campaign dates'] },
+{ no: '12', sport: 'Trail running', city: '[City]', tone: '#C9D6CD', applied: false, raceVerified: true, c: 88, a: 82, l: 70, b: 95, tags: ['Race recaps', 'Storytelling'], audience: 'Trail and road runners, about 4,100 followers (verified)', nextRace: 'Winter Trail 30K, Feb 7', evidence: '2 linked race recaps and 3 race-verified results', why: ['Long-form race recaps match your brief', 'Mixed trail and road audience', 'Within regional travel distance', 'Trail race lands in your campaign window'] },
+{ no: '03', sport: 'Road running', city: '[City]', tone: '#9DB1A4', applied: true, raceVerified: false, c: 80, a: 85, l: 100, b: 70, tags: ['Education', 'Community'], audience: 'Local club runners, about 1,900 followers (athlete-reported)', nextRace: 'Jingle Half, Dec 13', evidence: '3 linked posts. No verified race results yet', why: ['Teaching-style posts, fewer product reviews', 'Strong local club following', 'Same city as your campaign', 'Half marathon two weeks after your start date'] },
+{ no: '15', sport: 'Triathlon', city: '[City]', tone: '#C9D6CD', applied: false, raceVerified: true, c: 72, a: 70, l: 60, b: 85, tags: ['Race recaps', 'Humor'], audience: 'Multisport athletes, about 6,300 followers (athlete-reported)', nextRace: 'Spring Triathlon, Apr 25', evidence: '2 linked posts and 2 race-verified results', why: ['Race content, little gear review content', 'Overlap with runners is partial', 'Different region, travel needed', 'Season peaks after your campaign ends'] },
+{ no: '09', sport: 'Trail running', city: '[City]', tone: '#9DB1A4', applied: false, raceVerified: true, c: 66, a: 62, l: 85, b: 60, tags: ['Community'], audience: 'Local trail group, about 1,200 followers (athlete-reported)', nextRace: 'Winter Trail 30K, Feb 7', evidence: '1 linked post and 4 race-verified results', why: ['Mostly community posts, few reviews', 'Small audience overlap', 'Same region as your campaign', 'Racing near the end of your campaign'] },
+{ no: '18', sport: 'Cycling', city: '[City]', tone: '#C9D6CD', applied: false, raceVerified: false, c: 55, a: 50, l: 40, b: 80, tags: ['Gear reviews'], audience: 'Cyclists, about 900 followers (athlete-reported)', nextRace: 'No races listed', evidence: '1 linked post. No verified race results yet', why: ['Reviews are cycling gear, not running', 'Little runner audience overlap', 'Outside your area', 'No race on the calendar yet'] }
+];
+const all = raw.map((r) => ({ ...r, score: Math.round(r.c * 0.35 + r.a * 0.25 + r.l * 0.2 + r.b * 0.2) })).map((r) => ({ ...r, fit: r.score >= 85 ? 'Strong' : r.score >= 70 ? 'Good' : 'Fair', fitColor: r.score >= 85 ? '#3D6B52' : '#6E6E6E' })).sort((x, y) => y.score - x.score);
+const filtered = all.filter((r) => s.filter === 'All athletes' || r.applied);
+const cur = filtered[s.idx];
+const stText = (no) => (s.status[no] === 'saved' ? 'Saved' : (s.status[no] === 'invited' ? 'Invited' : (s.status[no] === 'passed' ? 'Passed' : '')));
+const len = 2 * Math.PI * 44;
+
+const act = (kind) => () => {
+if (!cur) return;
+this.setState({ status: { ...s.status, [cur.no]: kind }, idx: s.idx + 1, mutual: kind === 'invited' && cur.applied ? cur.no : s.mutual });
+};
+const invitePerson = (p) => () => this.setState({ status: { ...s.status, [p.no]: 'invited' }, mutual: p.applied ? p.no : s.mutual });
+const removePerson = (p) => () => { const next = { ...s.status }; delete next[p.no]; this.setState({ status: next }); };
+
+const curView = cur ? {
+no: cur.no, sport: cur.sport, city: cur.city, tone: cur.tone, score: cur.score, fit: cur.fit,
+dash: (cur.score / 100 * len).toFixed(1) + ' ' + len.toFixed(1),
+tags: cur.tags.map((t) => ({ label: t })),
+raceVerified: cur.raceVerified, applied: cur.applied,
+audience: cur.audience, nextRace: cur.nextRace, evidence: cur.evidence,
+hasStatus: !!stText(cur.no), statusText: stText(cur.no)
+} : { no: '', sport: '', city: '', tone: '#9DB1A4', score: 0, dash: '0 276', tags: [], raceVerified: false, applied: false, audience: '', nextRace: '', evidence: '', hasStatus: false, statusText: '' };
+
+const rows = cur ? [
+{ k: 'Content fit', n: cur.c, why: cur.why[0] },
+{ k: 'Audience fit', n: cur.a, why: cur.why[1] },
+{ k: 'Location fit', n: cur.l, why: cur.why[2] },
+{ k: 'Timing fit', n: cur.b, why: cur.why[3] }
+].map((r) => ({ k: r.k, level: level(r.n), why: r.why, pct: r.n + '%' })) : [];
+
+const toRow = (p) => ({ no: p.no, score: p.score, fit: p.fit, fitColor: p.fitColor, sport: p.sport, city: p.city, invite: invitePerson(p), remove: removePerson(p) });
+const shortlist = all.filter((p) => s.status[p.no] === 'saved').map(toRow);
+const invitedList = all.filter((p) => s.status[p.no] === 'invited').map(toRow);
+const apps = all.filter((p) => p.applied).map(toRow);
+
+const mk = (label) => { const on = s.filter === label; return { label, on, bg: on ? '#111111' : '#FFFFFF', fg: on ? '#FFFFFF' : '#111111', pick: () => this.setState({ filter: label, idx: 0 }) }; };
+
+const ltabs = ['Shortlisted', 'Invited', 'Interested'];
+const listTabs = ltabs.map((l) => { const on = s.ltab === l; return { label: l, on, bg: on ? '#111111' : 'transparent', fg: on ? '#FFFFFF' : '#111111', pick: () => this.setState({ ltab: l }) }; });
+const listRows = s.ltab === 'Shortlisted' ? shortlist : (s.ltab === 'Invited' ? invitedList : apps);
+const emptyText = s.ltab === 'Shortlisted' ? 'Athletes you save appear here.' : (s.ltab === 'Invited' ? 'Invitations you send appear here.' : 'No applications yet.');
+return {
+listTabs, listRows, listEmpty: listRows.length === 0, emptyText, showSavedActions: s.ltab === 'Shortlisted', showInvitedNote: s.ltab === 'Invited', showAppActions: s.ltab === 'Interested',
+cur: curView, rows, shortlist, invitedList, apps,
+hasCur: !!cur, isEnd: !cur, hasNext: !!filtered[s.idx + 1],
+filters: [mk('All athletes'), mk('Interested in you')],
+reviewed: Object.keys(s.status).length, total: all.length,
+savedCount: shortlist.length, invitedCount: invitedList.length, appCount: apps.length,
+noSaved: shortlist.length === 0, noInvited: invitedList.length === 0,
+pass: act('passed'), save: act('saved'), invite: act('invited'),
+prev: () => this.setState({ idx: Math.max(0, s.idx - 1) }),
+restart: () => this.setState({ idx: 0 }),
+showMutual: !!s.mutual, mutualNo: s.mutual, dismissMutual: () => this.setState({ mutual: '' })
+};
+}
+}
+</script>
+<script>(function(){function ensure(){if(document.querySelector(".pilot-back")||!document.body)return;var a=document.createElement("a");a.className="pilot-back";a.href="index.html";a.innerHTML='<span aria-hidden="true">&larr;</span> Test tasks';document.body.appendChild(a);}document.addEventListener("DOMContentLoaded",ensure);setInterval(ensure,800);})();</script>
+</body>
+</html>

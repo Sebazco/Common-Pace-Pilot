@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>App Welcome</title>
+<script src="./support.js"></script>
+<style id="pilot-css">.pilot-back{position:fixed;z-index:9999;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:8px 14px;border-radius:999px;background:#111111;color:#FFFFFF;font:600 13px/1 "Hanken Grotesk",system-ui,sans-serif;text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,.18)}.pilot-back:focus-visible{outline:2px solid #3D6B52;outline-offset:3px}.pilot-back{right:max(12px,env(safe-area-inset-right,0px));bottom:calc(86px + env(safe-area-inset-bottom,0px))}@media (min-width:520px){html,body{background:#E7E7E4}body{padding:28px 0}#dc-root{width:390px;margin:0 auto;box-shadow:0 10px 40px rgba(0,0,0,.14);border-radius:28px;overflow:hidden;background:#FFFFFF}.pilot-back{left:24px;right:auto;top:24px;bottom:auto}}</style>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}
+.aw-track{display:flex;width:max-content;animation:aw-scroll 60s linear infinite}
+@keyframes aw-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion: reduce){.aw-track{animation:none}}
+</style>
+</helmet>
+<div style="position:relative;width:390px;height:844px;overflow:hidden;background:#FFFFFF;color:#111111;font-family:'Hanken Grotesk',system-ui,sans-serif;font-size:16px;line-height:1.45;display:flex;flex-direction:column">
+<div style="flex:0 0 auto;padding:28px 20px 0">
+<a href="AppWelcome.dc.html" style="display:flex;align-items:center;gap:10px"><svg width="32" height="32" viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="8" fill="#111111"/><path d="M9.5 27 L17.5 9" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round"/><path d="M18.5 27 L26.5 9" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round"/></svg><span style="font-weight:700;font-size:14px;letter-spacing:.14em;text-transform:uppercase">Common Pace</span></a>
+<div style="margin-top:28px;font-weight:600;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#6E6E6E">Endurance sponsorship marketplace</div>
+<h1 style="margin:10px 0 0;font-family:'Instrument Serif',serif;font-weight:400;font-size:52px;line-height:.98;letter-spacing:-.025em">Get backed for the miles you put in.</h1>
+<p style="margin:14px 0 0;color:#3A3A3A;font-size:16px">Runners, triathletes, cyclists and swimmers meet businesses that want real stories, not just big follower counts.</p>
+</div>
+
+<div style="flex:1 1 auto;min-height:0;display:flex;align-items:center;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)">
+<div class="aw-track" aria-hidden="true">
+<sc-for list="{{tickets}}" as="t" hint-placeholder-count="20">
+<div style="position:relative;flex:0 0 auto;width:130px;height:190px;margin-right:12px;background:#FFFFFF;border:1px solid rgba(17,17,17,.22);border-radius:16px;overflow:hidden;box-sizing:border-box">
+<div style="height:96px;background-color:{{t.tone}};position:relative">
+<span style="position:absolute;top:8px;left:8px;background:#FFFFFF;border-radius:999px;padding:1px 8px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase">No. {{t.n}}</span>
+</div>
+<div style="padding:10px 10px 0"><div style="font-family:'Instrument Serif',serif;font-size:18px;line-height:1.05">[Athlete name]</div><div style="margin-top:2px;font-size:11px;color:#3A3A3A">[Sport] &middot; [City]</div><div style="margin-top:8px;font-size:12px;font-family:'Instrument Serif',serif;line-height:1.1">{{t.trait}}</div></div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="flex:0 0 auto;padding:12px 20px 28px">
+<a href="AppAuth.dc.html" style="display:block;text-align:center;background:#111111;color:#FFFFFF;border-radius:999px;padding:15px;font-size:17px;font-weight:600;min-height:52px;box-sizing:border-box">Create your athlete profile</a>
+<a href="AppAuth.dc.html?as=business" style="margin-top:10px;display:block;text-align:center;border:1.5px solid #111111;color:#111111;border-radius:999px;padding:13.5px;font-size:17px;font-weight:600;min-height:52px;box-sizing:border-box">I'm a business</a>
+<a href="AppAuth.dc.html?view=login" style="display:block;margin-top:6px;text-align:center;font-size:15px;font-weight:600;text-decoration:underline;min-height:44px;line-height:44px">Log in</a>
+<div style="text-align:center;font-size:13px;color:#6E6E6E">Free to build your profile and get discovered.</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() {
+const tones = ['#9DB1A4', '#C9D6CD'];
+const base = Array.from({ length: 20 }, (_, i) => ({ n: String(i + 1).padStart(2, '0'), tone: tones[i % 2], trait: ['Comeback from injury', 'Parent runner', 'Started after 40', 'Run club captain', 'Runs before sunrise', 'First in my family to race', 'Run commuter', 'Trail volunteer'][i % 8] }));
+return { tickets: base.concat(base) };
+}
+}
+</script>
+<script>(function(){function ensure(){if(document.querySelector(".pilot-back")||!document.body)return;var a=document.createElement("a");a.className="pilot-back";a.href="index.html";a.innerHTML='<span aria-hidden="true">&larr;</span> Test tasks';document.body.appendChild(a);}document.addEventListener("DOMContentLoaded",ensure);setInterval(ensure,800);})();</script>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Goal deal course</title>
+<script src="./support.js"></script>
+<style id="pilot-css">.pilot-back{position:fixed;z-index:9999;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:8px 14px;border-radius:999px;background:#111111;color:#FFFFFF;font:600 13px/1 "Hanken Grotesk",system-ui,sans-serif;text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,.18)}.pilot-back:focus-visible{outline:2px solid #3D6B52;outline-offset:3px}.pilot-back{left:max(16px,env(safe-area-inset-left,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px))}</style>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+input,textarea{font-family:inherit}
+.cp{color:#111111;font-family:'Hanken Grotesk',system-ui,sans-serif;font-size:17px;line-height:1.5;background:#FFFFFF}
+.app.cp{font-size:16px;line-height:1.45}
+.eb{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#6E6E6E}
+.dark .eb{color:#A3A3A3}
+.h1{margin:6px 0 0;font-family:'Instrument Serif',serif;font-weight:400;font-size:64px;line-height:.98;letter-spacing:-.02em}
+.app .h1{font-size:38px;line-height:1}
+.h2{margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:36px;line-height:1.02;letter-spacing:-.01em}
+.app .h2{font-size:28px}
+.lead{margin:8px 0 0;color:#3A3A3A}
+.dark .lead{color:#C8C8C8}
+.muted{color:#6E6E6E;font-size:14px}
+.clock{font-variant-numeric:tabular-nums;font-feature-settings:'tnum' 1;font-weight:800;letter-spacing:-.03em}
+.dark{background:#111111;color:#FFFFFF}
+.bib{position:relative;background:#FFFFFF;color:#111111;border:2px solid #111111;border-radius:14px;padding:16px 20px 14px;box-sizing:border-box}
+.pin{position:absolute;width:9px;height:9px;border-radius:50%;border:2px solid #111111;background:#FFFFFF;box-sizing:border-box}
+.p1{top:7px;left:7px}.p2{top:7px;right:7px}.p3{bottom:7px;left:7px}.p4{bottom:7px;right:7px}
+.bibno{font-size:54px;font-weight:800;line-height:.95;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.app .bibno{font-size:44px}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid #111111;border-radius:999px;padding:8px 14px;font-size:14px;font-weight:600;min-height:40px;background:#FFFFFF;color:#111111;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#111111;color:#FFFFFF;border:0;border-radius:999px;padding:14px 24px;font-size:16px;font-weight:600;min-height:48px;box-sizing:border-box;text-align:center}
+.btn2{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#FFFFFF;color:#111111;border:1.5px solid #111111;border-radius:999px;padding:12px 22px;font-size:16px;font-weight:600;min-height:48px;box-sizing:border-box;text-align:center}
+.btnw{display:inline-flex;align-items:center;justify-content:center;background:#FFFFFF;color:#111111;border:0;border-radius:999px;padding:14px 24px;font-size:16px;font-weight:700;min-height:48px;box-sizing:border-box}
+.link{font-weight:700;text-decoration:underline;min-height:44px;display:inline-flex;align-items:center}
+.card{border:1px solid rgba(17,17,17,.18);border-radius:22px;padding:20px;box-sizing:border-box;background:#FFFFFF}
+.mist{background:#F4F4F2;border-radius:22px;padding:20px;box-sizing:border-box}
+.tag{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:700;white-space:nowrap}
+.tag.v{background:#111111;color:#FFFFFF}
+.tag.a{border:1px dashed #6E6E6E;color:#3A3A3A}
+.tag.ai{border:1px solid #111111;color:#111111}
+.tag.open{background:#3D6B52;color:#FFFFFF}
+.tag.s{background:#F4F4F2;color:#111111}
+.x{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;gap:12px;scroll-padding-left:16px}
+.x::-webkit-scrollbar{display:none}
+.x>*{scroll-snap-align:start;flex:0 0 auto}
+.input{width:100%;box-sizing:border-box;padding:13px 16px;font-size:16px;border:1px solid #9A9A9A;border-radius:12px;color:#111111;background:#FFFFFF}
+.label{display:block;font-weight:600;font-size:15px;margin-bottom:6px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.grid2{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:900px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.app .grid2{display:block}
+.app .grid2>*+*{margin-top:16px}
+.wrap{max-width:1160px;margin:0 auto;padding:32px 24px 96px;box-sizing:border-box}
+.sec{margin-top:36px}
+.app .sec{margin-top:28px}
+@media (max-width:640px){.web .h1{font-size:44px}.web .lbl-done{display:none}.web .wrap{padding-left:16px;padding-right:16px}}
+
+/* calm theme */
+.flat .card{border:0;border-top:1px solid rgba(17,17,17,.1);border-radius:0;padding:26px 0 6px;background:transparent}
+.flat .grid2>div>.card:first-child{border-top:0;padding-top:0}
+.flat .mist{border-radius:18px}
+.rows li.card{border:0;border-bottom:1px solid rgba(17,17,17,.1);border-radius:0;padding:14px 0;background:transparent!important}
+.app .lbl-done{display:none}
+.clock{font-weight:600;letter-spacing:-.02em}
+.h1{font-size:56px}
+.hair{border-top:1px solid rgba(17,17,17,.1)}
+.seg{display:inline-flex;background:#F4F4F2;border-radius:999px;padding:3px}
+.seg button{border:0;border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600;min-height:36px;background:transparent;color:#6E6E6E}
+.seg button[aria-pressed="true"]{background:#FFFFFF;color:#111111;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.tabs{display:flex;gap:22px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid rgba(17,17,17,.1)}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:0 0 auto;border:0;background:none;padding:10px 0 12px;font-size:14px;font-weight:600;color:#8A8A8A;border-bottom:2px solid transparent;margin-bottom:-1px;min-height:44px;white-space:nowrap}
+.tabs button[aria-pressed="true"]{color:#111111;border-bottom-color:#111111}
+.stat .k{font-size:12px;font-weight:600;color:#8A8A8A;letter-spacing:.04em}
+.stat .v{font-size:22px;margin-top:2px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#3D6B52;flex:0 0 auto}
+.gtext{color:#3D6B52}
+.bibmini{display:inline-flex;align-items:baseline;gap:6px;border:1.5px solid #111111;border-radius:10px;padding:4px 10px}
+.bibmini span:first-child{font-size:10px;font-weight:700;letter-spacing:.12em;color:#6E6E6E}
+.bibmini span:last-child{font-weight:600;font-size:18px;font-variant-numeric:tabular-nums}
+.lnk{background:none;border:0;padding:0;font-size:15px;font-weight:600;color:#111111;text-decoration:underline;text-underline-offset:3px;min-height:44px;display:inline-flex;align-items:center}
+.btns{padding:10px 18px;font-size:15px;min-height:44px}
+.check{width:22px;height:22px;margin:2px 0 0;flex:0 0 auto;accent-color:#111111}
+</style>
+</helmet>
+<div class="cp web" style="min-height:100vh">
+<dc-import name="TopNav" kind="auto" active="Deals" hint-size="100%,74px"></dc-import>
+<div style="position:relative;">
+<div class="wrap" style="position:relative;padding-top:30px;padding-bottom:30px">
+<a href="{{dealsHref}}" class="link" style="color:#6E6E6E;font-size:14px;font-weight:600;text-decoration:none">&larr; Deals</a>
+<div class="eb" style="margin-top:6px">Goal deal &middot; Sample</div>
+<h1 class="h1">Sub-4:00 at City Marathon</h1>
+<div class="lead">Bib 0147 &middot; Backed by [Local running store] &middot; $300 + race-day shoes &middot; $100 finish-line bonus</div>
+<div class="row" style="margin-top:14px;gap:10px">
+<span style="display:inline-flex;align-items:center;gap:8px;background:{{paceBg}};color:{{paceFg}};border-radius:999px;padding:8px 16px;font-weight:800;font-size:15px"><span style="width:9px;height:9px;border-radius:50%;background:{{paceDot}}"></span>{{paceText}}</span>
+<span class="muted">{{paceSub}}</span>
+</div>
+<div style="position:relative;margin-top:16px">
+<svg viewBox="0 0 1060 200" role="img" aria-label="Course from start to finish with aid stations" style="width:100%;height:auto;display:block;overflow:visible">
+<path d="{{coursePast}}" fill="none" stroke="#111111" stroke-width="2.5" stroke-linecap="round"/>
+<path d="{{courseFuture}}" fill="none" stroke="#B5B5B5" stroke-width="2" stroke-dasharray="2 6" stroke-linecap="round"/>
+<line x1="{{finishX}}" x2="{{finishX}}" y1="{{finishTop}}" y2="{{finishY}}" stroke="#111111" stroke-width="1.5"/>
+<rect x="{{finishFlagX}}" y="{{finishTop}}" width="34" height="16" fill="#3D6B52"/>
+<sc-for list="{{stops}}" as="p" hint-placeholder-count="5"><circle cx="{{p.x}}" cy="{{p.y}}" r="11" fill="{{p.fill}}" stroke="{{p.ring}}" stroke-width="2.5"/></sc-for>
+<circle cx="{{todayX}}" cy="{{todayY}}" r="6" fill="#FFFFFF" stroke="#3D6B52" stroke-width="3"/>
+</svg>
+<sc-for list="{{stops}}" as="p" hint-placeholder-count="5"><span aria-hidden="true" class="clock" style="position:absolute;left:{{p.lx}};top:{{p.lt}};transform:translate(-50%,-50%);font-size:11px;color:{{p.numFg}};pointer-events:none">{{p.n}}</span></sc-for>
+<span aria-hidden="true" style="position:absolute;left:{{finishLx}};top:{{finishLt}};transform:translate(-50%,-140%);font-size:11px;font-weight:800;letter-spacing:.12em;color:#111111;white-space:nowrap">FINISH &middot; NOV 23</span>
+<span aria-hidden="true" style="position:absolute;left:{{todayLx}};top:{{todayLt}};transform:translate(-50%,16px);font-size:11px;font-weight:800;letter-spacing:.1em;color:#3D6B52;white-space:nowrap">TODAY</span>
+<span aria-hidden="true" style="position:absolute;left:0;bottom:-2px;font-size:11px;font-weight:700;color:#A3A3A3;letter-spacing:.08em">START &middot; NOV 2</span>
+</div>
+</div></div>
+<div class="flat rows wrap" style="padding-top:36px">
+<div class="grid2">
+<div>
+<h2 class="h2">Aid stations</h2>
+<ol style="margin:12px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{stops}}" as="p" hint-placeholder-count="5">
+<li class="card" style="padding:14px 16px;border-color:{{p.border}};background:{{p.cardBg}}">
+<div style="display:flex;gap:12px;align-items:center">
+<span class="clock" style="flex:0 0 auto;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;background:{{p.fill}};color:{{p.numFg2}};border:1.5px solid {{p.ring}}">{{p.n}}</span>
+<span style="flex:1 1 auto;min-width:0"><span style="display:block;font-weight:700">{{p.label}}</span><span class="muted">Due {{p.due}} &middot; {{p.status}}</span></span>
+<sc-if value="{{p.canMark}}" hint-placeholder-val="{{false}}"><button type="button" class="btn2" onClick="{{p.mark}}" style="flex:0 0 auto;padding:8px 14px;font-size:14px;min-height:44px">{{markLabel}}</button></sc-if>
+</div>
+<sc-if value="{{p.confirming}}" hint-placeholder-val="{{false}}">
+<div class="mist" style="margin-top:10px;padding:14px;border-radius:14px">
+<div style="display:flex;gap:10px;align-items:flex-start"><input id="cdisc" type="checkbox" class="check" checked="{{discOk}}" onChange="{{toggleDisc}}"><label for="cdisc" style="font-size:15px">{{discLabel}}</label></div>
+<div class="row" style="margin-top:10px;gap:8px"><button type="button" class="btn" onClick="{{confirmMark}}" disabled="{{discBlocked}}" style="padding:10px 18px;font-size:15px;min-height:44px">{{confirmLabel}}</button><button type="button" class="btn2" onClick="{{cancelMark}}" style="padding:8px 16px;font-size:15px;min-height:44px">Cancel</button></div>
+</div>
+</sc-if>
+</li>
+</sc-for>
+</ol>
+</div>
+<div>
+<div class="mist" style="padding:22px">
+<div class="eb">Finish line &middot; Nov 23</div>
+<sc-if value="{{noResult}}" hint-placeholder-val="{{true}}">
+<h2 class="h2" style="margin-top:6px">Goal: <span class="clock">Sub-4:00</span></h2>
+<p class="lead" style="font-size:15px">After the race, we match bib 0147's chip time to the official results. If the goal is hit, the $100 bonus unlocks.</p>
+<button type="button" class="btn2" onClick="{{loadResult}}" style="margin-top:14px">Race day: load official result (sample)</button>
+</sc-if>
+<sc-if value="{{hasResult}}" hint-placeholder-val="{{false}}">
+<div class="row" style="margin-top:6px;justify-content:space-between"><span class="row" style="gap:8px"><span class="dot"></span><span class="gtext" style="font-size:13px;font-weight:600">Verified from race results</span></span><span style="font-size:13px;font-weight:600">Goal hit</span></div>
+<div class="clock" style="font-size:64px;line-height:1;margin-top:10px">3:57:41</div>
+<div class="muted">Chip time, City Marathon &middot; Sample data</div>
+<div class="mist" style="margin-top:14px;padding:14px">
+<div style="font-weight:800">$100 finish-line bonus unlocked</div>
+<div class="muted" style="margin-top:2px">Pay it outside Common Pace, then mark it paid in Deals.</div>
+</div>
+</sc-if>
+</div>
+<sc-if value="{{hasResult}}" hint-placeholder-val="{{false}}">
+<div class="sec" style="margin-top:16px">
+<div class="eb">Race-day card</div>
+<div class="dark" style="position:relative;overflow:hidden;margin-top:8px;border-radius:24px;padding:20px">
+<div style="position:relative;display:flex;gap:14px;align-items:center">
+<span class="bibmini" style="flex:0 0 auto;background:#FFFFFF;color:#111111"><span>NO.</span><span>0147</span></span>
+<div style="min-width:0"><div class="eb">City Marathon &middot; Nov 23</div><div class="clock" style="font-size:40px;line-height:1;color:#FFFFFF">3:57:41</div><div style="font-size:14px;color:#C8C8C8">Goal: sub-4:00. Done.</div></div>
+</div>
+<div style="position:relative;margin-top:14px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#FFFFFF">Backed by [Local running store] &middot; Paid partnership</div>
+</div>
+<div class="muted" style="margin-top:8px">Both of you can share this card. It carries the paid-partnership label.</div>
+</div>
+</sc-if>
+</div>
+</div></div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1400}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { done: [true, false, false, false, false], markOpen: -1, discOk: false, result: false };
+}
+renderVals() {
+const s = this.state;
+const cpRole = (k) => { if (k === 'athlete' || k === 'business') return k; try { const q = new URLSearchParams(window.location.search).get('as'); if (q === 'business' || q === 'athlete') { try { localStorage.setItem('cpRole', q); } catch (e) {} return q; } if (localStorage.getItem('cpRole') === 'business') return 'business'; } catch (e) {} return 'athlete'; };
+const qp = (k) => { try { return new URLSearchParams(window.location.search).get(k) || ''; } catch (e) { return ''; } };
+const W = 1060, H = 200, PAD = 40;
+const t = (d) => Date.parse(d + 'T00:00:00Z') / 864e5;
+const T0 = t('2026-11-02'), T1 = t('2026-11-28'), TODAY = '2026-11-09';
+const X = (d) => PAD + (t(d) - T0) / (T1 - T0) * (W - 2 * PAD);
+const Y = (x) => H * 0.62 - 14 * Math.sin(x / (W / 5)) - 8 * Math.sin(x / (W / 13)) - 5 * Math.cos(x / 17);
+const path = (a, b) => { const out = []; for (let x = a; x <= b; x += 4) out.push(x.toFixed(1) + ' ' + Y(x).toFixed(1)); out.push(b.toFixed(1) + ' ' + Y(b).toFixed(1)); return 'M' + out.join(' L'); };
+const role = cpRole('auto'), isBiz = role === 'business';
+const stations = [['Kickoff post: why I\'m chasing sub-4', '2026-11-05', 'Nov 5'], ['Week 15 training check-in video', '2026-11-12', 'Nov 12'], ['Race-week gear story', '2026-11-19', 'Nov 19'], ['Race-day post with official result', '2026-11-23', 'Nov 23'], ['Finish photo with your product', '2026-11-24', 'Nov 24']];
+const tx = X(TODAY), fx = X('2026-11-23'), endX = W - PAD;
+const xs = []; stations.forEach((st, i) => { let x = X(st[1]); if (t(st[1]) === t('2026-11-23')) x = fx - 30; if (t(st[1]) > t('2026-11-23')) x = Math.max(x, fx + 30); if (i > 0 && x - xs[i - 1] < 28) x = xs[i - 1] + 28; xs.push(Math.min(x, W - 12)); });
+const expected = stations.filter((st) => t(st[1]) <= t(TODAY)).length;
+const doneN = s.done.filter(Boolean).length;
+const next = s.done.indexOf(false);
+const pace = doneN > expected ? ['Ahead of pace', '#EEF3EF', '#2C5240', '#3D6B52'] : doneN === expected ? ['On pace', '#EEF3EF', '#2C5240', '#3D6B52'] : ['Behind pace', '#F4F4F2', '#111111', '#111111'];
+const pct = (v, m) => (v / m * 100).toFixed(2) + '%';
+return {
+paceText: pace[0], paceBg: pace[1], paceFg: pace[2], paceDot: pace[3],
+paceSub: doneN + ' of ' + stations.length + ' aid stations done \u00b7 ' + Math.round((t('2026-11-23') - t(TODAY)) / 7) + ' weeks to the finish',
+coursePast: path(PAD, tx), courseFuture: path(tx, endX),
+finishX: fx.toFixed(1), finishY: Y(fx).toFixed(1), finishTop: (Y(fx) - 44).toFixed(1), finishFlagX: fx.toFixed(1),
+finishLx: pct(fx, W), finishLt: pct(Y(fx) - 44, H),
+todayX: tx.toFixed(1), todayY: Y(tx).toFixed(1), todayLx: pct(tx, W), todayLt: pct(Y(tx), H),
+stops: stations.map((st, i) => { const x = xs[i], y = Y(x), d = s.done[i], isNext = i === next; return { n: i + 1, label: st[0], due: st[2], x: x.toFixed(1), y: y.toFixed(1), lx: pct(x, W), lt: pct(y, H), fill: d ? '#111111' : (isNext ? '#3D6B52' : '#FFFFFF'), ring: d ? '#111111' : (isNext ? '#3D6B52' : '#B5B5B5'), numFg: d ? '#FFFFFF' : (isNext ? '#FFFFFF' : '#6E6E6E'), numFg2: d ? '#FFFFFF' : (isNext ? '#FFFFFF' : '#6E6E6E'), status: d ? 'Done \u00b7 disclosure checked' : (isNext ? 'Next' : 'Upcoming'), border: isNext ? '#111111' : 'rgba(17,17,17,.18)', cardBg: d ? '#F4F4F2' : '#FFFFFF', canMark: isNext && s.markOpen !== i, confirming: s.markOpen === i, mark: () => this.setState({ markOpen: i, discOk: false }) }; }),
+markLabel: isBiz ? 'Check post' : 'Mark done', confirmLabel: isBiz ? 'Confirm received' : 'Confirm done',
+discLabel: isBiz ? 'I checked the post. It is labeled as an ad or paid partnership.' : 'This post is labeled as an ad or paid partnership.',
+discOk: s.discOk, discBlocked: !s.discOk, toggleDisc: () => this.setState({ discOk: !s.discOk }),
+cancelMark: () => this.setState({ markOpen: -1, discOk: false }),
+confirmMark: () => { if (s.discOk && s.markOpen >= 0) this.setState({ done: s.done.map((v, j) => (j === s.markOpen ? true : v)), markOpen: -1, discOk: false }); },
+hasResult: s.result, noResult: !s.result, loadResult: () => this.setState({ result: true }),
+dealsHref: 'Deals.dc.html'
+};
+}
+}
+</script>
+<script>(function(){function ensure(){if(document.querySelector(".pilot-back")||!document.body)return;var a=document.createElement("a");a.className="pilot-back";a.href="index.html";a.innerHTML='<span aria-hidden="true">&larr;</span> Test tasks';document.body.appendChild(a);}document.addEventListener("DOMContentLoaded",ensure);setInterval(ensure,800);})();</script>
+</body>
+</html>

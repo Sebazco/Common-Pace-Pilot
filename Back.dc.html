@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Back a goal</title>
+<script src="./support.js"></script>
+<style id="pilot-css">.pilot-back{position:fixed;z-index:9999;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:8px 14px;border-radius:999px;background:#111111;color:#FFFFFF;font:600 13px/1 "Hanken Grotesk",system-ui,sans-serif;text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,.18)}.pilot-back:focus-visible{outline:2px solid #3D6B52;outline-offset:3px}.pilot-back{left:max(16px,env(safe-area-inset-left,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px))}</style>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+input,textarea{font-family:inherit}
+.cp{color:#111111;font-family:'Hanken Grotesk',system-ui,sans-serif;font-size:17px;line-height:1.5;background:#FFFFFF}
+.app.cp{font-size:16px;line-height:1.45}
+.eb{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#6E6E6E}
+.dark .eb{color:#A3A3A3}
+.h1{margin:6px 0 0;font-family:'Instrument Serif',serif;font-weight:400;font-size:64px;line-height:.98;letter-spacing:-.02em}
+.app .h1{font-size:38px;line-height:1}
+.h2{margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:36px;line-height:1.02;letter-spacing:-.01em}
+.app .h2{font-size:28px}
+.lead{margin:8px 0 0;color:#3A3A3A}
+.dark .lead{color:#C8C8C8}
+.muted{color:#6E6E6E;font-size:14px}
+.clock{font-variant-numeric:tabular-nums;font-feature-settings:'tnum' 1;font-weight:800;letter-spacing:-.03em}
+.dark{background:#111111;color:#FFFFFF}
+.bib{position:relative;background:#FFFFFF;color:#111111;border:2px solid #111111;border-radius:14px;padding:16px 20px 14px;box-sizing:border-box}
+.pin{position:absolute;width:9px;height:9px;border-radius:50%;border:2px solid #111111;background:#FFFFFF;box-sizing:border-box}
+.p1{top:7px;left:7px}.p2{top:7px;right:7px}.p3{bottom:7px;left:7px}.p4{bottom:7px;right:7px}
+.bibno{font-size:54px;font-weight:800;line-height:.95;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.app .bibno{font-size:44px}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid #111111;border-radius:999px;padding:8px 14px;font-size:14px;font-weight:600;min-height:40px;background:#FFFFFF;color:#111111;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#111111;color:#FFFFFF;border:0;border-radius:999px;padding:14px 24px;font-size:16px;font-weight:600;min-height:48px;box-sizing:border-box;text-align:center}
+.btn2{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#FFFFFF;color:#111111;border:1.5px solid #111111;border-radius:999px;padding:12px 22px;font-size:16px;font-weight:600;min-height:48px;box-sizing:border-box;text-align:center}
+.btnw{display:inline-flex;align-items:center;justify-content:center;background:#FFFFFF;color:#111111;border:0;border-radius:999px;padding:14px 24px;font-size:16px;font-weight:700;min-height:48px;box-sizing:border-box}
+.link{font-weight:700;text-decoration:underline;min-height:44px;display:inline-flex;align-items:center}
+.card{border:1px solid rgba(17,17,17,.18);border-radius:22px;padding:20px;box-sizing:border-box;background:#FFFFFF}
+.mist{background:#F4F4F2;border-radius:22px;padding:20px;box-sizing:border-box}
+.tag{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:700;white-space:nowrap}
+.tag.v{background:#111111;color:#FFFFFF}
+.tag.a{border:1px dashed #6E6E6E;color:#3A3A3A}
+.tag.ai{border:1px solid #111111;color:#111111}
+.tag.open{background:#3D6B52;color:#FFFFFF}
+.tag.s{background:#F4F4F2;color:#111111}
+.x{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;gap:12px;scroll-padding-left:16px}
+.x::-webkit-scrollbar{display:none}
+.x>*{scroll-snap-align:start;flex:0 0 auto}
+.input{width:100%;box-sizing:border-box;padding:13px 16px;font-size:16px;border:1px solid #9A9A9A;border-radius:12px;color:#111111;background:#FFFFFF}
+.label{display:block;font-weight:600;font-size:15px;margin-bottom:6px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.grid2{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:900px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.app .grid2{display:block}
+.app .grid2>*+*{margin-top:16px}
+.wrap{max-width:1160px;margin:0 auto;padding:32px 24px 96px;box-sizing:border-box}
+.sec{margin-top:36px}
+.app .sec{margin-top:28px}
+@media (max-width:640px){.web .h1{font-size:44px}.web .lbl-done{display:none}.web .wrap{padding-left:16px;padding-right:16px}}
+
+/* calm theme */
+.flat .card{border:0;border-top:1px solid rgba(17,17,17,.1);border-radius:0;padding:26px 0 6px;background:transparent}
+.flat .grid2>div>.card:first-child{border-top:0;padding-top:0}
+.flat .mist{border-radius:18px}
+.rows li.card{border:0;border-bottom:1px solid rgba(17,17,17,.1);border-radius:0;padding:14px 0;background:transparent!important}
+.app .lbl-done{display:none}
+.clock{font-weight:600;letter-spacing:-.02em}
+.h1{font-size:56px}
+.hair{border-top:1px solid rgba(17,17,17,.1)}
+.seg{display:inline-flex;background:#F4F4F2;border-radius:999px;padding:3px}
+.seg button{border:0;border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600;min-height:36px;background:transparent;color:#6E6E6E}
+.seg button[aria-pressed="true"]{background:#FFFFFF;color:#111111;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.tabs{display:flex;gap:22px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid rgba(17,17,17,.1)}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:0 0 auto;border:0;background:none;padding:10px 0 12px;font-size:14px;font-weight:600;color:#8A8A8A;border-bottom:2px solid transparent;margin-bottom:-1px;min-height:44px;white-space:nowrap}
+.tabs button[aria-pressed="true"]{color:#111111;border-bottom-color:#111111}
+.stat .k{font-size:12px;font-weight:600;color:#8A8A8A;letter-spacing:.04em}
+.stat .v{font-size:22px;margin-top:2px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#3D6B52;flex:0 0 auto}
+.gtext{color:#3D6B52}
+.bibmini{display:inline-flex;align-items:baseline;gap:6px;border:1.5px solid #111111;border-radius:10px;padding:4px 10px}
+.bibmini span:first-child{font-size:10px;font-weight:700;letter-spacing:.12em;color:#6E6E6E}
+.bibmini span:last-child{font-weight:600;font-size:18px;font-variant-numeric:tabular-nums}
+.lnk{background:none;border:0;padding:0;font-size:15px;font-weight:600;color:#111111;text-decoration:underline;text-underline-offset:3px;min-height:44px;display:inline-flex;align-items:center}
+.btns{padding:10px 18px;font-size:15px;min-height:44px}
+.check{width:22px;height:22px;margin:2px 0 0;flex:0 0 auto;accent-color:#111111}
+</style>
+</helmet>
+<div class="cp web" style="min-height:100vh">
+<dc-import name="TopNav" kind="business" active="Matches" hint-size="100%,74px"></dc-import>
+<div style="position:relative;">
+<div class="wrap" style="position:relative;padding-top:30px;padding-bottom:34px">
+<a href="{{seasonHref}}" class="link" style="color:#6E6E6E;font-size:14px;font-weight:600;text-decoration:none">&larr; Season</a>
+<div class="eb" style="margin-top:10px">Make an offer</div>
+<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:16px;align-items:center">
+<span class="bibmini" style="flex:0 0 auto"><span>NO.</span><span>{{bib}}</span></span>
+<div style="min-width:0;flex:1 1 220px">
+<h1 class="h1" style="margin:0">{{g.title}}</h1>
+<div class="lead" style="margin-top:6px">[Athlete name] &middot; {{g.dateText}} &middot; {{weeks}}</div>
+</div>
+</div>
+</div></div>
+<div class="flat rows wrap" style="padding-top:36px">
+<sc-if value="{{notSent}}" hint-placeholder-val="{{true}}">
+<div class="grid2">
+<div>
+<section class="card">
+<h2 class="h2">1. Your offer</h2><p class="lead" style="margin-top:4px;font-size:15px">You decide what to offer: cash, product or both.</p>
+<div role="group" aria-label="Support type" class="row" style="margin-top:12px;gap:8px">
+<sc-for list="{{supportRows}}" as="o" hint-placeholder-count="3"><button type="button" class="chip" aria-pressed="{{o.on}}" onClick="{{o.pick}}" style="background:{{o.bg}};color:{{o.fg}}">{{o.label}}</button></sc-for>
+</div>
+<div class="row" style="margin-top:14px;gap:12px;align-items:flex-start">
+<sc-if value="{{showCash}}" hint-placeholder-val="{{true}}"><div style="flex:1 1 160px;min-width:0"><label for="cash" class="label">Cash ($)</label><input id="cash" class="input clock" type="text" inputmode="numeric" placeholder="Example: 250" value="{{cash}}" onChange="{{setCash}}" style="font-weight:700"></div></sc-if>
+<sc-if value="{{showProduct}}" hint-placeholder-val="{{true}}"><div style="flex:2 1 220px;min-width:0"><label for="prod" class="label">Product</label><input id="prod" class="input" type="text" value="{{product}}" onChange="{{setProduct}}" placeholder="Example: a pair of race-day shoes"></div></sc-if>
+</div>
+</section>
+
+<section class="card" style="margin-top:16px">
+<h2 class="h2">2. Aid stations</h2>
+<p class="lead" style="margin-top:4px;font-size:15px">Pick posts from what the athlete already plans to share. Each one is a checkpoint on the course.</p>
+<div style="margin-top:12px;position:relative">
+<div aria-hidden="true" style="position:absolute;left:17px;top:18px;bottom:18px;border-left:2px dashed #9DB1A4"></div>
+<sc-for list="{{stationRows}}" as="st" hint-placeholder-count="4">
+<label style="position:relative;display:flex;gap:12px;align-items:center;padding:8px 0;cursor:pointer">
+<span class="clock" style="flex:0 0 auto;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;background:{{st.bg}};color:{{st.fg}};border:2px solid #111111">{{st.n}}</span>
+<span style="flex:1 1 auto;min-width:0"><span style="display:block;font-weight:700">{{st.label}}</span><span class="muted">Due {{st.due}}</span></span>
+<input type="checkbox" class="check" checked="{{st.on}}" onChange="{{st.toggle}}" aria-label="{{st.label}}">
+</label>
+</sc-for>
+</div>
+<div class="muted" style="margin-top:8px">Every post must be labeled as an ad or paid partnership.</div>
+</section>
+
+<section class="card" style="margin-top:16px">
+<div class="row" style="justify-content:space-between;gap:12px">
+<div style="min-width:0;flex:1 1 200px"><h2 class="h2">3. Finish-line bonus</h2><p class="lead" style="margin-top:4px;font-size:15px">Pays out only when the official race result is verified.</p></div>
+<button type="button" role="switch" aria-checked="{{bonusOnStr}}" aria-label="Add a finish-line bonus" onClick="{{toggleBonus}}" style="flex:0 0 auto;width:60px;height:36px;border-radius:999px;border:1.5px solid #111111;background:{{bonusTrack}};position:relative;padding:0"><span style="position:absolute;top:3px;left:{{bonusKnob}}px;width:27px;height:27px;border-radius:50%;background:{{bonusKnobBg}}"></span></button>
+</div>
+<sc-if value="{{bonusOn}}" hint-placeholder-val="{{true}}">
+<div class="eb" style="margin-top:14px">Unlocks when the athlete</div>
+<div role="group" aria-label="Bonus condition" class="row" style="margin-top:8px;gap:8px">
+<sc-for list="{{condRows}}" as="c" hint-placeholder-count="2"><button type="button" class="chip" aria-pressed="{{c.on}}" onClick="{{c.pick}}" style="background:{{c.bg}};color:{{c.fg}}">{{c.label}}</button></sc-for>
+</div>
+<div style="margin-top:12px;max-width:200px"><label for="bonus" class="label">Bonus ($)</label><input id="bonus" class="input clock" type="text" inputmode="numeric" value="{{bonusAmt}}" onChange="{{setBonus}}" style="font-weight:700"></div>
+<div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start"><span class="row" style="gap:6px"><span class="dot"></span><span class="gtext" style="font-size:13px;font-weight:600">Verified from race results</span></span><span style="font-size:14px;color:#3A3A3A;flex:1 1 220px">We check the chip time against the official results, then mark the bonus as unlocked. Payment happens outside Common Pace for now.</span></div>
+</sc-if>
+</section>
+
+<section class="card" style="margin-top:16px">
+<label for="note" class="label" style="font-size:17px">4. A note to the athlete <span style="font-weight:400;color:#6E6E6E">(optional)</span></label>
+<textarea id="note" rows="3" class="input" value="{{noteText}}" onChange="{{setNote}}" placeholder="Why this goal caught your eye"></textarea>
+</section>
+</div>
+<div style="position:sticky;top:20px">
+<div class="mist" style="border-radius:24px">
+<div class="eb">Your backing</div>
+<div style="margin-top:10px;display:grid;grid-template-columns:1fr auto;gap:8px 12px;align-items:baseline">
+<span>Support</span><span class="clock" style="font-size:20px;text-align:right">{{baseText}}</span>
+<span style="white-space:nowrap">Finish-line bonus</span><span class="clock" style="font-size:20px;text-align:right">{{bonusText}}</span>
+<span style="font-weight:700;border-top:1px solid rgba(17,17,17,.2);padding-top:8px">Up to</span><span class="clock" style="font-size:32px;text-align:right;border-top:1px solid rgba(17,17,17,.2);padding-top:6px">{{totalText}}</span>
+</div>
+<div style="margin-top:10px;font-size:14px;color:#3A3A3A">{{stationsText}} &middot; Finish {{g.dateText}}</div>
+<div style="margin-top:14px;display:flex;gap:10px;align-items:flex-start"><input id="agree" type="checkbox" class="check" checked="{{agree}}" onChange="{{toggleAgree}}"><label for="agree" style="font-size:14px">I understand posts must be disclosed, payment is handled outside Common Pace, and nothing is agreed until the athlete accepts.</label></div>
+<button type="button" class="btn" onClick="{{send}}" disabled="{{blocked}}" style="margin-top:14px;width:100%">Send offer</button>
+<div role="status" class="muted" style="margin-top:8px">{{hint}}</div>
+</div>
+</div>
+</div></sc-if>
+<sc-if value="{{sent}}" hint-placeholder-val="{{false}}">
+<div class="card" style="border:2px solid #111111;max-width:640px">
+<div class="eb">Offer sent</div>
+<h2 class="h2" style="margin-top:6px">You're on the start line.</h2>
+<p class="lead">Bib {{bib}} gets your offer for {{g.title}}: {{totalText}} at most, {{stationsText}}. You'll get a message when they reply.</p>
+<div class="row" style="margin-top:16px"><a class="btn" href="{{courseHref}}">Preview the course</a><a class="btn2" href="{{findHref}}">Find more athletes</a></div>
+</div>
+</sc-if>
+</div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1500}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { support: 'Both', cash: '', product: '', on: [true, true, true, false], bonus: true, cond: 'goal', bonusAmt: '100', note: '', agree: false, sent: false };
+}
+renderVals() {
+const s = this.state;
+const cpRole = (k) => { if (k === 'athlete' || k === 'business') return k; try { const q = new URLSearchParams(window.location.search).get('as'); if (q === 'business' || q === 'athlete') { try { localStorage.setItem('cpRole', q); } catch (e) {} return q; } if (localStorage.getItem('cpRole') === 'business') return 'business'; } catch (e) {} return 'athlete'; };
+const qp = (k) => { try { return new URLSearchParams(window.location.search).get(k) || ''; } catch (e) { return ''; } };
+const P = '';
+const goals = {
+r3: { title: 'Sub-4:00 at City Marathon', goal: 'Sub-4:00', dateText: 'Nov 23', weeks: '2 weeks out', stations: [['Training check-in video featuring your product', 'Nov 12'], ['Honest gear notes from a long run', 'Nov 16'], ['Race-week story', 'Nov 19'], ['Race-day post with official result', 'Nov 23']] },
+r4: { title: 'First ultra finish at Spring Trail 50K', goal: 'finish before the cutoff', dateText: 'Apr 10', weeks: '22 weeks out', stations: [['Long-run film featuring your product', 'Jan 10'], ['Trail gear notes', 'Mar 28'], ['Race-day story', 'Apr 10'], ['Finish-line post with official result', 'Apr 11']] }
+};
+const gid = qp('goal') === 'r4' ? 'r4' : 'r3';
+const g = goals[gid];
+const num = (v) => { const n = parseInt(String(v).replace(/[^0-9]/g, ''), 10); return isNaN(n) ? 0 : n; };
+const cashOn = s.support !== 'Product', prodOn = s.support !== 'Cash';
+const base = cashOn ? num(s.cash) : 0;
+const bonus = s.bonus ? num(s.bonusAmt) : 0;
+const nSt = s.on.filter(Boolean).length;
+const hasSupport = (cashOn && base > 0) || (prodOn && s.product.trim().length > 0);
+const ok = hasSupport && nSt > 0 && s.agree;
+const money = (n) => '$' + n.toLocaleString('en-US');
+const missing = [];
+if (!hasSupport) missing.push('your support'); if (nSt === 0) missing.push('at least one aid station'); if (!s.agree) missing.push('the checkbox');
+const bib = qp('bib') || '0147';
+return {
+g, bib, weeks: g.weeks,
+supportRows: [['Cash', 'Cash'], ['Product', 'Product'], ['Both', 'Cash and product']].map((o) => { const on = s.support === o[0]; return { label: o[1], on: on ? 'true' : 'false', bg: on ? '#111111' : '#FFFFFF', fg: on ? '#FFFFFF' : '#111111', pick: () => this.setState({ support: o[0] }) }; }),
+showCash: cashOn, showProduct: prodOn,
+cash: s.cash, setCash: (e) => this.setState({ cash: e.target.value }), product: s.product, setProduct: (e) => this.setState({ product: e.target.value }),
+stationRows: g.stations.map((st, i) => ({ n: i + 1, label: st[0], due: st[1], on: s.on[i], bg: s.on[i] ? '#111111' : '#FFFFFF', fg: s.on[i] ? '#FFFFFF' : '#111111', toggle: () => this.setState({ on: s.on.map((v, j) => (j === i ? !v : v)) }) })),
+bonusOn: s.bonus, bonusOnStr: s.bonus ? 'true' : 'false', bonusTrack: s.bonus ? '#111111' : '#FFFFFF', bonusKnob: s.bonus ? 27 : 3, bonusKnobBg: s.bonus ? '#FFFFFF' : '#111111', toggleBonus: () => this.setState({ bonus: !s.bonus }),
+condRows: [['finish', 'Finishes the race'], ['goal', gid === 'r3' ? 'Hits the goal: ' + g.goal : 'Finishes before the cutoff']].map((c) => { const on = s.cond === c[0]; return { label: c[1], on: on ? 'true' : 'false', bg: on ? '#111111' : '#FFFFFF', fg: on ? '#FFFFFF' : '#111111', pick: () => this.setState({ cond: c[0] }) }; }),
+bonusAmt: s.bonusAmt, setBonus: (e) => this.setState({ bonusAmt: e.target.value }),
+noteText: s.note, setNote: (e) => this.setState({ note: e.target.value }),
+baseText: (cashOn ? money(base) : '$0') + (prodOn && s.product.trim() ? ' + product' : ''),
+bonusText: s.bonus ? money(bonus) : 'None',
+totalText: money(base + bonus) + (prodOn && s.product.trim() ? ' + product' : ''),
+stationsText: nSt + (nSt === 1 ? ' aid station' : ' aid stations'),
+agree: s.agree, toggleAgree: () => this.setState({ agree: !s.agree }),
+blocked: !ok, hint: ok ? 'The athlete can accept, decline or suggest changes.' : 'Still needed: ' + missing.join(', ') + '.',
+send: () => { if (ok) { this.setState({ sent: true }); try { document.getElementById('scroll').scrollTop = 0; } catch (e) {} } },
+sent: s.sent, notSent: !s.sent,
+seasonHref: P + 'Season.dc.html?view=business&as=business&goal=' + gid,
+courseHref: P + 'Course.dc.html?as=business', findHref: P + 'Find.dc.html?as=business'
+};
+}
+}
+</script>
+<script>(function(){function ensure(){if(document.querySelector(".pilot-back")||!document.body)return;var a=document.createElement("a");a.className="pilot-back";a.href="index.html";a.innerHTML='<span aria-hidden="true">&larr;</span> Test tasks';document.body.appendChild(a);}document.addEventListener("DOMContentLoaded",ensure);setInterval(ensure,800);})();</script>
+</body>
+</html>

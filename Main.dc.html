@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Common Pace Landing</title>
+<script src="./support.js"></script>
+<style id="pilot-css">.pilot-back{position:fixed;z-index:9999;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:8px 14px;border-radius:999px;background:#111111;color:#FFFFFF;font:600 13px/1 "Hanken Grotesk",system-ui,sans-serif;text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,.18)}.pilot-back:focus-visible{outline:2px solid #3D6B52;outline-offset:3px}.pilot-back{left:max(16px,env(safe-area-inset-left,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px))}</style>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}
+a:hover{opacity:.8}
+@keyframes cp-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (max-width:640px){.cp-link{display:none}}
+.cp-track{display:flex;width:max-content;animation:cp-scroll 70s linear infinite}
+.cp-marquee:hover .cp-track{animation-play-state:paused}
+@media (prefers-reduced-motion: reduce){.cp-track{animation:none}.cp-marquee{overflow-x:auto}}
+</style>
+</helmet>
+<div style="background:#FFFFFF;color:#111111;font-family:'Hanken Grotesk',system-ui,sans-serif;font-size:18px;line-height:1.55">
+
+<!-- NAV -->
+<div style="border-bottom:1px solid rgba(17,17,17,.14)">
+<div style="max-width:1200px;margin:0 auto;padding:20px 24px;box-sizing:border-box;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px">
+<a href="#top" style="display:flex;align-items:center;gap:12px">
+<svg width="34" height="34" viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="8" fill="#111111"/><path d="M9.5 27 L17.5 9" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round"/><path d="M18.5 27 L26.5 9" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round"/></svg>
+<span style="font-weight:700;font-size:15px;letter-spacing:.14em;text-transform:uppercase">Common Pace</span>
+</a>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:28px;font-weight:500;font-size:16px">
+<a class="cp-link" href="#how">How it works</a>
+<a class="cp-link" href="#matching">Matching</a>
+<a class="cp-link" href="#business">For businesses</a>
+<a href="Auth.dc.html?view=login" style="font-weight:600;text-decoration:underline;min-height:44px;display:inline-flex;align-items:center">Log in</a>
+<a href="Auth.dc.html" style="background:#111111;color:#FFFFFF;padding:12px 24px;border-radius:999px;font-weight:600">Create your profile</a>
+</div>
+</div>
+</div>
+
+<!-- HERO -->
+<div id="top">
+<div style="max-width:1200px;margin:0 auto;padding:88px 24px 64px;box-sizing:border-box;display:flex;flex-wrap:wrap;align-items:center;gap:64px">
+<div style="flex:1 1 520px;min-width:0">
+<div style="font-weight:600;font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:#6E6E6E">Endurance sponsorship marketplace</div>
+<h1 style="margin:22px 0 0;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(56px,8vw,116px);line-height:.95;letter-spacing:-.025em">Get backed for the miles you put in.</h1>
+<p style="margin:30px 0 0;max-width:540px;font-size:21px;color:#3A3A3A">Common Pace connects runners, triathletes, cyclists and swimmers with businesses that want real stories, not just big follower counts.</p>
+<div style="margin-top:38px;display:flex;flex-wrap:wrap;gap:16px">
+<a href="Auth.dc.html" style="background:#111111;color:#FFFFFF;padding:16px 32px;border-radius:999px;font-weight:600;font-size:18px">Create your athlete profile</a>
+<a href="Auth.dc.html?as=business" style="border:1.5px solid #111111;color:#111111;padding:14.5px 30px;border-radius:999px;font-weight:600;font-size:18px">I'm a business</a>
+</div>
+<div style="margin-top:20px;font-size:15px;color:#6E6E6E">Free to build your profile and get discovered.</div>
+</div>
+
+</div>
+</div>
+
+<!-- TICKET SLIDESHOW -->
+<div style="border-top:1px solid rgba(17,17,17,.14);border-bottom:1px solid rgba(17,17,17,.14);padding:48px 0 40px;overflow:hidden">
+<div class="cp-marquee" style="overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)">
+<div class="cp-track">
+
+<div style="display:flex;gap:20px;padding-right:20px">
+<sc-for list="{{tickets}}" as="t" hint-placeholder-count="20">
+<div style="position:relative;flex:0 0 auto;width:240px;height:350px;background:#FFFFFF;border:1px solid rgba(17,17,17,.22);border-radius:20px;overflow:hidden;box-sizing:border-box">
+<div style="height:176px;background-color:{{t.tone}};position:relative">
+<span style="position:absolute;top:14px;left:14px;background:#FFFFFF;border-radius:999px;padding:2px 12px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase">No. {{t.n}}</span>
+</div>
+<div style="position:absolute;left:-11px;top:165px;width:22px;height:22px;border-radius:50%;background:#FFFFFF;border:1px solid rgba(17,17,17,.22);box-sizing:border-box"></div>
+<div style="position:absolute;right:-11px;top:165px;width:22px;height:22px;border-radius:50%;background:#FFFFFF;border:1px solid rgba(17,17,17,.22);box-sizing:border-box"></div>
+<div style="margin:0 18px;border-top:2px dashed rgba(17,17,17,.25);position:relative;top:0"></div>
+<div style="padding:14px 18px 0">
+<div style="font-family:'Instrument Serif',serif;font-size:28px;line-height:1.05">[Athlete name]</div>
+<div style="margin-top:4px;font-size:14px;color:#3A3A3A">[Sport] &middot; [City]</div>
+<div style="margin-top:10px;font-family:'Instrument Serif',serif;font-size:17px;line-height:1.15;color:#111111">{{t.trait}}</div>
+<div style="margin-top:12px;display:flex;gap:7px;align-items:baseline;font-size:13px"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#3D6B52;flex:0 0 auto"></span><span style="font-weight:600">[Goal]</span><span style="color:#6E6E6E">&middot; [Race]</span></div>
+</div>
+</div>
+</sc-for>
+</div>
+
+<div aria-hidden="true" style="display:flex;gap:20px;padding-right:20px">
+<sc-for list="{{tickets}}" as="t" hint-placeholder-count="20">
+<div style="position:relative;flex:0 0 auto;width:240px;height:350px;background:#FFFFFF;border:1px solid rgba(17,17,17,.22);border-radius:20px;overflow:hidden;box-sizing:border-box">
+<div style="height:176px;background-color:{{t.tone}};position:relative">
+<span style="position:absolute;top:14px;left:14px;background:#FFFFFF;border-radius:999px;padding:2px 12px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase">No. {{t.n}}</span>
+</div>
+<div style="position:absolute;left:-11px;top:165px;width:22px;height:22px;border-radius:50%;background:#FFFFFF;border:1px solid rgba(17,17,17,.22);box-sizing:border-box"></div>
+<div style="position:absolute;right:-11px;top:165px;width:22px;height:22px;border-radius:50%;background:#FFFFFF;border:1px solid rgba(17,17,17,.22);box-sizing:border-box"></div>
+<div style="margin:0 18px;border-top:2px dashed rgba(17,17,17,.25);position:relative;top:0"></div>
+<div style="padding:14px 18px 0">
+<div style="font-family:'Instrument Serif',serif;font-size:28px;line-height:1.05">[Athlete name]</div>
+<div style="margin-top:4px;font-size:14px;color:#3A3A3A">[Sport] &middot; [City]</div>
+<div style="margin-top:10px;font-family:'Instrument Serif',serif;font-size:17px;line-height:1.15;color:#111111">{{t.trait}}</div>
+<div style="margin-top:12px;display:flex;gap:7px;align-items:baseline;font-size:13px"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#3D6B52;flex:0 0 auto"></span><span style="font-weight:600">[Goal]</span><span style="color:#6E6E6E">&middot; [Race]</span></div>
+</div>
+</div>
+</sc-for>
+</div>
+
+</div>
+</div>
+<div style="margin-top:28px;text-align:center;font-size:14px;color:#6E6E6E">Sample bibs. Real athletes appear here at launch.</div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div id="how" style="background:#111111;color:#FFFFFF">
+<div style="max-width:1200px;margin:0 auto;padding:112px 24px;box-sizing:border-box">
+<div style="font-weight:600;font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:#A3A3A3">How it works</div>
+<h2 style="margin:18px 0 0;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(42px,5.6vw,76px);line-height:1;letter-spacing:-.02em;max-width:860px">Show who you are, not just how many follow you.</h2>
+<div style="margin-top:64px;display:flex;flex-wrap:wrap;gap:36px">
+<div style="flex:1 1 240px;min-width:0;border-top:1px solid #9DB1A4;padding-top:22px">
+<div style="font-family:'Instrument Serif',serif;font-size:44px;line-height:1;color:#A3A3A3">1</div>
+<h3 style="margin:14px 0 0;font-size:21px;font-weight:700">Build your profile</h3>
+<p style="margin:8px 0 0;color:#C8C8C8">Tell your story and show your work: your sport, goals, race calendar and best videos, in your own voice. Nothing goes live until you approve it.</p>
+</div>
+<div style="flex:1 1 240px;min-width:0;border-top:1px solid #9DB1A4;padding-top:22px">
+<div style="font-family:'Instrument Serif',serif;font-size:44px;line-height:1;color:#A3A3A3">2</div>
+<h3 style="margin:14px 0 0;font-size:21px;font-weight:700">Put a goal on the line</h3>
+<p style="margin:8px 0 0;color:#C8C8C8">Pick the race and the result you're chasing, and say what you'll share along the way. Verified results back it up.</p>
+</div>
+<div style="flex:1 1 240px;min-width:0;border-top:1px solid #9DB1A4;padding-top:22px">
+<div style="font-family:'Instrument Serif',serif;font-size:44px;line-height:1;color:#A3A3A3">3</div>
+<h3 style="margin:14px 0 0;font-size:21px;font-weight:700">Businesses come to you</h3>
+<p style="margin:8px 0 0;color:#C8C8C8">You never pitch or set a price. Businesses that fit make the offer: cash, product or both.</p>
+</div>
+<div style="flex:1 1 240px;min-width:0;border-top:1px solid #9DB1A4;padding-top:22px">
+<div style="font-family:'Instrument Serif',serif;font-size:44px;line-height:1;color:#A3A3A3">4</div>
+<h3 style="margin:14px 0 0;font-size:21px;font-weight:700">Agree and deliver</h3>
+<p style="margin:8px 0 0;color:#C8C8C8">Confirm deliverables and deadlines, then track each one to completion.</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- MATCHING -->
+<div id="matching">
+<div style="max-width:1200px;margin:0 auto;padding:120px 24px;box-sizing:border-box;display:flex;flex-wrap:wrap;align-items:center;gap:72px">
+<div style="flex:1 1 440px;min-width:0">
+<div style="font-weight:600;font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:#6E6E6E">Compatibility, not follower counts</div>
+<h2 style="margin:18px 0 0;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(42px,5.6vw,76px);line-height:1;letter-spacing:-.02em">A smaller audience can be the right one.</h2>
+<p style="margin:26px 0 0;max-width:520px;color:#3A3A3A">A local business does not need the biggest name. It needs a credible athlete whose content, community and location fit. Every recommendation on Common Pace comes with the reasons behind it, so you can see why you were matched.</p>
+</div>
+<div style="flex:1 1 440px;min-width:0;display:flex;justify-content:center">
+<div style="width:100%;max-width:480px;background:#F4F4F2;color:#111111;border-radius:24px;padding:36px;box-sizing:border-box">
+<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between">
+<div style="font-family:'Instrument Serif',serif;font-size:32px">Why this match</div>
+<span style="border:1px solid #9DB1A4;color:#6E6E6E;border-radius:999px;padding:4px 12px;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase">Example</span>
+</div>
+<div style="margin-top:22px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;justify-content:space-between;gap:16px;padding-bottom:14px;border-bottom:1px solid rgba(17,17,17,.12)"><span style="color:#6E6E6E">Content fit</span><span style="font-weight:600">Strong</span></div>
+<div style="display:flex;justify-content:space-between;gap:16px;padding-bottom:14px;border-bottom:1px solid rgba(17,17,17,.12)"><span style="color:#6E6E6E">Audience fit</span><span style="font-weight:600">Strong</span></div>
+<div style="display:flex;justify-content:space-between;gap:16px;padding-bottom:14px;border-bottom:1px solid rgba(17,17,17,.12)"><span style="color:#6E6E6E">Location fit</span><span style="font-weight:600">Strong</span></div>
+<div style="display:flex;justify-content:space-between;gap:16px;padding-bottom:14px;border-bottom:1px solid rgba(17,17,17,.12)"><span style="color:#6E6E6E">Timing fit</span><span style="font-weight:600">Races during your campaign</span></div>
+<div style="display:flex;justify-content:space-between;gap:16px"><span style="color:#6E6E6E">Evidence</span><span style="font-weight:600">Linked posts</span></div>
+</div>
+<p style="margin:24px 0 0;font-size:15px;color:#6E6E6E">Recommendations explain themselves. They never invent your numbers.</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- TRANSPARENCY -->
+<div style="background:#F4F4F2">
+<div style="max-width:1200px;margin:0 auto;padding:104px 24px;box-sizing:border-box">
+<h2 style="margin:0;max-width:800px;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(40px,5vw,66px);line-height:1;letter-spacing:-.02em">Every number says where it came from.</h2>
+<div style="margin-top:52px;display:flex;flex-wrap:wrap;gap:20px">
+<div style="flex:1 1 240px;min-width:0;background:#FFFFFF;border-radius:16px;padding:28px;box-sizing:border-box">
+<div style="font-size:20px;font-weight:700">Verified</div>
+<p style="margin:8px 0 0;font-size:16px;color:#3A3A3A">Checked against a connected source.</p>
+</div>
+<div style="flex:1 1 240px;min-width:0;background:#FFFFFF;border-radius:16px;padding:28px;box-sizing:border-box">
+<div style="font-size:20px;font-weight:700">Athlete-reported</div>
+<p style="margin:8px 0 0;font-size:16px;color:#3A3A3A">Entered by you and clearly labeled as such.</p>
+</div>
+<div style="flex:1 1 240px;min-width:0;background:#FFFFFF;border-radius:16px;padding:28px;box-sizing:border-box">
+<div style="font-size:20px;font-weight:700">AI estimate</div>
+<p style="margin:8px 0 0;font-size:16px;color:#3A3A3A">Suggested by the platform, reviewed by you.</p>
+</div>
+<div style="flex:1 1 240px;min-width:0;background:#FFFFFF;border-radius:16px;padding:28px;box-sizing:border-box">
+<div style="font-size:20px;font-weight:700">Platform-tracked</div>
+<p style="margin:8px 0 0;font-size:16px;color:#3A3A3A">Counted by Common Pace, like link clicks and on-time delivery.</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- BUSINESSES -->
+<div id="business">
+<div style="max-width:1200px;margin:0 auto;padding:112px 24px;box-sizing:border-box;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:40px">
+<div style="flex:1 1 520px;min-width:0">
+<div style="font-weight:600;font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:#6E6E6E">For businesses</div>
+<h2 style="margin:18px 0 0;max-width:760px;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(38px,4.8vw,62px);line-height:1.02;letter-spacing:-.02em">Describe the athlete you want. Get a shortlist you can trust.</h2>
+<p style="margin:22px 0 0;max-width:620px;color:#3A3A3A">Tell us your goal in plain English, set a budget, and compare athletes with clear reasons for every recommendation. Built for small local businesses and larger brands alike.</p>
+</div>
+<a href="Auth.dc.html?as=business" style="background:#111111;color:#FFFFFF;padding:16px 32px;border-radius:999px;font-weight:600;font-size:18px">Start a campaign</a>
+</div>
+</div>
+
+<!-- FINAL CTA -->
+<div id="join" style="background:#F4F4F2;color:#111111">
+<div style="max-width:1200px;margin:0 auto;padding:112px 24px;box-sizing:border-box;text-align:center">
+<h2 style="margin:0 auto;max-width:900px;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(48px,7vw,100px);line-height:.96;letter-spacing:-.025em">Your next partner is looking for someone like you.</h2>
+<div style="margin-top:40px">
+<a href="Auth.dc.html" style="display:inline-block;background:#111111;color:#FFFFFF;padding:18px 38px;border-radius:999px;font-weight:600;font-size:19px">Create your athlete profile</a>
+</div>
+</div>
+</div>
+
+<!-- FOOTER -->
+<div style="background:#111111;color:#C8C8C8">
+<div style="max-width:1200px;margin:0 auto;padding:40px 24px;box-sizing:border-box;display:flex;flex-wrap:wrap;gap:16px 40px;align-items:center;justify-content:space-between;font-size:15px">
+<span style="font-weight:700;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:#FFFFFF">Common Pace</span>
+<div style="display:flex;flex-wrap:wrap;gap:24px">
+<a href="#how">How it works</a>
+<a href="#business">For businesses</a>
+<a href="Legal.dc.html#terms">Terms</a>
+<a href="Legal.dc.html#privacy">Privacy</a>
+<a href="Legal.dc.html#disclosure">Sponsorship disclosure</a>
+<a href="Legal.dc.html#copyright">Copyright</a>
+<a href="Legal.dc.html#contact">Contact</a>
+</div>
+</div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":4600}}'>
+class Component extends DCLogic {
+renderVals() {
+const tickets = Array.from({ length: 20 }, (_, i) => ({ n: String(i + 1).padStart(2, '0'), tone: i % 2 === 0 ? '#9DB1A4' : '#C9D6CD', trait: ['Comeback from injury', 'Parent runner', 'Started after 40', 'Run club captain', 'Runs before sunrise', 'First in my family to race', 'Run commuter', 'Trail volunteer'][i % 8] }));
+return { tickets };
+}
+}
+</script>
+<script>(function(){function ensure(){if(document.querySelector(".pilot-back")||!document.body)return;var a=document.createElement("a");a.className="pilot-back";a.href="index.html";a.innerHTML='<span aria-hidden="true">&larr;</span> Test tasks';document.body.appendChild(a);}document.addEventListener("DOMContentLoaded",ensure);setInterval(ensure,800);})();</script>
+</body>
+</html>

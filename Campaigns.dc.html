@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Discover Campaigns</title>
+<script src="./support.js"></script>
+<style id="pilot-css">.pilot-back{position:fixed;z-index:9999;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:8px 14px;border-radius:999px;background:#111111;color:#FFFFFF;font:600 13px/1 "Hanken Grotesk",system-ui,sans-serif;text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,.18)}.pilot-back:focus-visible{outline:2px solid #3D6B52;outline-offset:3px}.pilot-back{left:max(16px,env(safe-area-inset-left,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px))}</style>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0}
+button{font-family:inherit;cursor:pointer}
+input,textarea{font-family:inherit}
+a{color:inherit;text-decoration:none}
+@media (max-width:760px){.cm-row{flex-wrap:nowrap!important;overflow-x:auto;scroll-snap-type:x mandatory;margin-left:-24px!important;margin-right:-24px!important;padding:0 24px;scroll-padding-left:24px;scrollbar-width:none}.cm-row::-webkit-scrollbar{display:none}.cm-card{flex:0 0 86%!important;scroll-snap-align:start}.cm-rr{flex-direction:column;gap:0!important}.cm-rv{text-align:left!important}}
+</style>
+</helmet>
+<div style="background:#FFFFFF;color:#111111;font-family:'Hanken Grotesk',system-ui,sans-serif;font-size:17px;line-height:1.5">
+
+<!-- NAV -->
+<dc-import name="TopNav" kind="athlete" active="Discover" hint-size="100%,74px"></dc-import>
+
+<div style="max-width:1280px;margin:0 auto;padding:56px 24px 96px;box-sizing:border-box">
+
+<div style="font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6E6E6E">Discover</div>
+<h1 style="margin:10px 0 0;font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(48px,6.5vw,88px);line-height:.96;letter-spacing:-.025em">Partners at your pace.</h1>
+<p style="margin:16px 0 0;max-width:560px;color:#3A3A3A">Sample campaigns from sample businesses. Matches come from what's on your profile, and each one says why.</p>
+
+<!-- MATCHES -->
+<sc-if value="{{showMatches}}" hint-placeholder-val="{{true}}">
+<div style="margin-top:56px">
+<div style="display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;justify-content:space-between">
+<h2 style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:44px;line-height:1;letter-spacing:-.02em">Matched for you</h2>
+<span style="font-size:14px;color:#6E6E6E">AI suggestions. Raise your hand and the business decides what to offer.</span>
+</div>
+<div class="cm-row" data-scroll-x="1" style="margin-top:24px;display:flex;flex-wrap:wrap;gap:20px">
+<sc-for list="{{matches}}" as="m" hint-placeholder-count="3">
+<div class="cm-card" style="flex:1 1 340px;min-width:0;background:#F4F4F2;color:#111111;border-radius:28px;padding:28px;box-sizing:border-box;display:flex;flex-direction:column">
+<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between">
+<span style="font-size:14px;color:#6E6E6E">{{m.biz}}</span>
+<span style="background:#111111;color:#FFFFFF;border-radius:999px;padding:3px 12px;font-size:13px;font-weight:700">{{m.match}} fit</span>
+</div>
+<div style="margin-top:12px;font-family:'Instrument Serif',serif;font-size:34px;line-height:1.05;letter-spacing:-.01em">{{m.title}}</div>
+<div style="margin-top:8px;font-size:15px;color:#6E6E6E">{{m.comp}} &middot; {{m.location}}</div>
+<div style="margin-top:20px;border-top:1px solid rgba(17,17,17,.12)">
+<sc-for list="{{m.reasons}}" as="r" hint-placeholder-count="4">
+<div class="cm-rr" style="display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid rgba(17,17,17,.12);font-size:15px"><span style="color:#6E6E6E;white-space:nowrap">{{r.k}}</span><span class="cm-rv" style="font-weight:600;text-align:right">{{r.v}}</span></div>
+</sc-for>
+</div>
+<div style="margin-top:20px">
+<button type="button" onClick="{{m.open}}" style="background:#111111;color:#FFFFFF;border:0;border-radius:999px;padding:12px 24px;font-size:15px;font-weight:600;min-height:46px">{{m.cta}}</button>
+</div>
+</div>
+</sc-for>
+</div>
+<sc-if value="{{mf}}" hint-placeholder-val="{{false}}">
+<div style="margin-top:20px;background:#F4F4F2;border-radius:20px;padding:22px;box-sizing:border-box">
+<label for="pitch" style="display:block;font-weight:700;margin-bottom:6px">A note for {{mfBiz}} (optional)</label>
+<div style="font-size:14px;color:#3A3A3A;margin-bottom:10px">Your profile, videos and verified activity are attached automatically. The business decides what to offer.</div>
+<textarea id="pitch" rows="4" value="{{pitch}}" onChange="{{setPitch}}" placeholder="Anything they should know? You don't need to pitch or name a price." style="width:100%;box-sizing:border-box;padding:12px 14px;font-size:16px;line-height:1.5;border:1px solid #9A9A9A;border-radius:12px;background:#FFFFFF;color:#111111;resize:vertical"></textarea>
+<div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+<sc-if value="{{canSend}}" hint-placeholder-val="{{false}}">
+<button type="button" onClick="{{mfSend}}" style="background:#111111;color:#FFFFFF;border:0;border-radius:999px;padding:12px 26px;font-size:15px;font-weight:600;min-height:46px">I'm interested</button>
+</sc-if>
+<sc-if value="{{cannotSend}}" hint-placeholder-val="{{true}}">
+<button type="button" disabled style="background:#E2E2E2;color:#6E6E6E;border:0;border-radius:999px;padding:12px 26px;font-size:15px;font-weight:600;min-height:46px;cursor:not-allowed">I'm interested</button>
+</sc-if>
+<button type="button" onClick="{{mfClose}}" style="background:none;border:0;padding:8px;font-size:15px;font-weight:600;text-decoration:underline;color:#111111;min-height:44px">Cancel</button>
+<span style="font-size:13px;color:#6E6E6E">{{sendHint}}</span>
+</div>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+<!-- SEARCH -->
+<div style="margin-top:{{listTop}}px">
+<div>
+<label for="q" style="display:block;font-weight:600;font-size:15px;margin-bottom:6px">Search</label>
+<input id="q" type="text" value="{{q}}" onChange="{{setQ}}" placeholder="Try a sport, a place or a kind of product" style="width:100%;max-width:560px;box-sizing:border-box;padding:14px 18px;font-size:17px;border:1px solid #9A9A9A;border-radius:999px;background:#FFFFFF;color:#111111">
+</div>
+<div style="margin-top:20px;font-weight:600;font-size:15px">Sport</div>
+<div role="group" aria-label="Sport filter" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:8px">
+<sc-for list="{{sportChips}}" as="c" hint-placeholder-count="6">
+<button type="button" onClick="{{c.pick}}" aria-pressed="{{c.on}}" style="padding:8px 18px;border-radius:999px;font-size:15px;font-weight:600;min-height:44px;border:1px solid #111111;background:{{c.bg}};color:{{c.fg}}">{{c.label}}</button>
+</sc-for>
+</div>
+<div style="margin-top:16px;font-weight:600;font-size:15px">Compensation</div>
+<div role="group" aria-label="Compensation filter" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:8px">
+<sc-for list="{{compChips}}" as="c" hint-placeholder-count="5">
+<button type="button" onClick="{{c.pick}}" aria-pressed="{{c.on}}" style="padding:8px 18px;border-radius:999px;font-size:15px;font-weight:600;min-height:44px;border:1px solid #111111;background:{{c.bg}};color:{{c.fg}}">{{c.label}}</button>
+</sc-for>
+</div>
+<h2 style="margin:40px 0 0;font-family:'Instrument Serif',serif;font-weight:400;font-size:44px;line-height:1;letter-spacing:-.02em">{{listHeading}}</h2>
+<div style="margin-top:8px;font-size:15px;color:#6E6E6E">{{countText}}</div>
+
+<div style="margin-top:12px;border-top:1px solid rgba(17,17,17,.14)">
+<sc-for list="{{rows}}" as="c" hint-placeholder-count="3">
+<div style="padding:26px 0;border-bottom:1px solid rgba(17,17,17,.14)">
+<div style="display:flex;flex-wrap:wrap;gap:16px 28px;align-items:flex-start;justify-content:space-between">
+<div style="flex:2 1 340px;min-width:0">
+<div style="font-size:14px;color:#6E6E6E">{{c.biz}} &middot; Due {{c.due}}</div>
+<div style="margin-top:4px;font-family:'Instrument Serif',serif;font-size:34px;line-height:1.05;letter-spacing:-.01em">{{c.title}}</div>
+<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+<span style="border:1px solid #111111;border-radius:999px;padding:2px 12px;font-size:13px;font-weight:600">{{c.sport}}</span>
+<span style="border:1px solid #111111;border-radius:999px;padding:2px 12px;font-size:13px;font-weight:600">{{c.comp}}</span>
+<span style="background:#F4F4F2;border-radius:999px;padding:2px 12px;font-size:13px;font-weight:600">{{c.location}}</span>
+</div>
+<div style="margin-top:12px;font-size:15px;color:#3A3A3A">Deliverables: {{c.deliver}}</div>
+<button type="button" onClick="{{c.report}}" style="background:none;border:0;padding:8px 4px;font-size:14px;font-weight:600;text-decoration:underline;color:#6E6E6E;min-height:44px;padding:4px 0">Report campaign</button>
+</div>
+<div style="flex:0 0 auto;display:flex;flex-direction:column;align-items:flex-end;gap:10px">
+<span style="font-size:14px;font-weight:600;color:#6E6E6E">{{c.match}} fit</span>
+<sc-if value="{{c.applied}}" hint-placeholder-val="{{false}}">
+<span style="display:inline-flex;align-items:center;gap:6px;background:#F4F4F2;border-radius:999px;padding:12px 22px;font-size:15px;font-weight:700"><svg width="14" height="14" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 6.5 L5 9 L10 3" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Interested</span>
+</sc-if>
+<sc-if value="{{c.notApplied}}" hint-placeholder-val="{{true}}">
+<button type="button" onClick="{{c.open}}" aria-expanded="{{c.isOpen}}" style="background:#111111;color:#FFFFFF;border:0;border-radius:999px;padding:12px 26px;font-size:15px;font-weight:600;min-height:46px">{{c.cta}}</button>
+</sc-if>
+</div>
+</div>
+
+<sc-if value="{{c.showForm}}" hint-placeholder-val="{{false}}">
+<div style="margin-top:20px;background:#F4F4F2;border-radius:20px;padding:22px;box-sizing:border-box">
+<label for="pitch" style="display:block;font-weight:700;margin-bottom:6px">A note for {{c.biz}} (optional)</label>
+<div style="font-size:14px;color:#3A3A3A;margin-bottom:10px">Your profile, videos and verified activity are attached automatically. The business decides what to offer.</div>
+<textarea id="pitch" rows="4" value="{{pitch}}" onChange="{{setPitch}}" placeholder="Anything they should know? You don't need to pitch or name a price." style="width:100%;box-sizing:border-box;padding:12px 14px;font-size:16px;line-height:1.5;border:1px solid #9A9A9A;border-radius:12px;background:#FFFFFF;color:#111111;resize:vertical"></textarea>
+<div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+<sc-if value="{{canSend}}" hint-placeholder-val="{{false}}">
+<button type="button" onClick="{{c.send}}" style="background:#111111;color:#FFFFFF;border:0;border-radius:999px;padding:12px 26px;font-size:15px;font-weight:600;min-height:46px">I'm interested</button>
+</sc-if>
+<sc-if value="{{cannotSend}}" hint-placeholder-val="{{true}}">
+<button type="button" disabled style="background:#E2E2E2;color:#6E6E6E;border:0;border-radius:999px;padding:12px 26px;font-size:15px;font-weight:600;min-height:46px;cursor:not-allowed">I'm interested</button>
+</sc-if>
+<button type="button" onClick="{{c.open}}" style="background:none;border:0;padding:8px;font-size:15px;font-weight:600;text-decoration:underline;color:#111111;min-height:44px">Cancel</button>
+<span style="font-size:13px;color:#6E6E6E">{{sendHint}}</span>
+</div>
+</div>
+</sc-if>
+</div>
+</sc-for>
+</div>
+<sc-if value="{{noResults}}" hint-placeholder-val="{{false}}">
+<div style="padding:40px 0;color:#3A3A3A">No campaigns match those filters. Try a different sport or clear the search.</div>
+</sc-if>
+</div>
+
+</div>
+<sc-if value="{{rpOpen}}" hint-placeholder-val="{{false}}">
+<div style="position:fixed;inset:0;z-index:80;background:rgba(17,17,17,.45);display:flex;align-items:center;justify-content:center;padding:24px;box-sizing:border-box">
+<div role="dialog" aria-modal="true" aria-labelledby="rp-title" style="width:min(520px,100%);max-height:90%;overflow-y:auto;background:#FFFFFF;border-radius:24px;padding:24px 20px;box-sizing:border-box;color:#111111">
+<sc-if value="{{rpNotSent}}" hint-placeholder-val="{{true}}">
+<h2 id="rp-title" style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:30px;line-height:1.05">Report {{rpTarget}}</h2>
+<p style="margin:8px 0 0;font-size:15px;color:#3A3A3A">Reports are private. The account is not told who reported it.</p>
+<div style="margin-top:14px;font-weight:600;font-size:15px">What's wrong?</div>
+<div role="radiogroup" aria-label="Reason" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:8px">
+<sc-for list="{{rpReasons}}" as="x" hint-placeholder-count="6">
+<button type="button" role="radio" aria-checked="{{x.on}}" onClick="{{x.pick}}" style="padding:10px 16px;border-radius:999px;font-size:15px;font-weight:600;min-height:44px;border:1px solid #111111;background:{{x.bg}};color:{{x.fg}}">{{x.label}}</button>
+</sc-for>
+</div>
+<div style="margin-top:8px;font-size:14px;color:#6E6E6E">{{rpHelp}}</div>
+<label for="rp-note" style="display:block;margin-top:14px;font-weight:600;font-size:15px">Details <span style="font-weight:400;color:#6E6E6E">(optional)</span></label>
+<textarea id="rp-note" rows="3" value="{{rpNote}}" onChange="{{setRpNote}}" style="margin-top:6px;width:100%;box-sizing:border-box;padding:12px 14px;font-size:16px;font-family:inherit;border:1px solid #9A9A9A;border-radius:12px;resize:vertical"></textarea>
+<div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:10px">
+<button type="button" onClick="{{sendReport}}" disabled="{{rpBlocked}}" style="background:{{rpBg}};color:#FFFFFF;border:0;border-radius:999px;padding:12px 24px;font-size:16px;font-weight:600;min-height:48px">Send report</button>
+<button type="button" onClick="{{closeReport}}" style="background:#FFFFFF;color:#111111;border:1.5px solid #111111;border-radius:999px;padding:12px 24px;font-size:16px;font-weight:600;min-height:48px">Cancel</button>
+</div>
+</sc-if>
+<sc-if value="{{rpSent}}" hint-placeholder-val="{{false}}">
+<h2 role="status" style="margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:30px;line-height:1.05">Thanks. We'll look into it.</h2>
+<p style="margin:8px 0 0;font-size:15px;color:#3A3A3A">Our team reviews reports within [24 hours] and messages you with the outcome. Copyright reports follow our takedown process.</p>
+<button type="button" onClick="{{closeReport}}" style="margin-top:16px;background:#111111;color:#FFFFFF;border:0;border-radius:999px;padding:12px 24px;font-size:16px;font-weight:600;min-height:48px">Done</button>
+</sc-if>
+</div>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":2100}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { q: '', sportF: 'All', compF: 'Any', openId: 0, applied: [], pitch: '' };
+}
+renderVals() {
+const s = this.state;
+const rpReasonDefs = [['Spam or scam', 'Fake offers, requests for money or personal details.'], ['Harassment or hate', 'Abuse, threats or hateful content.'], ['Copyright', 'Uses video, music or images the account does not own.'], ['Misleading or fake', 'False stats, race times or identity.'], ['Under 18', 'The person appears to be younger than 18.'], ['Something else', 'Tell us more in the details.']];
+const rpPick = rpReasonDefs.find((d) => d[0] === s.rpReason);
+const rpVals = { rpOpen: !!s.rp, rpTarget: s.rp || '', rpSent: !!s.rpSent, rpNotSent: !s.rpSent,
+rpReasons: rpReasonDefs.map((d) => { const on = s.rpReason === d[0]; return { label: d[0], on: on ? 'true' : 'false', bg: on ? '#111111' : '#FFFFFF', fg: on ? '#FFFFFF' : '#111111', pick: () => this.setState({ rpReason: d[0] }) }; }),
+rpHelp: rpPick ? rpPick[1] : 'Pick one reason.', rpNote: s.rpNote || '', setRpNote: (e) => this.setState({ rpNote: e.target.value }),
+rpBlocked: !s.rpReason, rpBg: s.rpReason ? '#111111' : '#E2E2E2',
+sendReport: () => { if (s.rpReason) this.setState({ rpSent: true }); },
+closeReport: () => this.setState({ rp: '', rpReason: '', rpNote: '', rpSent: false }) };
+const openReport = (t) => () => this.setState({ rp: t, rpReason: '', rpNote: '', rpSent: false });
+const all = [
+{ id: 1, biz: '[Local running store]', title: 'Fall long-run series: honest shoe reviews', sports: ['Running', 'Trail'], comp: 'Product + cash', compKeys: ['Cash', 'Product'], location: '[City, State]', due: 'Nov 20', deliver: '2 videos, 3 stories', match: 'Strong', reasons: [{ k: 'Content fit', v: 'Strong. Gear reviews on your profile.' }, { k: 'Audience fit', v: 'Strong. Recreational runners.' }, { k: 'Location fit', v: 'Strong. Same city.' }, { k: 'Timing fit', v: 'Runs Nov 1 to 30, right around your City Marathon.' }] },
+{ id: 2, biz: '[Recovery studio]', title: 'Marathon recovery series', sports: ['Running'], comp: 'Cash', compKeys: ['Cash'], location: '[City, State]', due: 'Nov 30', deliver: '1 video, 2 posts', match: 'Good', reasons: [{ k: 'Content fit', v: 'Good. Training diary posts.' }, { k: 'Audience fit', v: 'Good. Marathon training audience.' }, { k: 'Location fit', v: 'Strong. Same city.' }, { k: 'Timing fit', v: 'Starts after your marathon. Good timing for recovery content.' }] },
+{ id: 3, biz: '[Nutrition brand]', title: 'Race-week fueling diary', sports: ['Running', 'Triathlon'], comp: 'Product', compKeys: ['Product'], location: 'Remote', due: 'Dec 5', deliver: '1 video, 1 post', match: 'Good', reasons: [{ k: 'Content fit', v: 'Good. Race recaps on your profile.' }, { k: 'Audience fit', v: 'Good. Endurance audience.' }, { k: 'Location fit', v: 'Not location-specific.' }, { k: 'Timing fit', v: 'Race week lines up with your Nov 23 marathon.' }] },
+{ id: 4, biz: '[Cycling apparel company]', title: 'Winter base-miles kit testers', sports: ['Cycling'], comp: 'Cash + product', compKeys: ['Cash', 'Product'], location: 'Remote', due: 'Dec 15', deliver: '2 videos', match: 'Fair', reasons: [{ k: 'Content fit', v: 'Fair. One ride on your profile.' }, { k: 'Audience fit', v: 'Fair. Smaller cycling overlap.' }, { k: 'Location fit', v: 'Not location-specific.' }, { k: 'Timing fit', v: 'Winter cycling, outside your race season.' }] },
+{ id: 5, biz: '[Swim gear startup]', title: 'Open-water season wrap', sports: ['Swimming', 'Triathlon'], comp: 'Affiliate', compKeys: ['Affiliate'], location: 'Remote', due: 'Jan 10', deliver: '1 video, tracked link', match: 'Fair', reasons: [{ k: 'Content fit', v: 'Fair. No swim content yet.' }, { k: 'Audience fit', v: 'Unknown. Not enough data.' }, { k: 'Location fit', v: 'Not location-specific.' }, { k: 'Timing fit', v: 'Summer open-water season. Not on your calendar.' }] },
+{ id: 6, biz: '[Trail race organizer]', title: 'Event ambassadors', sports: ['Trail', 'Running'], comp: 'Event support', compKeys: ['Event support'], location: '[State]', due: 'Jan 31', deliver: '3 posts, 1 recap', match: 'Fair', reasons: [{ k: 'Content fit', v: 'Fair. Race recaps on your profile.' }, { k: 'Audience fit', v: 'Fair. Trail overlap unknown.' }, { k: 'Location fit', v: 'Good. Same region.' }, { k: 'Timing fit', v: 'Event dates match your spring trail race.' }] }
+];
+const q = s.q.trim().toLowerCase();
+const filtered = all.filter((c) => {
+const text = (c.biz + ' ' + c.title + ' ' + c.sports.join(' ') + ' ' + c.comp + ' ' + c.location + ' ' + c.deliver).toLowerCase();
+return (!q || text.includes(q)) && (s.sportF === 'All' || c.sports.includes(s.sportF)) && (s.compF === 'Any' || c.compKeys.includes(s.compF));
+});
+const toggleOpen = (id) => () => this.setState({ openId: s.openId === id ? 0 : id, pitch: '' });
+const canSend = true;
+const filtering = !!q || s.sportF !== 'All' || s.compF !== 'Any';
+const matchIds = all.filter((c) => c.match === 'Strong' || c.match === 'Good').slice(0, 3).map((c) => c.id);
+const listed = filtering ? filtered : filtered.filter((c) => !matchIds.includes(c.id));
+const rows = listed.map((c) => {
+const applied = s.applied.includes(c.id);
+const isOpen = s.openId === c.id;
+return { ...c, sport: c.sports[0], applied, notApplied: !applied, isOpen, showForm: isOpen && !applied, cta: isOpen ? 'Close' : "I'm interested", open: toggleOpen(c.id), report: openReport('this campaign'), send: () => { if (canSend) this.setState({ applied: [...s.applied, c.id], openId: 0, pitch: '' }); } };
+});
+const matches = all.filter((c) => c.match === 'Strong' || c.match === 'Good').slice(0, 3).map((c) => {
+const applied = s.applied.includes(c.id);
+return { ...c, cta: applied ? 'Interested' : "I'm interested", open: () => { if (!applied) this.setState({ openId: s.openId === c.id ? 0 : c.id, pitch: '' }); } };
+});
+const mfCamp = !filtering ? all.find((c) => c.id === s.openId && matchIds.includes(c.id) && !s.applied.includes(c.id)) : null;
+const sendHint = canSend ? 'Nothing is sent until you press the button.' : 'Write a few words about why you are a fit to send.';
+const chips = (labels, key) => labels.map((l) => { const on = s[key] === l; return { label: l, on, bg: on ? '#111111' : '#FFFFFF', fg: on ? '#FFFFFF' : '#111111', pick: () => this.setState({ [key]: l }) }; });
+return {
+...rpVals,
+q: s.q, setQ: (e) => this.setState({ q: e.target.value }),
+pitch: s.pitch, setPitch: (e) => this.setState({ pitch: e.target.value }),
+canSend, cannotSend: !canSend,
+sportChips: chips(['All', 'Running', 'Triathlon', 'Cycling', 'Swimming', 'Trail'], 'sportF'),
+compChips: chips(['Any', 'Cash', 'Product', 'Event support', 'Affiliate'], 'compF'),
+matches, rows, sendHint,
+showMatches: !filtering, mf: !!mfCamp, mfBiz: mfCamp ? mfCamp.biz : '',
+mfSend: () => { if (canSend && mfCamp) this.setState({ applied: [...s.applied, mfCamp.id], openId: 0, pitch: '' }); },
+mfClose: () => this.setState({ openId: 0, pitch: '' }),
+listTop: 72, listHeading: filtering ? 'Results' : 'More campaigns',
+countText: listed.length + (listed.length === 1 ? ' campaign' : ' campaigns'),
+noResults: listed.length === 0
+};
+}
+}
+</script>
+<script>(function(){function ensure(){if(document.querySelector(".pilot-back")||!document.body)return;var a=document.createElement("a");a.className="pilot-back";a.href="index.html";a.innerHTML='<span aria-hidden="true">&larr;</span> Test tasks';document.body.appendChild(a);}document.addEventListener("DOMContentLoaded",ensure);setInterval(ensure,800);})();</script>
+</body>
+</html>

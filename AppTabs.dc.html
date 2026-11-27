@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>App tab bar</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}
+</style>
+</helmet>
+<nav aria-label="Primary tabs" style="position:absolute;left:0;right:0;bottom:0;height:72px;z-index:60;display:flex;background:#FFFFFF;border-top:1px solid rgba(17,17,17,.18);padding:6px 6px 8px;box-sizing:border-box;font-family:'Hanken Grotesk',system-ui,sans-serif">
+<sc-for list="{{items}}" as="n" hint-placeholder-count="4">
+<a href="{{n.href}}" aria-current="{{n.current}}" style="flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:11px;font-weight:600;color:{{n.lc}}">
+<span style="display:flex;align-items:center;justify-content:center;width:56px;height:30px;border-radius:999px;background:{{n.bg}}"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="{{n.icon}}" fill="none" stroke="{{n.fg}}" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+<span>{{n.label}}</span>
+</a>
+</sc-for>
+</nav>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"kind":{"editor":null,"default":"athlete"},"active":{"editor":null,"default":""},"$preview":{"width":390,"height":72}}'>
+class Component extends DCLogic {
+renderVals() {
+const cpRole = (k) => { if (k === 'athlete' || k === 'business') return k; try { const q = new URLSearchParams(window.location.search).get('as'); if (q === 'business' || q === 'athlete') { try { localStorage.setItem('cpRole', q); } catch (e) {} return q; } if (localStorage.getItem('cpRole') === 'business') return 'business'; } catch (e) {} return 'athlete'; };
+const kind = cpRole(this.props.kind);
+const active = this.props.active || '';
+const icons = { 'Discover': 'M11 4a7 7 0 1 0 0 14a7 7 0 0 0 0-14zM21 21l-5-5', 'Messages': 'M4 5h16v11H9l-5 4z', 'Deals': 'M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h5', 'Profile': 'M12 4a4 4 0 1 0 0 8a4 4 0 0 0 0-8zM5 21c0-4 3-6 7-6s7 2 7 6', 'Matches': 'M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z', 'New campaign': 'M12 5v14M5 12h14' };
+const defs = kind === 'business'
+? [['Matches', 'AppFind.dc.html?as=business'], ['New campaign', 'AppCreate.dc.html'], ['Messages', 'AppMessages.dc.html?as=business'], ['Deals', 'AppDeals.dc.html?as=business']]
+: [['Discover', 'AppDiscover.dc.html'], ['Messages', 'AppMessages.dc.html?as=athlete'], ['Deals', 'AppDeals.dc.html?as=athlete'], ['Profile', 'AppSeason.dc.html?as=athlete']];
+const items = defs.map((d) => { const on = d[0] === active; return { label: d[0], href: d[1], icon: icons[d[0]], current: on ? 'page' : 'false', lc: on ? '#111111' : '#6E6E6E', bg: on ? '#111111' : 'transparent', fg: on ? '#FFFFFF' : '#6E6E6E' }; });
+return { items };
+}
+}
+</script>
+</body>
+</html>

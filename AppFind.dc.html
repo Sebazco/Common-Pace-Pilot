@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>App: Find athletes</title>
+<script src="./support.js"></script>
+<style id="pilot-css">.pilot-back{position:fixed;z-index:9999;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:8px 14px;border-radius:999px;background:#111111;color:#FFFFFF;font:600 13px/1 "Hanken Grotesk",system-ui,sans-serif;text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,.18)}.pilot-back:focus-visible{outline:2px solid #3D6B52;outline-offset:3px}.pilot-back{right:max(12px,env(safe-area-inset-right,0px));bottom:calc(86px + env(safe-area-inset-bottom,0px))}@media (min-width:520px){html,body{background:#E7E7E4}body{padding:28px 0}#dc-root{width:390px;margin:0 auto;box-shadow:0 10px 40px rgba(0,0,0,.14);border-radius:28px;overflow:hidden;background:#FFFFFF}.pilot-back{left:24px;right:auto;top:24px;bottom:auto}}</style>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap">
+<style>
+body{margin:0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+input,textarea{font-family:inherit}
+.cp{color:#111111;font-family:'Hanken Grotesk',system-ui,sans-serif;font-size:17px;line-height:1.5;background:#FFFFFF}
+.app.cp{font-size:16px;line-height:1.45}
+.eb{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#6E6E6E}
+.dark .eb{color:#A3A3A3}
+.h1{margin:6px 0 0;font-family:'Instrument Serif',serif;font-weight:400;font-size:64px;line-height:.98;letter-spacing:-.02em}
+.app .h1{font-size:38px;line-height:1}
+.h2{margin:0;font-family:'Instrument Serif',serif;font-weight:400;font-size:36px;line-height:1.02;letter-spacing:-.01em}
+.app .h2{font-size:28px}
+.lead{margin:8px 0 0;color:#3A3A3A}
+.dark .lead{color:#C8C8C8}
+.muted{color:#6E6E6E;font-size:14px}
+.clock{font-variant-numeric:tabular-nums;font-feature-settings:'tnum' 1;font-weight:800;letter-spacing:-.03em}
+.dark{background:#111111;color:#FFFFFF}
+.bib{position:relative;background:#FFFFFF;color:#111111;border:2px solid #111111;border-radius:14px;padding:16px 20px 14px;box-sizing:border-box}
+.pin{position:absolute;width:9px;height:9px;border-radius:50%;border:2px solid #111111;background:#FFFFFF;box-sizing:border-box}
+.p1{top:7px;left:7px}.p2{top:7px;right:7px}.p3{bottom:7px;left:7px}.p4{bottom:7px;right:7px}
+.bibno{font-size:54px;font-weight:800;line-height:.95;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.app .bibno{font-size:44px}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid #111111;border-radius:999px;padding:8px 14px;font-size:14px;font-weight:600;min-height:40px;background:#FFFFFF;color:#111111;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#111111;color:#FFFFFF;border:0;border-radius:999px;padding:14px 24px;font-size:16px;font-weight:600;min-height:48px;box-sizing:border-box;text-align:center}
+.btn2{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#FFFFFF;color:#111111;border:1.5px solid #111111;border-radius:999px;padding:12px 22px;font-size:16px;font-weight:600;min-height:48px;box-sizing:border-box;text-align:center}
+.btnw{display:inline-flex;align-items:center;justify-content:center;background:#FFFFFF;color:#111111;border:0;border-radius:999px;padding:14px 24px;font-size:16px;font-weight:700;min-height:48px;box-sizing:border-box}
+.link{font-weight:700;text-decoration:underline;min-height:44px;display:inline-flex;align-items:center}
+.card{border:1px solid rgba(17,17,17,.18);border-radius:22px;padding:20px;box-sizing:border-box;background:#FFFFFF}
+.mist{background:#F4F4F2;border-radius:22px;padding:20px;box-sizing:border-box}
+.tag{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:700;white-space:nowrap}
+.tag.v{background:#111111;color:#FFFFFF}
+.tag.a{border:1px dashed #6E6E6E;color:#3A3A3A}
+.tag.ai{border:1px solid #111111;color:#111111}
+.tag.open{background:#3D6B52;color:#FFFFFF}
+.tag.s{background:#F4F4F2;color:#111111}
+.x{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;gap:12px;scroll-padding-left:16px}
+.x::-webkit-scrollbar{display:none}
+.x>*{scroll-snap-align:start;flex:0 0 auto}
+.input{width:100%;box-sizing:border-box;padding:13px 16px;font-size:16px;border:1px solid #9A9A9A;border-radius:12px;color:#111111;background:#FFFFFF}
+.label{display:block;font-weight:600;font-size:15px;margin-bottom:6px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.grid2{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:900px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.app .grid2{display:block}
+.app .grid2>*+*{margin-top:16px}
+.wrap{max-width:1160px;margin:0 auto;padding:32px 24px 96px;box-sizing:border-box}
+.sec{margin-top:36px}
+.app .sec{margin-top:28px}
+@media (max-width:640px){.web .h1{font-size:44px}.web .lbl-done{display:none}.web .wrap{padding-left:16px;padding-right:16px}}
+
+/* calm theme */
+.flat .card{border:0;border-top:1px solid rgba(17,17,17,.1);border-radius:0;padding:26px 0 6px;background:transparent}
+.flat .grid2>div>.card:first-child{border-top:0;padding-top:0}
+.flat .mist{border-radius:18px}
+.rows li.card{border:0;border-bottom:1px solid rgba(17,17,17,.1);border-radius:0;padding:14px 0;background:transparent!important}
+.app .lbl-done{display:none}
+.clock{font-weight:600;letter-spacing:-.02em}
+.h1{font-size:56px}
+.hair{border-top:1px solid rgba(17,17,17,.1)}
+.seg{display:inline-flex;background:#F4F4F2;border-radius:999px;padding:3px}
+.seg button{border:0;border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600;min-height:36px;background:transparent;color:#6E6E6E}
+.seg button[aria-pressed="true"]{background:#FFFFFF;color:#111111;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.tabs{display:flex;gap:22px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid rgba(17,17,17,.1)}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:0 0 auto;border:0;background:none;padding:10px 0 12px;font-size:14px;font-weight:600;color:#8A8A8A;border-bottom:2px solid transparent;margin-bottom:-1px;min-height:44px;white-space:nowrap}
+.tabs button[aria-pressed="true"]{color:#111111;border-bottom-color:#111111}
+.stat .k{font-size:12px;font-weight:600;color:#8A8A8A;letter-spacing:.04em}
+.stat .v{font-size:22px;margin-top:2px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#3D6B52;flex:0 0 auto}
+.gtext{color:#3D6B52}
+.bibmini{display:inline-flex;align-items:baseline;gap:6px;border:1.5px solid #111111;border-radius:10px;padding:4px 10px}
+.bibmini span:first-child{font-size:10px;font-weight:700;letter-spacing:.12em;color:#6E6E6E}
+.bibmini span:last-child{font-weight:600;font-size:18px;font-variant-numeric:tabular-nums}
+.lnk{background:none;border:0;padding:0;font-size:15px;font-weight:600;color:#111111;text-decoration:underline;text-underline-offset:3px;min-height:44px;display:inline-flex;align-items:center}
+.btns{padding:10px 18px;font-size:15px;min-height:44px}
+.check{width:22px;height:22px;margin:2px 0 0;flex:0 0 auto;accent-color:#111111}
+.clock:empty{display:none}.fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}</style>
+</helmet>
+<div class="cp app" style="position:relative;width:390px;height:844px;overflow:hidden">
+<div id="scroll" style="position:absolute;left:0;right:0;top:0;bottom:72px;overflow-y:auto">
+<div style="padding:24px 16px 0">
+<h1 class="h1">Who are you looking for?</h1>
+<p class="lead" style="margin-top:8px">Describe them in your own words. We match goals, races and content.</p>
+<div style="margin-top:20px;display:flex;align-items:center;gap:8px;background:#F4F4F2;border-radius:999px;padding:6px 6px 6px 18px">
+<label for="fq" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Describe the athlete you want</label>
+<input id="fq" type="text" value="{{q}}" onChange="{{setQ}}" placeholder="Parent runners training for a marathon" style="flex:1 1 auto;min-width:0;border:0;background:transparent;font-size:16px;color:#111111;padding:10px 0;outline-offset:4px">
+<button type="button" class="btn btns" onClick="{{find}}" style="flex:0 0 auto">Find</button>
+</div>
+<sc-if value="{{hasHeard}}" hint-placeholder-val="{{false}}">
+<div class="row" style="margin-top:12px;gap:6px"><span class="muted">Matching</span>
+<sc-for list="{{heard}}" as="h" hint-placeholder-count="3"><button type="button" onClick="{{h.remove}}" aria-label="{{h.aria}}" style="display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(17,17,17,.2);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:600;min-height:34px;background:#FFFFFF;color:#111111">{{h.label}}<span aria-hidden="true" style="color:#8A8A8A">&times;</span></button></sc-for>
+</div>
+</sc-if>
+</div>
+<div style="padding:28px 0 40px">
+<div style="padding-left:16px;padding-right:16px"><div class="stat"><div class="k">RACING NEAR [CITY]</div></div></div>
+<div class="tabs" role="group" aria-label="Races" style="margin-top:6px;padding:0 16px">
+<sc-for list="{{raceRows}}" as="r" hint-placeholder-count="7"><button type="button" aria-pressed="{{r.on}}" onClick="{{r.pick}}" style="text-align:left"><span class="clock" style="display:block;font-size:15px">{{r.dateText}}</span><span style="display:block;font-weight:500;font-size:13px">{{r.name}}</span></button></sc-for>
+</div>
+<div style="padding-left:16px;padding-right:16px;margin-top:14px">
+<div role="group" aria-label="Distance" class="x" data-scroll-x="1" style="gap:6px">
+<sc-for list="{{distRows}}" as="d" hint-placeholder-count="6"><button type="button" aria-pressed="{{d.on}}" onClick="{{d.pick}}" style="flex:0 0 auto;border:1px solid {{d.border}};border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600;min-height:36px;background:{{d.bg}};color:{{d.fg}}">{{d.label}}</button></sc-for>
+</div>
+<div class="row" style="margin-top:18px;justify-content:space-between"><span style="font-weight:600">{{countText}}</span><a class="lnk" href="AppMatches.dc.html" style="font-size:14px">One at a time</a></div>
+<div class="muted" style="margin-top:2px">Fit is an AI estimate from profile, content and race timing. Sample data.</div>
+</div>
+<sc-if value="{{empty}}" hint-placeholder-val="{{false}}"><div style="padding-left:16px;padding-right:16px;margin-top:24px"><div style="font-weight:600">No open goals match yet.</div><div class="muted">Remove a filter or pick another race.</div></div></sc-if>
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="3">
+<div style="margin-top:34px">
+<div style="padding-left:16px;padding-right:16px;display:flex;align-items:baseline;gap:10px"><span class="clock" style="font-size:13px;color:#8A8A8A">{{g.tag}}</span><span style="font-weight:600;font-size:18px">{{g.name}}</span></div>
+<div class="muted" style="padding-left:16px;padding-right:16px">{{g.desc}}</div>
+<div class="x" data-scroll-x="1" style="margin-top:14px;padding:0 16px 6px">
+<sc-for list="{{g.people}}" as="a" hint-placeholder-count="2">
+<div style="width:264px;border:1px solid rgba(17,17,17,.12);border-radius:18px;padding:18px;box-sizing:border-box;background:#FFFFFF">
+<div style="display:flex;justify-content:space-between;align-items:center"><span class="bibmini"><span>NO.</span><span>{{a.bib}}</span></span><span style="font-size:12px;font-weight:600;color:{{a.fitColor}}">{{a.fitText}}</span></div>
+<div style="margin-top:14px;font-weight:600">[Athlete name]</div>
+<div class="muted">{{a.sport}} &middot; {{a.area}} &middot; {{a.followers}} followers</div>
+<div style="margin-top:12px;font-family:'Instrument Serif',serif;font-size:20px;line-height:1.15">{{a.trait}}</div>
+<sc-if value="{{a.hasMiss}}" hint-placeholder-val="{{false}}"><div style="margin-top:8px;font-size:13px;line-height:1.35"><div class="gtext" style="font-weight:600">{{a.hitText}}</div><div style="color:#8A8A8A">{{a.missText}}</div></div></sc-if>
+<div style="margin-top:14px;display:flex;gap:8px;align-items:baseline"><span class="dot" style="transform:translateY(-1px)"></span><span><span style="font-weight:600">{{a.goal}}</span><span class="muted" style="display:block">{{a.raceText}}</span></span></div>
+<svg viewBox="0 0 220 34" aria-hidden="true" style="margin-top:12px;width:100%;height:30px;display:block"><path d="{{a.spark}}" fill="none" stroke="#C8C8C8" stroke-width="1.5" stroke-linejoin="round"/><circle cx="{{a.gx}}" cy="{{a.gy}}" r="3.5" fill="#3D6B52"/></svg>
+<div class="row" style="margin-top:14px;gap:14px"><a class="btn btns" href="{{a.backHref}}">Make an offer</a><a class="lnk" href="{{a.seasonHref}}" style="font-size:14px">View season</a></div>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div></div>
+<dc-import name="AppTabs" kind="business" active="Matches" hint-size="390px,72px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { q: '', heard: [], race: '', dist: 'All', back: 'Any' };
+}
+renderVals() {
+const s = this.state;
+const cpRole = (k) => { if (k === 'athlete' || k === 'business') return k; try { const q = new URLSearchParams(window.location.search).get('as'); if (q === 'business' || q === 'athlete') { try { localStorage.setItem('cpRole', q); } catch (e) {} return q; } if (localStorage.getItem('cpRole') === 'business') return 'business'; } catch (e) {} return 'athlete'; };
+const qp = (k) => { try { return new URLSearchParams(window.location.search).get(k) || ''; } catch (e) { return ''; } };
+const P = 'App';
+const races = [
+{ id: 'cm', name: 'City Marathon', dateText: 'Nov 23', dist: 'Marathon' },
+{ id: 'tt', name: 'Turkey Trot 5K', dateText: 'Nov 26', dist: '5K' },
+{ id: 'jh', name: 'Jingle Half', dateText: 'Dec 13', dist: 'Half' },
+{ id: 'nr', name: 'New Year 10K', dateText: 'Jan 1', dist: '10K' },
+{ id: 'wt', name: 'Winter Trail 30K', dateText: 'Feb 7', dist: 'Ultra' },
+{ id: 'sm', name: 'Spring Trail 50K', dateText: 'Apr 10', dist: 'Ultra' }
+];
+const people = [
+{ bib: '0147', traits: ['Comeback from injury', 'Races in a cape'], sport: 'Run', area: '[Neighborhood A]', goal: 'Sub-4:00', race: 'cm', style: 'Gear reviews', backing: 'Both', fit: [3, 3, 3, 2], followers: '2.4k', peaks: [0.2, 0.35, 0.6, 0.9] },
+{ bib: '0212', traits: ['Parent runner'], sport: 'Run', area: '[Neighborhood B]', goal: 'First marathon finish', race: 'cm', style: 'First-timers', backing: 'Product', fit: [3, 2, 3, 3], followers: '1.1k', peaks: [0.3, 0.6] },
+{ bib: '0605', traits: ['Started after 40'], sport: 'Run', area: '[Neighborhood C]', goal: 'Sub-3:30, Boston qualifier', race: 'cm', style: 'Storytellers', backing: 'Cash', fit: [2, 3, 3, 1], followers: '12k', peaks: [0.15, 0.4, 0.6] },
+{ bib: '0094', traits: ['Run club captain'], sport: 'Run', area: '[Neighborhood A]', goal: 'Turkey Trot PR', race: 'tt', style: 'First-timers', backing: 'Product', fit: [2, 3, 3, 3], followers: '640', peaks: [0.5, 0.62] },
+{ bib: '0388', traits: ['Runs before sunrise'], sport: 'Run', area: '[Neighborhood D]', goal: 'Sub-1:45 half', race: 'jh', style: 'Storytellers', backing: 'Cash', fit: [2, 3, 3, 2], followers: '5.8k', peaks: [0.25, 0.7] },
+{ bib: '0520', traits: ['Run commuter'], sport: 'Run', area: '[Neighborhood B]', goal: 'Sub-50 10K', race: 'nr', style: 'Gear reviews', backing: 'Product', fit: [3, 2, 3, 3], followers: '980', peaks: [0.3, 0.55, 0.78] },
+{ bib: '0333', traits: ['Trail volunteer'], sport: 'Trail', area: '[Neighborhood E]', goal: 'Top 10 in age group', race: 'wt', style: 'Gear reviews', backing: 'Cash', fit: [3, 3, 2, 2], followers: '7.1k', peaks: [0.2, 0.5, 0.85] },
+{ bib: '0451', traits: ['Sober and running'], sport: 'Trail', area: '[Neighborhood E]', goal: 'First ultra finish', race: 'sm', style: 'Storytellers', backing: 'Both', fit: [3, 2, 2, 3], followers: '3.2k', peaks: [0.4, 0.95] }
+];
+const styles = { 'Gear reviews': 'Honest, detailed gear reviews and training tips', 'First-timers': 'New to racing. Relatable to beginner customers', 'Storytellers': 'Video stories about training life and race days' };
+const DISTS = ['All', '5K', '10K', 'Half', 'Marathon', 'Ultra'], BACKS = ['Any', 'Cash', 'Product'];
+const parse = (q) => { const t = q.toLowerCase(), out = [];
+if (/\bultra|trail|50k|30k\b/.test(t)) out.push(['dist', 'Ultra']); else if (/half/.test(t)) out.push(['dist', 'Half']); else if (/marathon/.test(t)) out.push(['dist', 'Marathon']); else if (/10k/.test(t)) out.push(['dist', '10K']); else if (/5k|turkey/.test(t)) out.push(['dist', '5K']);
+if (/review|honest|gear/.test(t)) out.push(['style', 'Gear reviews']); if (/first|beginner|new to|newbie/.test(t)) out.push(['style', 'First-timers']); if (/story|stories|video|film|vlog/.test(t)) out.push(['style', 'Storytellers']);
+[[/comeback|injur/, 'Comeback from injury'], [/parent|mom|dad|kids/, 'Parent runner'], [/after 40|over 40|masters|40\+/, 'Started after 40'], [/club|captain|community/, 'Run club captain'], [/sunrise|early|morning|5 ?a\.?m/, 'Runs before sunrise'], [/commut/, 'Run commuter'], [/volunteer/, 'Trail volunteer'], [/sober/, 'Sober and running'], [/cape|costume/, 'Races in a cape']].forEach((x) => { if (x[0].test(t)) out.push(['trait', x[1]]); });
+if (/near|local|city|nearby/.test(t)) out.push(['near', 'Near [City]']);
+return out; };
+const heardTraits = s.heard.filter((h) => h[0] === 'trait').map((h) => h[1]);
+const heardStyles = s.heard.filter((h) => h[0] === 'style').map((h) => h[1]);
+const hDist = (s.heard.find((h) => h[0] === 'dist') || [])[1], hBack = (s.heard.find((h) => h[0] === 'back') || [])[1];
+const dist = s.dist !== 'All' ? s.dist : (hDist || 'All');
+const back = s.back !== 'Any' ? s.back : (hBack || 'Any');
+const raceOf = (id) => races.find((r) => r.id === id);
+const match = people.filter((p) => (!s.race || p.race === s.race) && (dist === 'All' || raceOf(p.race).dist === dist) && (!heardStyles.length || heardStyles.indexOf(p.style) >= 0) && (!heardTraits.length || heardTraits.some((t) => p.traits.indexOf(t) >= 0)));
+const score = (p) => p.fit.reduce((a, b) => a + b, 0);
+const crit = [];
+if (s.dist === 'All' && hDist) crit.push({ label: hDist, ok: (p) => raceOf(p.race).dist === hDist });
+if (heardStyles.length) crit.push({ label: heardStyles.join(' or '), ok: (p) => heardStyles.indexOf(p.style) >= 0 });
+if (heardTraits.length) crit.push({ label: heardTraits.join(' or '), ok: (p) => heardTraits.some((t) => p.traits.indexOf(t) >= 0) });
+const hitN = (p) => crit.filter((c) => c.ok(p)).length;
+const fuzzy = match.length === 0 && crit.length > 1;
+if (fuzzy) people.filter((p) => (!s.race || p.race === s.race) && (s.dist === 'All' || raceOf(p.race).dist === s.dist) && hitN(p) > 0).forEach((p) => match.push(p));
+const groupNames = fuzzy ? ['closest'] : Object.keys(styles).filter((k) => match.some((p) => p.style === k)).sort((a, b) => { const av = (k) => { const l = match.filter((p) => p.style === k); return l.reduce((x, p) => x + score(p), 0) / l.length; }; return av(b) - av(a); });
+const spark = (pk) => { const pts = []; for (let x = 0; x <= 220; x += 4) { let y = 30; pk.forEach((f, i) => { const dx = (x - f * 220) / 12; y -= (10 + i * 5) * Math.exp(-dx * dx); }); pts.push(x + ' ' + y.toFixed(1)); } return 'M' + pts.join(' L'); };
+const fitWord = (n) => (n >= 11 ? ['Strong fit', '#111111', '#FFFFFF'] : n >= 9 ? ['Good fit', '#F4F4F2', '#111111'] : ['Fair fit', '#FFFFFF', '#3A3A3A']);
+const seg = (v, i) => (v > i ? '#111111' : '#E2E2E2');
+const countRace = (id) => people.filter((p) => p.race === id).length;
+return {
+q: s.q, setQ: (e) => this.setState({ q: e.target.value }),
+find: () => this.setState({ heard: parse(s.q), dist: 'All', back: 'Any' }),
+heard: s.heard.map((h, i) => ({ label: h[1], aria: 'Remove ' + h[1], remove: () => this.setState({ heard: s.heard.filter((_, j) => j !== i) }) })),
+hasHeard: s.heard.length > 0, noHeard: s.heard.length === 0,
+hint: s.q.trim() ? 'Press Find athletes to turn this into filters.' : 'Try: honest shoe reviews from first-time marathoners near me',
+raceRows: [{ id: '', name: 'All races', dateText: 'All', sub: people.length + ' open goals' }].concat(races.map((r) => ({ id: r.id, name: r.name, dateText: r.dateText, sub: r.dist + ' \u00b7 ' + countRace(r.id) + (countRace(r.id) === 1 ? ' open goal' : ' open goals') }))).map((r) => { const on = s.race === r.id; return Object.assign(r, { on: on ? 'true' : 'false', bg: on ? '#111111' : '#FFFFFF', fg: on ? '#FFFFFF' : '#111111', pick: () => this.setState({ race: r.id, dist: 'All', heard: s.heard.filter((h) => h[0] !== 'dist') }) }); }),
+distRows: DISTS.map((d) => { const on = dist === d; return { label: d === 'All' ? 'All distances' : d, on: on ? 'true' : 'false', bg: on ? '#111111' : '#FFFFFF', fg: on ? '#FFFFFF' : '#111111', border: on ? '#111111' : 'rgba(17,17,17,.2)', pick: () => this.setState({ dist: d, heard: s.heard.filter((h) => h[0] !== 'dist') }) }; }),
+backRows: BACKS.map((b) => { const on = back === b; return { label: b === 'Any' ? 'Any backing' : b, on: on ? 'true' : 'false', bg: on ? '#111111' : '#FFFFFF', fg: on ? '#FFFFFF' : '#111111', pick: () => this.setState({ back: b, heard: s.heard.filter((h) => h[0] !== 'back') }) }; }),
+countText: (fuzzy ? 'No exact match. ' + match.length + ' closest' : match.length + (match.length === 1 ? ' athlete' : ' athletes') + ' with open goals') + (s.race ? ' at ' + raceOf(s.race).name : ' near [City]'),
+empty: match.length === 0,
+fuzzy: fuzzy, groups: groupNames.map((k, gi) => ({ tag: fuzzy ? '' : 'PACE ' + 'ABC'.charAt(gi), name: fuzzy ? 'Closest matches' : k, desc: fuzzy ? 'Sorted by how much of your search they match.' : styles[k], people: match.filter((p) => fuzzy || p.style === k).sort((a, b) => (fuzzy ? hitN(b) - hitN(a) : 0) || score(b) - score(a)).map((p) => { const r = raceOf(p.race), fw = fitWord(score(p)); const gx = p.peaks[p.peaks.length - 1] * 220; let gy = 30; p.peaks.forEach((f, i) => { const dx = (gx - f * 220) / 12; gy -= (10 + i * 5) * Math.exp(-dx * dx); }); return { bib: p.bib, sport: p.sport, area: p.area, followers: p.followers, goal: p.goal, raceText: r.name + ' \u00b7 ' + r.dateText, trait: p.traits[0], hasMiss: fuzzy, hitText: fuzzy ? 'Matches ' + crit.filter((c) => c.ok(p)).map((c) => c.label).join(', ') : '', missText: fuzzy ? 'Not ' + crit.filter((c) => !c.ok(p)).map((c) => c.label).join(', ') : '', fitText: fw[0], fitColor: fw[0] === 'Strong fit' ? '#3D6B52' : '#8A8A8A', spark: spark(p.peaks), gx: gx.toFixed(1), gy: gy.toFixed(1), fits: ['Content', 'Audience', 'Location', 'Timing'].map((k2, i) => ({ k: k2, c1: seg(p.fit[i], 0), c2: seg(p.fit[i], 1), c3: seg(p.fit[i], 2) })), backHref: P + 'Back.dc.html?goal=r3&bib=' + p.bib + '&as=business', seasonHref: P + 'Season.dc.html?view=business&as=business' }; }) }))
+};
+}
+}
+</script>
+<script>(function(){function ensure(){if(document.querySelector(".pilot-back")||!document.body)return;var a=document.createElement("a");a.className="pilot-back";a.href="index.html";a.innerHTML='<span aria-hidden="true">&larr;</span> Test tasks';document.body.appendChild(a);}document.addEventListener("DOMContentLoaded",ensure);setInterval(ensure,800);})();</script>
+</body>
+</html>
